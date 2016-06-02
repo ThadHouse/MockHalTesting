@@ -3,7 +3,7 @@ apply plugin: 'google-test'
 model {
     testSuites {
         ntcoreTest {
-            if (!project.hasProperty('skipJava')) {
+            if (project.hasProperty('skipJava')) {
                 setupJniIncludes(binaries)
             }
             sources {
