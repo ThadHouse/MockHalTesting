@@ -26,6 +26,7 @@ HalPortHandle createPortHandle(uint8_t pin, uint8_t module) {
 
 HalHandle createHandle(int16_t index, HalHandleEnum handleType) {
   if (index < 0) return HAL_HANDLE_NEGATIVE_INDEX;
+  if (handleType <= 0 || handleType > 127) return HAL_HANDLE_INVALID_TYPE;
   // set last 8 bits, then shift to first 8 bits
   HalHandle handle = handleType;
   handle = handle << 24;
