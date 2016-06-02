@@ -1,15 +1,22 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) FIRST 2015. All Rights Reserved.                             */
+/* Copyright (c) FIRST 2016. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "gtest/gtest.h"
+#pragma once
 
-int main(int argc, char **argv)
-{
-    ::testing::InitGoogleTest(&argc, argv);
-    int ret = RUN_ALL_TESTS();
-    return ret;
+enum AccelerometerRange {
+  kRange_2G = 0,
+  kRange_4G = 1,
+  kRange_8G = 2,
+};
+
+extern "C" {
+void setAccelerometerActive(bool);
+void setAccelerometerRange(AccelerometerRange);
+double getAccelerometerX();
+double getAccelerometerY();
+double getAccelerometerZ();
 }
