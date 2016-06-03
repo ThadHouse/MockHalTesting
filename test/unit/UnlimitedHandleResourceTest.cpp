@@ -43,6 +43,36 @@ TEST_F(UnlimitedHandleResourceTest, HandleCreateRemoveGetNull) {
   ASSERT_EQ(nullptr, v);
 }
 
+TEST_F(UnlimitedHandleResourceTest, GetWithLargeIndexInvalidHandle) {
+  ASSERT_EQ(0, structures().size());
+  auto h = (TestHalHandle) createHandle(75, HalHandleEnum::DIO);
+  auto v = resource.Get(h);
+  ASSERT_EQ(nullptr, v);
+}
+
+TEST_F(UnlimitedHandleResourceTest, GetInvalidNegativeIndex) {
+  ASSERT_EQ(0, structures().size());
+  auto h = (TestHalHandle) createHandle(0, HalHandleEnum::DIO);
+  //force negative index
+  h += 0xffff;
+  auto v = resource.Get(h);
+  ASSERT_EQ(nullptr, v);
+}
+
+TEST_F(UnlimitedHandleResourceTest, FreeInvalidIndexPositive) {
+  ASSERT_EQ(0, structures().size());
+  auto h = (TestHalHandle) createHandle(0, HalHandleEnum::DIO);
+  resource.Free(h);
+}
+
+TEST_F(UnlimitedHandleResourceTest, FreeInvalidIndexNegative) {
+  ASSERT_EQ(0, structures().size());
+  auto h = (TestHalHandle) createHandle(0, HalHandleEnum::DIO);
+  //force negative index
+  h += 0xffff;
+  resource.Free(h);
+}
+
 TEST_F(UnlimitedHandleResourceTest, Create2HandlesReassignNum1) {
   auto s = std::make_shared<TestStruct>();
   // allocate 2 handles

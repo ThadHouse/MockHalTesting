@@ -79,7 +79,7 @@ void UnlimitedHandleResource<THandle, TStruct, enumValue>::Free(
     THandle handle) {
   int16_t index = getHandleTypedIndex(handle, enumValue);
   std::lock_guard<priority_recursive_mutex> sync(m_handleMutex);
-  if (index < 0 || index > m_structures.size()) return;
+  if (index < 0 || index >= m_structures.size()) return;
   m_structures[index].reset();
 }
 }
