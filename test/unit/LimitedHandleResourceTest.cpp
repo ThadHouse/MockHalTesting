@@ -10,7 +10,7 @@ TEST_F(LimitedHandleResourceTest, EnsureAllHandlesNotAllocated) {
     int32_t status = 0;
     TestHalHandle handle = (TestHalHandle) createHandle(i, HalHandleEnum::DIO);
     auto v = resource.Get(handle, &status);
-    ASSERT_EQ(LIMITED_RESOURCE_NOT_ALLOCATED, status);
+    ASSERT_EQ(LimitedResourceNotAllocated, status);
     ASSERT_FALSE(Allocated()[i]);
   }
 }
@@ -79,14 +79,14 @@ TEST_F(LimitedHandleResourceTest, GetHandleOutOfRangeErrorNegativeIndex) {
   // force handle to have index -1
   handle += 0xffff;
   auto v = resource.Get(handle, &status);
-  ASSERT_EQ(LIMITED_RESOURCE_INDEX_OUT_OF_RANGE, status);
+  ASSERT_EQ(LimitedResourceIndexOutOfRange, status);
 }
 
 TEST_F(LimitedHandleResourceTest, GetHandleOutOfRangeErrorIndexTooHigh) {
   int32_t status = 0;
   TestHalHandle handle = (TestHalHandle) createHandle(COUNT, HalHandleEnum::DIO);
   auto v = resource.Get(handle, &status);
-  ASSERT_EQ(LIMITED_RESOURCE_INDEX_OUT_OF_RANGE, status);
+  ASSERT_EQ(LimitedResourceIndexOutOfRange, status);
 }
 
 TEST_F(LimitedHandleResourceTest, GetHandleProperlyAllocated) {
@@ -110,7 +110,7 @@ TEST_F(LimitedHandleResourceTest, GetHandleUnAllocated) {
   resource.Free(h);
   int32_t status = 0;
   auto v = resource.Get(h, &status);
-  ASSERT_EQ(LIMITED_RESOURCE_NOT_ALLOCATED, status);
+  ASSERT_EQ(LimitedResourceNotAllocated, status);
 }
 
 TEST_F(LimitedHandleResourceTest, GetHandleEnsureDifferentAddress) {

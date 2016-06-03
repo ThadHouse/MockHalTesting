@@ -10,7 +10,7 @@ TEST_F(IndexedHandleResourceTest, EnsureAllHandlesNotAllocated) {
    int32_t status = 0;
    TestHalHandle handle = (TestHalHandle) createHandle(i, HalHandleEnum::DIO);
    auto v = resource.Get(handle, &status);
-   ASSERT_EQ(INDEXED_RESOURCE_NOT_ALLOCATED, status);
+   ASSERT_EQ(IndexedResourceNotAllocated, status);
    ASSERT_FALSE(Allocated()[i]);
   }
 }
@@ -56,14 +56,14 @@ TEST_F(IndexedHandleResourceTest, GetHandleOutOfRangeErrorNegativeIndex) {
   // force handle to have index -1
   handle += 0xffff;
   auto v = resource.Get(handle, &status);
-  ASSERT_EQ(INDEXED_RESOURCE_INDEX_OUT_OF_RANGE, status);
+  ASSERT_EQ(IndexedResourceIndexOutOfRange, status);
 }
 
 TEST_F(IndexedHandleResourceTest, GetHandleOutOfRangeErrorIndexTooHigh) {
   int32_t status = 0;
   TestHalHandle handle = (TestHalHandle) createHandle(COUNT, HalHandleEnum::DIO);
   auto v = resource.Get(handle, &status);
-  ASSERT_EQ(INDEXED_RESOURCE_INDEX_OUT_OF_RANGE, status);
+  ASSERT_EQ(IndexedResourceIndexOutOfRange, status);
 }
 
 TEST_F(IndexedHandleResourceTest, GetHandleProperlyAllocated) {
@@ -88,7 +88,7 @@ TEST_F(IndexedHandleResourceTest, GetHandleUnAllocated) {
   resource.Free(h);
   int32_t status = 0;
   auto v = resource.Get(h, &status);
-  ASSERT_EQ(INDEXED_RESOURCE_NOT_ALLOCATED, status);
+  ASSERT_EQ(IndexedResourceNotAllocated, status);
 }
 
 TEST_F(IndexedHandleResourceTest, GetHandleReAllocated) {
@@ -102,7 +102,7 @@ TEST_F(IndexedHandleResourceTest, GetHandleReAllocated) {
   ASSERT_FALSE(Allocated()[2]);
   int32_t status = 0;
   auto v = resource.Get(h, &status);
-  ASSERT_EQ(INDEXED_RESOURCE_NOT_ALLOCATED, status);
+  ASSERT_EQ(IndexedResourceNotAllocated, status);
   auto h2 = resource.Allocate(2, s);
   ASSERT_TRUE(Allocated()[2]);
   status = 0;

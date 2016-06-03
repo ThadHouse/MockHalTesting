@@ -16,10 +16,10 @@
 #include "HAL/cpp/priority_mutex.h"
 #include "HandlesInternal.h"
 
-#define LIMITED_RESOURCE_INDEX_OUT_OF_RANGE -1
-#define LIMITED_RESOURCE_NOT_ALLOCATED -2
-
 namespace hal {
+
+constexpr int32_t LimitedResourceIndexOutOfRange = -1;
+constexpr int32_t LimitedResourceNotAllocated = -2;
 
 /**
  * The LimitedHandleResource class is a way to track handles. This version
@@ -88,13 +88,13 @@ TStruct LimitedHandleResource<THandle, TStruct, size, enumValue>::Get(
   // get handle index, and fail early if index out of range or wrong handle
   int16_t index = getHandleTypedIndex(handle, enumValue);
   if (index < 0 || index >= size) {
-    *status = LIMITED_RESOURCE_INDEX_OUT_OF_RANGE;
+    *status = LimitedResourceIndexOutOfRange;
     return TStruct();
   }
   std::lock_guard<priority_recursive_mutex> sync(m_handleMutexes[index]);
   // check for already deallocated handle, then return structure
   if (!m_allocated[index]) {
-    *status = LIMITED_RESOURCE_NOT_ALLOCATED;
+    *status = LimitedResourceNotAllocated;
     return TStruct();
   }
   return m_structures[index];

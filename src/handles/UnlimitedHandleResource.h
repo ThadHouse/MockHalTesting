@@ -70,7 +70,7 @@ std::shared_ptr<TStruct>
 UnlimitedHandleResource<THandle, TStruct, enumValue>::Get(THandle handle) {
   int16_t index = getHandleTypedIndex(handle, enumValue);
   std::lock_guard<priority_recursive_mutex> sync(m_handleMutex);
-  if (index < 0 || index > m_structures.size()) return nullptr;
+  if (index < 0 || index >= m_structures.size()) return nullptr;
   return m_structures[index];
 }
 
