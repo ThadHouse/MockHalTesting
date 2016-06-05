@@ -1,3 +1,6 @@
 LIBRARY NTCORE
 EXPORTS
-
+getNativeMultiWait
+initializeMutexNormal
+initializeMultiWait
+takeMultiWait

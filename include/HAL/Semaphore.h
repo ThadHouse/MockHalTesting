@@ -22,6 +22,7 @@ bool tryTakeMutex(MUTEX_ID sem);
 void giveMutex(MUTEX_ID sem);
 
 MULTIWAIT_ID initializeMultiWait();
+void* getNativeMultiWait(MULTIWAIT_ID sem);
 void deleteMultiWait(MULTIWAIT_ID sem);
 void takeMultiWait(MULTIWAIT_ID sem, MUTEX_ID m);
 void giveMultiWait(MULTIWAIT_ID sem);
