@@ -13,7 +13,7 @@
 namespace hal {
 HalPortHandle createPortHandle(uint8_t pin, uint8_t module) {
   // set last 8 bits, then shift to first 8 bits
-  HalPortHandle handle = HalHandleEnum::Port;
+  HalPortHandle handle = static_cast<HalPortHandle>(HalHandleEnum::Port);
   handle = handle << 24;
   // shift module and add to 3rd set of 8 bits
   int32_t temp = module;
@@ -26,9 +26,10 @@ HalPortHandle createPortHandle(uint8_t pin, uint8_t module) {
 
 HalHandle createHandle(int16_t index, HalHandleEnum handleType) {
   if (index < 0) return HAL_HANDLE_NEGATIVE_INDEX;
-  if (handleType <= 0 || handleType > 127) return HAL_HANDLE_INVALID_TYPE;
+  uint8_t hType = static_cast<uint8_t>(handleType);
+  if (hType == 0 || hType > 127) return HAL_HANDLE_INVALID_TYPE;
   // set last 8 bits, then shift to first 8 bits
-  HalHandle handle = handleType;
+  HalHandle handle = hType;
   handle = handle << 24;
   // add index to set last 16 bits
   handle += index;

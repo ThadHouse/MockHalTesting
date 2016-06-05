@@ -5,6 +5,8 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#ifdef _WIN32
+
 #include "HAL/Semaphore.h"
 
 #include "Log.h"
@@ -41,19 +43,17 @@ bool tryTakeMutex(MUTEX_ID mutex) { return mutex->try_lock(); }
  */
 void giveMutex(MUTEX_ID mutex) { mutex->unlock(); }
 
-MULTIWAIT_ID initializeMultiWait() { return new priority_condition_variable; }
+MULTIWAIT_ID initializeMultiWait() { return CreateSemaphore(NULL, 1, 1, NULL); }
 
-void* getNativeMultiWait(MULTIWAIT_ID sem) {
-  return sem->native_handle();
-}
-
-void deleteMultiWait(MULTIWAIT_ID cond) { delete cond; }
+void deleteMultiWait(MULTIWAIT_ID cond) { CloseHandle(cond); }
 
 void takeMultiWait(MULTIWAIT_ID cond, MUTEX_ID m) {
-  std::unique_lock<priority_mutex> lock(*m);
-  cond->wait(lock);
+  WaitForSingleObject(cond, INFINITE);
 }
 
-void giveMultiWait(MULTIWAIT_ID cond) { cond->notify_all(); }
+void giveMultiWait(MULTIWAIT_ID cond) { 
+  ReleaseSemaphore(cond, 1, NULL);
+}
 
 }  // extern "C"
+#endif // _WIN32

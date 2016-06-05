@@ -72,7 +72,6 @@ def setupModel = { project, isArm ->
                     targetPlatform 'arm'
                 } else {
                     targetPlatform 'x86'
-                    targetPlatform 'x64'
                 }
                 binaries.all {
                     if (project.hasProperty('debug')) {

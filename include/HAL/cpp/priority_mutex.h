@@ -10,7 +10,7 @@
 // Allows usage with std::lock_guard without including <mutex> separately
 #include <mutex>
 
-#ifdef FRC_SIMULATOR
+#if defined(_WIN32) || defined(FRC_SIMULATOR)
 // We do not want to use pthreads if in the simulator; however, in the
 // simulator, we do not care about priority inversion.
 typedef std::mutex priority_mutex;

@@ -11,8 +11,13 @@
 #include "cpp/priority_mutex.h"
 
 typedef priority_mutex* MUTEX_ID;
+#ifdef _WIN32
+#include <windows.h>
+typedef HANDLE MULTIWAIT_ID;
+#else
 typedef priority_condition_variable* MULTIWAIT_ID;
 typedef priority_condition_variable::native_handle_type NATIVE_MULTIWAIT_ID;
+#endif
 
 extern "C" {
 MUTEX_ID initializeMutexNormal();
@@ -22,7 +27,6 @@ bool tryTakeMutex(MUTEX_ID sem);
 void giveMutex(MUTEX_ID sem);
 
 MULTIWAIT_ID initializeMultiWait();
-void* getNativeMultiWait(MULTIWAIT_ID sem);
 void deleteMultiWait(MULTIWAIT_ID sem);
 void takeMultiWait(MULTIWAIT_ID sem, MUTEX_ID m);
 void giveMultiWait(MULTIWAIT_ID sem);

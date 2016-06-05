@@ -19,12 +19,11 @@ model {
                     if (file(VS_2015_INCLUDE_DIR).exists()) {
                         args << "/I$VS_2015_INCLUDE_DIR"
                     }
-                    args << '/DFRC_SIMULATOR'
                 }
                 linker.withArguments { args ->
                     if (file(VS_2015_LIB_DIR).exists()) {
                         if (platform.architecture.name == 'x86') {
-                            args << "/LIBPATH:$VS_2015_LIB_DIR/x86"
+                            args << "/LIBPATH:$VS_2015_LIB_DIR/x86" << "-DEFAULTLIB:../libraries/windows/FRC_NetworkCommunication.lib"
                         } else {
                             args << "/LIBPATH:$VS_2015_LIB_DIR/x64"
                         }

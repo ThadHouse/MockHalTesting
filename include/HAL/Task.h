@@ -7,6 +7,8 @@
 
 #pragma once
 
+#ifndef _WIN32
+
 #include <pthread.h>
 #include <stdint.h>
 
@@ -45,3 +47,5 @@ STATUS verifyTaskID(TASK task);
 STATUS setTaskPriority(TASK task, int priority);  // valid priority [1..99]
 STATUS getTaskPriority(TASK task, int* priority);
 }
+
+#endif //_WIN32
