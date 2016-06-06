@@ -88,18 +88,20 @@ def setupModel = { project, isArm ->
                 sources {
                     cpp {
                         source {
-                            srcDirs = ['../src']
-                            if (includeJava) {
-                                srcDirs "../java/lib"
+                            srcDirs = ['../src/shared']
+                            if (isArm) {
+                                srcDirs += ["../src/athena", "../src/athena/FRC_FPGA_ChipObject"]
+                            } else {
+                                srcDirs "../src/desktop"
                             }
                             includes = ['**/*.cpp']
                         }
                         exportedHeaders {
-                            srcDirs = ['../include', '../src']
-                            if (includeJava) {
-                                project.jniHeadersNetworkTables.outputs.files.each { file ->
-                                    srcDirs file.getPath()
-                                }
+                            srcDirs = ['../include', '../src/shared']
+                            if (isArm) {
+                                srcDirs += ["../src/athena", "../src/athena/FRC_FPGA_ChipObject"]
+                            } else {
+                                srcDirs "../src/desktop"
                             }
                             includes = ['**/*.h']
                         }
