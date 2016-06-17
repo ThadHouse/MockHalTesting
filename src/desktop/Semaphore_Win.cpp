@@ -43,7 +43,7 @@ bool tryTakeMutex(MUTEX_ID mutex) { return mutex->try_lock(); }
  */
 void giveMutex(MUTEX_ID mutex) { mutex->unlock(); }
 
-MULTIWAIT_ID initializeMultiWait() { return CreateSemaphore(NULL, 1, 1, NULL); }
+MULTIWAIT_ID initializeMultiWait() { return CreateMutex(NULL, FALSE, NULL); }
 
 void deleteMultiWait(MULTIWAIT_ID cond) { CloseHandle(cond); }
 
@@ -52,7 +52,7 @@ void takeMultiWait(MULTIWAIT_ID cond, MUTEX_ID m) {
 }
 
 void giveMultiWait(MULTIWAIT_ID cond) { 
-  ReleaseSemaphore(cond, 1, NULL);
+  ReleaseMutex(cond);
 }
 
 }  // extern "C"

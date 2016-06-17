@@ -19,7 +19,7 @@ class LimitedHandleResourceTest : public ::testing::Test {
  public:
   LimitedHandleResource<TestHalHandle, TestStruct, COUNT, HalHandleEnum::DIO> resource;
   
-  bool* Allocated() { return resource.m_allocated; }
+  std::shared_ptr<TestStruct>* Allocated() { return resource.m_structures; }
 };
 
 }
