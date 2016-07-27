@@ -9,7 +9,7 @@
 
 #include <stdint.h>
 
-#include "HAL/Handles.h"
+#include "HAL/Types.h"
 
 /* General Handle Data Layout
  * Bits 0-15:  Handle Index
@@ -23,22 +23,42 @@
 
 namespace hal {
 
-enum class HalHandleEnum { Undefined = 0, DIO = 1, Port = 2, Notifier = 3 };
+constexpr int16_t InvalidHandleIndex = -1;
 
-static inline int16_t getHandleIndex(HalHandle handle) {
+enum class HAL_HandleEnum {
+  Undefined = 0,
+  DIO = 1,
+  Port = 2,
+  Notifier = 3,
+  Interrupt = 4,
+  AnalogOutput = 5,
+  AnalogInput = 6,
+  AnalogTrigger = 7,
+  Relay = 8,
+  PWM = 9,
+  DigitalPWM = 10,
+  Counter = 11,
+  FPGAEncoder = 12,
+  Encoder = 13,
+  Compressor = 14,
+  Solenoid = 15,
+  AnalogGyro = 16
+};
+
+static inline int16_t getHandleIndex(HAL_Handle handle) {
   // mask and return last 16 bits
   return (int16_t)(handle & 0xffff);
 }
-static inline HalHandleEnum getHandleType(HalHandle handle) {
+static inline HAL_HandleEnum getHandleType(HAL_Handle handle) {
   // mask first 8 bits and cast to enum
-  return (HalHandleEnum)((handle >> 24) & 0xff);
+  return (HAL_HandleEnum)((handle >> 24) & 0xff);
 }
-static inline bool isHandleType(HalHandle handle, HalHandleEnum handleType) {
+static inline bool isHandleType(HAL_Handle handle, HAL_HandleEnum handleType) {
   return handleType == getHandleType(handle);
 }
-static inline int16_t getHandleTypedIndex(HalHandle handle,
-                                          HalHandleEnum enumType) {
-  if (!isHandleType(handle, enumType)) return HAL_HANDLE_INVALID_TYPE;
+static inline int16_t getHandleTypedIndex(HAL_Handle handle,
+                                          HAL_HandleEnum enumType) {
+  if (!isHandleType(handle, enumType)) return InvalidHandleIndex;
   return getHandleIndex(handle);
 }
 
@@ -52,20 +72,18 @@ static inline int16_t getHandleTypedIndex(HalHandle handle,
  */
 
 // using a 16 bit value so we can store 0-255 and still report error
-static inline int16_t getPortHandlePin(HalPortHandle handle) {
-  if (!isHandleType(handle, HalHandleEnum::Port))
-    return HAL_HANDLE_INVALID_TYPE;
+static inline int16_t getPortHandlePin(HAL_PortHandle handle) {
+  if (!isHandleType(handle, HAL_HandleEnum::Port)) return InvalidHandleIndex;
   return (uint8_t)(handle & 0xff);
 }
 
 // using a 16 bit value so we can store 0-255 and still report error
-static inline int16_t getPortHandleModule(HalPortHandle handle) {
-  if (!isHandleType(handle, HalHandleEnum::Port))
-    return HAL_HANDLE_INVALID_TYPE;
+static inline int16_t getPortHandleModule(HAL_PortHandle handle) {
+  if (!isHandleType(handle, HAL_HandleEnum::Port)) return InvalidHandleIndex;
   return (uint8_t)((handle >> 8) & 0xff);
 }
 
-HalPortHandle createPortHandle(uint8_t pin, uint8_t module);
+HAL_PortHandle createPortHandle(uint8_t pin, uint8_t module);
 
-HalHandle createHandle(int16_t index, HalHandleEnum handleType);
-}
+HAL_Handle createHandle(int16_t index, HAL_HandleEnum handleType);
+}  // namespace hal

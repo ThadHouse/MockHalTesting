@@ -10,11 +10,17 @@
 #include "ChipObject.h"
 #include "HAL/AnalogInput.h"
 #include "HAL/cpp/priority_mutex.h"
+#include "PortsInternal.h"
 
 namespace hal {
 priority_recursive_mutex analogRegisterWindowMutex;
-tAI* analogInputSystem = nullptr;
-tAO* analogOutputSystem = nullptr;
+std::unique_ptr<tAI> analogInputSystem;
+std::unique_ptr<tAO> analogOutputSystem;
+
+IndexedHandleResource<HAL_AnalogInputHandle, hal::AnalogPort, kNumAnalogInputs,
+                      HAL_HandleEnum::AnalogInput>
+    analogInputHandles;
+
 static uint32_t analogNumChannelsToActivate = 0;
 
 bool analogSystemInitialized = false;
@@ -25,10 +31,10 @@ bool analogSystemInitialized = false;
 void initializeAnalog(int32_t* status) {
   std::lock_guard<priority_recursive_mutex> sync(analogRegisterWindowMutex);
   if (analogSystemInitialized) return;
-  analogInputSystem = tAI::create(status);
-  analogOutputSystem = tAO::create(status);
-  setAnalogNumChannelsToActivate(kAnalogInputPins);
-  setAnalogSampleRate(kDefaultSampleRate, status);
+  analogInputSystem.reset(tAI::create(status));
+  analogOutputSystem.reset(tAO::create(status));
+  setAnalogNumChannelsToActivate(kNumAnalogInputs);
+  HAL_SetAnalogSampleRate(kDefaultSampleRate, status);
   analogSystemInitialized = true;
 }
 
@@ -72,4 +78,4 @@ uint32_t getAnalogNumChannelsToActivate(int32_t* status) {
 void setAnalogNumChannelsToActivate(uint32_t channels) {
   analogNumChannelsToActivate = channels;
 }
-}
+}  // namespace hal

@@ -11,25 +11,27 @@
 #include <thread>
 
 #include "ChipObject.h"
+#include "ConstantsInternal.h"
 #include "FRC_NetworkCommunication/LoadOut.h"
+#include "HAL/AnalogTrigger.h"
 #include "HAL/HAL.h"
-#include "HAL/cpp/Resource.h"
+#include "HAL/Ports.h"
 #include "HAL/cpp/priority_mutex.h"
+#include "PortsInternal.h"
 
-static_assert(sizeof(uint32_t) <= sizeof(void*),
-              "This file shoves uint32_ts into pointers.");
 namespace hal {
 // Create a mutex to protect changes to the DO PWM config
 priority_recursive_mutex digitalPwmMutex;
 
-tDIO* digitalSystem = nullptr;
-tRelay* relaySystem = nullptr;
-tPWM* pwmSystem = nullptr;
-hal::Resource* DIOChannels = nullptr;
-hal::Resource* DO_PWMGenerators = nullptr;
-hal::Resource* PWMChannels = nullptr;
+std::unique_ptr<tDIO> digitalSystem;
+std::unique_ptr<tRelay> relaySystem;
+std::unique_ptr<tPWM> pwmSystem;
 
 bool digitalSystemsInitialized = false;
+
+DigitalHandleResource<HAL_DigitalHandle, DigitalPort,
+                      kNumDigitalPins + kNumPWMHeaders>
+    digitalPinHandles;
 
 /**
  * Initialize the digital system.
@@ -37,24 +39,17 @@ bool digitalSystemsInitialized = false;
 void initializeDigital(int32_t* status) {
   if (digitalSystemsInitialized) return;
 
-  hal::Resource::CreateResourceObject(&DIOChannels,
-                                      tDIO::kNumSystems * kDigitalPins);
-  hal::Resource::CreateResourceObject(
-      &DO_PWMGenerators,
-      tDIO::kNumPWMDutyCycleAElements + tDIO::kNumPWMDutyCycleBElements);
-  hal::Resource::CreateResourceObject(&PWMChannels,
-                                      tPWM::kNumSystems * kPwmPins);
-  digitalSystem = tDIO::create(status);
+  digitalSystem.reset(tDIO::create(status));
 
   // Relay Setup
-  relaySystem = tRelay::create(status);
+  relaySystem.reset(tRelay::create(status));
 
   // Turn off all relay outputs.
   relaySystem->writeValue_Forward(0, status);
   relaySystem->writeValue_Reverse(0, status);
 
   // PWM Setup
-  pwmSystem = tPWM::create(status);
+  pwmSystem.reset(tPWM::create(status));
 
   // Make sure that the 9403 IONode has had a chance to initialize before
   // continuing.
@@ -74,13 +69,22 @@ void initializeDigital(int32_t* status) {
       (kDefaultPwmCenter - kDefaultPwmStepsDown * loopTime) / loopTime + .5);
   pwmSystem->writeConfig_MinHigh(minHigh, status);
   // Ensure that PWM output values are set to OFF
-  for (uint32_t pwm_index = 0; pwm_index < kPwmPins; pwm_index++) {
-    // Initialize port structure
-    DigitalPort digital_port;
-    digital_port.pin = pwm_index;
+  for (uint8_t pwm_index = 0; pwm_index < kNumPWMPins; pwm_index++) {
+    // Copy of SetPWM
+    if (pwm_index < tPWM::kNumHdrRegisters) {
+      pwmSystem->writeHdr(pwm_index, kPwmDisabled, status);
+    } else {
+      pwmSystem->writeMXP(pwm_index - tPWM::kNumHdrRegisters, kPwmDisabled,
+                          status);
+    }
 
-    setPWM(&digital_port, kPwmDisabled, status);
-    setPWMPeriodScale(&digital_port, 3, status);  // Set all to 4x by default.
+    // Copy of SetPWMPeriodScale, set to 4x by default.
+    if (pwm_index < tPWM::kNumPeriodScaleHdrElements) {
+      pwmSystem->writePeriodScaleHdr(pwm_index, 3, status);
+    } else {
+      pwmSystem->writePeriodScaleMXP(
+          pwm_index - tPWM::kNumPeriodScaleHdrElements, 3, status);
+    }
   }
 
   digitalSystemsInitialized = true;
@@ -90,9 +94,9 @@ void initializeDigital(int32_t* status) {
  * Map DIO pin numbers from their physical number (10 to 26) to their position
  * in the bit field.
  */
-uint32_t remapMXPChannel(uint32_t pin) { return pin - 10; }
+int32_t remapMXPChannel(int32_t pin) { return pin - 10; }
 
-uint32_t remapMXPPWMChannel(uint32_t pin) {
+int32_t remapMXPPWMChannel(int32_t pin) {
   if (pin < 14) {
     return pin - 10;  // first block of 4 pwms (MXP 0-3)
   } else {
@@ -105,17 +109,29 @@ uint32_t remapMXPPWMChannel(uint32_t pin) {
  * If it's an analog trigger, determine the module from the high order routing
  * channel else do normal digital input remapping based on pin number (MXP)
  */
-extern "C++" void remapDigitalSource(bool analogTrigger, uint32_t& pin,
-                                     uint8_t& module) {
-  if (analogTrigger) {
+bool remapDigitalSource(HAL_Handle digitalSourceHandle,
+                        HAL_AnalogTriggerType analogTriggerType, uint8_t& pin,
+                        uint8_t& module, bool& analogTrigger) {
+  if (isHandleType(digitalSourceHandle, HAL_HandleEnum::AnalogTrigger)) {
+    // If handle passed, index is not negative
+    int32_t index = getHandleIndex(digitalSourceHandle);
+    pin = (index << 2) + analogTriggerType;
     module = pin >> 4;
-  } else {
-    if (pin >= kNumHeaders) {
-      pin = remapMXPChannel(pin);
+    analogTrigger = true;
+    return true;
+  } else if (isHandleType(digitalSourceHandle, HAL_HandleEnum::DIO)) {
+    int32_t index = getHandleIndex(digitalSourceHandle);
+    if (index >= kNumDigitalHeaders) {
+      pin = remapMXPChannel(index);
       module = 1;
     } else {
+      pin = index;
       module = 0;
     }
+    analogTrigger = false;
+    return true;
+  } else {
+    return false;
   }
 }
-}
+}  // namespace hal

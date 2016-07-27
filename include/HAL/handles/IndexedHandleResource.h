@@ -12,14 +12,13 @@
 #include <memory>
 #include <vector>
 
-#include "HAL/Handles.h"
+#include "HAL/Errors.h"
+#include "HAL/Types.h"
+#include "HAL/cpp/make_unique.h"
 #include "HAL/cpp/priority_mutex.h"
-#include "HandlesInternal.h"
+#include "HAL/handles/HandlesInternal.h"
 
 namespace hal {
-  
-constexpr int32_t HandleIndexOutOfRange = -1;
-constexpr int32_t HandleAlreadyAllocated = -2;
 
 /**
  * The IndexedHandleResource class is a way to track handles. This version
@@ -27,66 +26,75 @@ constexpr int32_t HandleAlreadyAllocated = -2;
  * Because they are allocated by index, each individual index holds its own
  * mutex, which reduces contention heavily.]
  *
- * @tparam THandle The Handle Type (Must be typedefed from HalHandle)
+ * @tparam THandle The Handle Type (Must be typedefed from HAL_Handle)
  * @tparam TStruct The struct type held by this resource
  * @tparam size The number of resources allowed to be allocated
  * @tparam enumValue The type value stored in the handle
  *
  */
 template <typename THandle, typename TStruct, int16_t size,
-          HalHandleEnum enumValue>
+          HAL_HandleEnum enumValue>
 class IndexedHandleResource {
   friend class IndexedHandleResourceTest;
 
  public:
   IndexedHandleResource(const IndexedHandleResource&) = delete;
   IndexedHandleResource operator=(const IndexedHandleResource&) = delete;
-  IndexedHandleResource() = default;
-  THandle Allocate(int16_t index, int32_t *status);
+  IndexedHandleResource();
+  THandle Allocate(int16_t index, int32_t* status);
   std::shared_ptr<TStruct> Get(THandle handle);
   void Free(THandle handle);
 
  private:
-  std::shared_ptr<TStruct> m_structures[size];
-  priority_mutex m_handleMutexes[size];
+  // Dynamic array to shrink HAL file size.
+  std::unique_ptr<std::shared_ptr<TStruct>[]> m_structures;
+  std::unique_ptr<priority_mutex[]> m_handleMutexes;
 };
 
 template <typename THandle, typename TStruct, int16_t size,
-          HalHandleEnum enumValue>
+          HAL_HandleEnum enumValue>
+IndexedHandleResource<THandle, TStruct, size,
+                      enumValue>::IndexedHandleResource() {
+  m_structures = std::make_unique<std::shared_ptr<TStruct>[]>(size);
+  m_handleMutexes = std::make_unique<priority_mutex[]>(size);
+}
+
+template <typename THandle, typename TStruct, int16_t size,
+          HAL_HandleEnum enumValue>
 THandle IndexedHandleResource<THandle, TStruct, size, enumValue>::Allocate(
-    int16_t index, int32_t *status) {
-  *status = 0;
+    int16_t index, int32_t* status) {
   // don't aquire the lock if we can fail early.
   if (index < 0 || index >= size) {
-    *status = HandleIndexOutOfRange;
-    return HAL_HANDLE_INDEX_OUT_OF_RANGE;
+    *status = RESOURCE_OUT_OF_RANGE;
+    return HAL_kInvalidHandle;
   }
   std::lock_guard<priority_mutex> sync(m_handleMutexes[index]);
   // check for allocation, otherwise allocate and return a valid handle
   if (m_structures[index] != nullptr) {
-    *status = HandleAlreadyAllocated;
-    return HAL_HANDLE_ALREADY_ALLOCATED;
+    *status = RESOURCE_IS_ALLOCATED;
+    return HAL_kInvalidHandle;
   }
   m_structures[index] = std::make_shared<TStruct>();
   return (THandle)hal::createHandle(index, enumValue);
 }
 
 template <typename THandle, typename TStruct, int16_t size,
-          HalHandleEnum enumValue>
-std::shared_ptr<TStruct> IndexedHandleResource<THandle, TStruct, size, enumValue>::Get(
-    THandle handle) {
+          HAL_HandleEnum enumValue>
+std::shared_ptr<TStruct>
+IndexedHandleResource<THandle, TStruct, size, enumValue>::Get(THandle handle) {
   // get handle index, and fail early if index out of range or wrong handle
   int16_t index = getHandleTypedIndex(handle, enumValue);
   if (index < 0 || index >= size) {
     return nullptr;
   }
   std::lock_guard<priority_mutex> sync(m_handleMutexes[index]);
-  // return structure. Null will propogate correctly, so no need to manually check.
+  // return structure. Null will propogate correctly, so no need to manually
+  // check.
   return m_structures[index];
 }
 
 template <typename THandle, typename TStruct, int16_t size,
-          HalHandleEnum enumValue>
+          HAL_HandleEnum enumValue>
 void IndexedHandleResource<THandle, TStruct, size, enumValue>::Free(
     THandle handle) {
   // get handle index, and fail early if index out of range or wrong handle
@@ -96,4 +104,4 @@ void IndexedHandleResource<THandle, TStruct, size, enumValue>::Free(
   std::lock_guard<priority_mutex> sync(m_handleMutexes[index]);
   m_structures[index].reset();
 }
-}
+}  // namespace hal
