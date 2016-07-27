@@ -14,8 +14,8 @@
 #ifndef __FRC_COMM_H__
 #define __FRC_COMM_H__
 
-#ifdef WIN32
-# include <vxWorks_compat.h>
+#ifdef _WIN32
+# include <Windows.h>
 #ifdef USE_THRIFT
 #  define EXPORT_FUNC
 # else

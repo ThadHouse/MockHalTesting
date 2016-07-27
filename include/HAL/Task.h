@@ -7,6 +7,8 @@
 
 #pragma once
 
+#ifndef _WIN32
+
 #include <pthread.h>
 #include <stdint.h>
 
@@ -37,4 +39,5 @@ STATUS HAL_SetTaskPriority(TASK task, int priority);  // valid priority [1..99]
 STATUS HAL_GetTaskPriority(TASK task, int* priority);
 #ifdef __cplusplus
 }
+#endif
 #endif
