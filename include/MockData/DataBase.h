@@ -10,6 +10,6 @@ class DataBase {
  public:
   virtual void ResetData() = 0;
  protected:
-  virtual void OnPropertyChangedName(HAL_Value* value, const char* propertyName);
+  virtual void OnPropertyChangedName(HAL_Value* value, const char* propertyName) = 0;
 };
 }

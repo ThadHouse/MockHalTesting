@@ -1,13 +1,6 @@
 #pragma once
 
-#include <cassert>
-#include <memory>
-#include <string>
-#include <type_traits>
-#include <vector>
-
 #include "MockData/llvm/StringRef.h"
-#include "HAL_String.h"
 #include "HAL/Types.h"
 
 /** HAL data types. */
@@ -22,7 +15,6 @@ enum HAL_Type {
 
 /** HAL Entry Value.  Note this is a typed union. */
 struct HAL_Value {
-  enum HAL_Type type;
   union {
     HAL_Bool v_boolean;
     int32_t v_enum;
@@ -30,6 +22,7 @@ struct HAL_Value {
     int64_t v_long;
     double v_double;
   } data;
+  enum HAL_Type type;
 };
 
 inline HAL_Value MakeBoolean(HAL_Bool v) {
