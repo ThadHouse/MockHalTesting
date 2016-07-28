@@ -1,25 +1,22 @@
 #include "AccelerometerDataInternal.h"
 
-#include <memory>
-
 using namespace hal;
 
-static std::unique_ptr<AccelerometerData> accelData = std::make_unique<AccelerometerData>();
-
+std::unique_ptr<std::shared_ptr<AccelerometerData>[]> hal::SimAccelerometerData = std::make_unique<std::shared_ptr<AccelerometerData>[]>(1);
 void AccelerometerData::ResetData() {
   m_active = false;
   m_range = (HAL_AccelerometerRange)0;
-  m_x = 0;
-  m_y = 0;
-  m_z = 0;
+  m_x = 0.0;
+  m_y = 0.0;
+  m_z = 0.0;
 }
 
-bool AccelerometerData::GetActive() {
+HAL_Bool AccelerometerData::GetActive() {
   return m_active;
 }
 
-void AccelerometerData::SetActive(bool active) {
-  bool oldValue = m_active.exchange(active);
+void AccelerometerData::SetActive(HAL_Bool active) {
+  HAL_Bool oldValue = m_active.exchange(active);
   if (oldValue != active) {
     OnPropertyChanged(&MakeBoolean(active));
   }
@@ -34,4 +31,60 @@ void AccelerometerData::SetRange(HAL_AccelerometerRange range) {
   if (oldValue != range) {
     OnPropertyChanged(&MakeEnum(range));
   }
+}
+
+double AccelerometerData::GetX() {
+  return m_x;
+}
+
+void AccelerometerData::SetX(double x) {
+  double oldValue = m_x.exchange(x);
+  if (oldValue != x) {
+    OnPropertyChanged(&MakeDouble(x));
+  }
+}
+
+double AccelerometerData::GetY() {
+  return m_y;
+}
+
+void AccelerometerData::SetY(double y) {
+  double oldValue = m_y.exchange(y);
+  if (oldValue != y) {
+    OnPropertyChanged(&MakeDouble(y));
+  }
+}
+
+double AccelerometerData::GetZ() {
+  return m_z;
+}
+
+void AccelerometerData::SetZ(double z) {
+  double oldValue = m_z.exchange(z);
+  if (oldValue != z) {
+    OnPropertyChanged(&MakeDouble(z));
+  }
+}
+
+extern "C" {
+HAL_Bool HALSIM_GetAccelerometerActive(int32_t index) {
+  return SimAccelerometerData[index]->GetActive();
+}
+
+HAL_AccelerometerRange HALSIM_GetAccelerometerRange(int32_t index) {
+  return SimAccelerometerData[index]->GetRange();
+}
+
+double HALSIM_GetAccelerometerX(int32_t index) {
+  return SimAccelerometerData[index]->GetX();
+}
+
+double HALSIM_GetAccelerometerY(int32_t index) {
+  return SimAccelerometerData[index]->GetY();
+}
+
+double HALSIM_GetAccelerometerZ(int32_t index) {
+  return SimAccelerometerData[index]->GetZ();
+}
+
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "HALValue.h"
+#include "HAL_Value.h"
 
 #define OnPropertyChanged(context) \
   OnPropertyChangedName((context), __func__)

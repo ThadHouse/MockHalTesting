@@ -1,24 +1,22 @@
 #pragma once
 
-#include <atomic>
-
-#include "HAL/Accelerometer.h"
+#include "HAL/HAL.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-HAL_Bool HALSIM_GetAcceleromterActive(void);
-HAL_AccelerometerRange HALSIM_GetAccelerometerRange(void);
-double HALSIM_GetAccelerometerX(void);
-double HALSIM_GetAccelerometerY(void);
-double HALSIM_GetAccelerometerZ(void);
+HAL_Bool HALSIM_GetAccelerometerActive(int32_t index);
 
-void HALSIM_SetAccelerometerX(double x);
-void HALSIM_SetAccelerometerY(double y);
-void HALSIM_SetAccelerometerZ(double z);
+HAL_AccelerometerRange HALSIM_GetAccelerometerRange(int32_t index);
 
+double HALSIM_GetAccelerometerX(int32_t index);
+
+double HALSIM_GetAccelerometerY(int32_t index);
+
+double HALSIM_GetAccelerometerZ(int32_t index);
 
 #ifdef __cplusplus
 }
 #endif
+
