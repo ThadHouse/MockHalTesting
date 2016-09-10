@@ -82,6 +82,8 @@ fabric.properties
 # modules.xml
 
 
+
+
 ### Eclipse ###
 
 .metadata
@@ -169,6 +171,10 @@ nbactions.xml
 *.la
 *.a
 *.lib
+
+!libraries/windows/*
+
+!libraries/windows/FRC_NetworkCommunication.lib
 
 # Executables
 *.exe
