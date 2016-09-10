@@ -24,12 +24,12 @@ void SPIAccelerometerData::SetActive(HAL_Bool active) {
   }
 }
 
-uint8_t SPIAccelerometerData::GetRange() {
+uint32_t SPIAccelerometerData::GetRange() {
   return m_range;
 }
 
-void SPIAccelerometerData::SetRange(uint8_t range) {
-  uint8_t oldValue = m_range.exchange(range);
+void SPIAccelerometerData::SetRange(uint32_t range) {
+  uint32_t oldValue = m_range.exchange(range);
   if (oldValue != range) {
     OnPropertyChanged(&MakeEnum(range));
   }
@@ -73,7 +73,7 @@ HAL_Bool HALSIM_GetSPIAccelerometerActive(int32_t index) {
   return SimSPIAccelerometerData[index]->GetActive();
 }
 
-uint8_t HALSIM_GetSPIAccelerometerRange(int32_t index) {
+uint32_t HALSIM_GetSPIAccelerometerRange(int32_t index) {
   return SimSPIAccelerometerData[index]->GetRange();
 }
 
@@ -81,12 +81,24 @@ double HALSIM_GetSPIAccelerometerX(int32_t index) {
   return SimSPIAccelerometerData[index]->GetX();
 }
 
+void HALSIM_SetSPIAccelerometerX(int32_t index, double x) {
+  SimSPIAccelerometerData[index]->SetX(x);
+}
+
 double HALSIM_GetSPIAccelerometerY(int32_t index) {
   return SimSPIAccelerometerData[index]->GetY();
 }
 
+void HALSIM_SetSPIAccelerometerY(int32_t index, double y) {
+  SimSPIAccelerometerData[index]->SetY(y);
+}
+
 double HALSIM_GetSPIAccelerometerZ(int32_t index) {
   return SimSPIAccelerometerData[index]->GetZ();
+}
+
+void HALSIM_SetSPIAccelerometerZ(int32_t index, double z) {
+  SimSPIAccelerometerData[index]->SetZ(z);
 }
 
 }

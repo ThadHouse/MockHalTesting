@@ -193,60 +193,120 @@ HAL_Bool HALSIM_GetRoboRioFPGAButton(int32_t index) {
   return SimRoboRioData[index]->GetFPGAButton();
 }
 
+void HALSIM_SetRoboRioFPGAButton(int32_t index, HAL_Bool fPGAButton) {
+  SimRoboRioData[index]->SetFPGAButton(fPGAButton);
+}
+
 double HALSIM_GetRoboRioVInVoltage(int32_t index) {
   return SimRoboRioData[index]->GetVInVoltage();
+}
+
+void HALSIM_SetRoboRioVInVoltage(int32_t index, double vInVoltage) {
+  SimRoboRioData[index]->SetVInVoltage(vInVoltage);
 }
 
 double HALSIM_GetRoboRioVInCurrent(int32_t index) {
   return SimRoboRioData[index]->GetVInCurrent();
 }
 
+void HALSIM_SetRoboRioVInCurrent(int32_t index, double vInCurrent) {
+  SimRoboRioData[index]->SetVInCurrent(vInCurrent);
+}
+
 double HALSIM_GetRoboRioUserVoltage6V(int32_t index) {
   return SimRoboRioData[index]->GetUserVoltage6V();
+}
+
+void HALSIM_SetRoboRioUserVoltage6V(int32_t index, double userVoltage6V) {
+  SimRoboRioData[index]->SetUserVoltage6V(userVoltage6V);
 }
 
 double HALSIM_GetRoboRioUserCurrent6V(int32_t index) {
   return SimRoboRioData[index]->GetUserCurrent6V();
 }
 
+void HALSIM_SetRoboRioUserCurrent6V(int32_t index, double userCurrent6V) {
+  SimRoboRioData[index]->SetUserCurrent6V(userCurrent6V);
+}
+
 HAL_Bool HALSIM_GetRoboRioUserActive6V(int32_t index) {
   return SimRoboRioData[index]->GetUserActive6V();
+}
+
+void HALSIM_SetRoboRioUserActive6V(int32_t index, HAL_Bool userActive6V) {
+  SimRoboRioData[index]->SetUserActive6V(userActive6V);
 }
 
 double HALSIM_GetRoboRioUserVoltage5V(int32_t index) {
   return SimRoboRioData[index]->GetUserVoltage5V();
 }
 
+void HALSIM_SetRoboRioUserVoltage5V(int32_t index, double userVoltage5V) {
+  SimRoboRioData[index]->SetUserVoltage5V(userVoltage5V);
+}
+
 double HALSIM_GetRoboRioUserCurrent5V(int32_t index) {
   return SimRoboRioData[index]->GetUserCurrent5V();
+}
+
+void HALSIM_SetRoboRioUserCurrent5V(int32_t index, double userCurrent5V) {
+  SimRoboRioData[index]->SetUserCurrent5V(userCurrent5V);
 }
 
 HAL_Bool HALSIM_GetRoboRioUserActive5V(int32_t index) {
   return SimRoboRioData[index]->GetUserActive5V();
 }
 
+void HALSIM_SetRoboRioUserActive5V(int32_t index, HAL_Bool userActive5V) {
+  SimRoboRioData[index]->SetUserActive5V(userActive5V);
+}
+
 double HALSIM_GetRoboRioUserVoltage3V3(int32_t index) {
   return SimRoboRioData[index]->GetUserVoltage3V3();
+}
+
+void HALSIM_SetRoboRioUserVoltage3V3(int32_t index, double userVoltage3V3) {
+  SimRoboRioData[index]->SetUserVoltage3V3(userVoltage3V3);
 }
 
 double HALSIM_GetRoboRioUserCurrent3V3(int32_t index) {
   return SimRoboRioData[index]->GetUserCurrent3V3();
 }
 
+void HALSIM_SetRoboRioUserCurrent3V3(int32_t index, double userCurrent3V3) {
+  SimRoboRioData[index]->SetUserCurrent3V3(userCurrent3V3);
+}
+
 HAL_Bool HALSIM_GetRoboRioUserActive3V3(int32_t index) {
   return SimRoboRioData[index]->GetUserActive3V3();
+}
+
+void HALSIM_SetRoboRioUserActive3V3(int32_t index, HAL_Bool userActive3V3) {
+  SimRoboRioData[index]->SetUserActive3V3(userActive3V3);
 }
 
 int32_t HALSIM_GetRoboRioUserFaults6V(int32_t index) {
   return SimRoboRioData[index]->GetUserFaults6V();
 }
 
+void HALSIM_SetRoboRioUserFaults6V(int32_t index, int32_t userFaults6V) {
+  SimRoboRioData[index]->SetUserFaults6V(userFaults6V);
+}
+
 int32_t HALSIM_GetRoboRioUserFaults5V(int32_t index) {
   return SimRoboRioData[index]->GetUserFaults5V();
 }
 
+void HALSIM_SetRoboRioUserFaults5V(int32_t index, int32_t userFaults5V) {
+  SimRoboRioData[index]->SetUserFaults5V(userFaults5V);
+}
+
 int32_t HALSIM_GetRoboRioUserFaults3V3(int32_t index) {
   return SimRoboRioData[index]->GetUserFaults3V3();
+}
+
+void HALSIM_SetRoboRioUserFaults3V3(int32_t index, int32_t userFaults3V3) {
+  SimRoboRioData[index]->SetUserFaults3V3(userFaults3V3);
 }
 
 }

@@ -9,10 +9,13 @@ extern "C" {
 bool HALSIM_GetPWMInitialized(int32_t index);
 
 int HALSIM_GetPWMRawValue(int32_t index);
+void HALSIM_SetPWMRawValue(int32_t index, int rawValue);
 
 double HALSIM_GetPWMSpeed(int32_t index);
+void HALSIM_SetPWMSpeed(int32_t index, double speed);
 
 double HALSIM_GetPWMPosition(int32_t index);
+void HALSIM_SetPWMPosition(int32_t index, double position);
 
 int HALSIM_GetPWMPeriodScale(int32_t index);
 

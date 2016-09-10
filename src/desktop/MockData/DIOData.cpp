@@ -78,6 +78,10 @@ HAL_Bool HALSIM_GetDIOValue(int32_t index) {
   return SimDIOData[index]->GetValue();
 }
 
+void HALSIM_SetDIOValue(int32_t index, HAL_Bool value) {
+  SimDIOData[index]->SetValue(value);
+}
+
 double HALSIM_GetDIOPulseLength(int32_t index) {
   return SimDIOData[index]->GetPulseLength();
 }

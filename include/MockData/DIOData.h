@@ -9,6 +9,7 @@ extern "C" {
 HAL_Bool HALSIM_GetDIOInitialized(int32_t index);
 
 HAL_Bool HALSIM_GetDIOValue(int32_t index);
+void HALSIM_SetDIOValue(int32_t index, HAL_Bool value);
 
 double HALSIM_GetDIOPulseLength(int32_t index);
 

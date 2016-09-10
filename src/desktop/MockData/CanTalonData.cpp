@@ -914,300 +914,600 @@ double HALSIM_GetCanTalonProfileParamSlot0_P(int32_t index) {
   return SimCanTalonData[index]->GetProfileParamSlot0_P();
 }
 
+void HALSIM_SetCanTalonProfileParamSlot0_P(int32_t index, double profileParamSlot0_P) {
+  SimCanTalonData[index]->SetProfileParamSlot0_P(profileParamSlot0_P);
+}
+
 double HALSIM_GetCanTalonProfileParamSlot0_I(int32_t index) {
   return SimCanTalonData[index]->GetProfileParamSlot0_I();
+}
+
+void HALSIM_SetCanTalonProfileParamSlot0_I(int32_t index, double profileParamSlot0_I) {
+  SimCanTalonData[index]->SetProfileParamSlot0_I(profileParamSlot0_I);
 }
 
 double HALSIM_GetCanTalonProfileParamSlot0_D(int32_t index) {
   return SimCanTalonData[index]->GetProfileParamSlot0_D();
 }
 
+void HALSIM_SetCanTalonProfileParamSlot0_D(int32_t index, double profileParamSlot0_D) {
+  SimCanTalonData[index]->SetProfileParamSlot0_D(profileParamSlot0_D);
+}
+
 double HALSIM_GetCanTalonProfileParamSlot0_F(int32_t index) {
   return SimCanTalonData[index]->GetProfileParamSlot0_F();
+}
+
+void HALSIM_SetCanTalonProfileParamSlot0_F(int32_t index, double profileParamSlot0_F) {
+  SimCanTalonData[index]->SetProfileParamSlot0_F(profileParamSlot0_F);
 }
 
 int32_t HALSIM_GetCanTalonProfileParamSlot0_IZone(int32_t index) {
   return SimCanTalonData[index]->GetProfileParamSlot0_IZone();
 }
 
+void HALSIM_SetCanTalonProfileParamSlot0_IZone(int32_t index, int32_t profileParamSlot0_IZone) {
+  SimCanTalonData[index]->SetProfileParamSlot0_IZone(profileParamSlot0_IZone);
+}
+
 int32_t HALSIM_GetCanTalonProfileParamSlot0_CloseLoopRampRate(int32_t index) {
   return SimCanTalonData[index]->GetProfileParamSlot0_CloseLoopRampRate();
+}
+
+void HALSIM_SetCanTalonProfileParamSlot0_CloseLoopRampRate(int32_t index, int32_t profileParamSlot0_CloseLoopRampRate) {
+  SimCanTalonData[index]->SetProfileParamSlot0_CloseLoopRampRate(profileParamSlot0_CloseLoopRampRate);
 }
 
 double HALSIM_GetCanTalonProfileParamSlot1_P(int32_t index) {
   return SimCanTalonData[index]->GetProfileParamSlot1_P();
 }
 
+void HALSIM_SetCanTalonProfileParamSlot1_P(int32_t index, double profileParamSlot1_P) {
+  SimCanTalonData[index]->SetProfileParamSlot1_P(profileParamSlot1_P);
+}
+
 double HALSIM_GetCanTalonProfileParamSlot1_I(int32_t index) {
   return SimCanTalonData[index]->GetProfileParamSlot1_I();
+}
+
+void HALSIM_SetCanTalonProfileParamSlot1_I(int32_t index, double profileParamSlot1_I) {
+  SimCanTalonData[index]->SetProfileParamSlot1_I(profileParamSlot1_I);
 }
 
 double HALSIM_GetCanTalonProfileParamSlot1_D(int32_t index) {
   return SimCanTalonData[index]->GetProfileParamSlot1_D();
 }
 
+void HALSIM_SetCanTalonProfileParamSlot1_D(int32_t index, double profileParamSlot1_D) {
+  SimCanTalonData[index]->SetProfileParamSlot1_D(profileParamSlot1_D);
+}
+
 double HALSIM_GetCanTalonProfileParamSlot1_F(int32_t index) {
   return SimCanTalonData[index]->GetProfileParamSlot1_F();
+}
+
+void HALSIM_SetCanTalonProfileParamSlot1_F(int32_t index, double profileParamSlot1_F) {
+  SimCanTalonData[index]->SetProfileParamSlot1_F(profileParamSlot1_F);
 }
 
 int32_t HALSIM_GetCanTalonProfileParamSlot1_IZone(int32_t index) {
   return SimCanTalonData[index]->GetProfileParamSlot1_IZone();
 }
 
+void HALSIM_SetCanTalonProfileParamSlot1_IZone(int32_t index, int32_t profileParamSlot1_IZone) {
+  SimCanTalonData[index]->SetProfileParamSlot1_IZone(profileParamSlot1_IZone);
+}
+
 int32_t HALSIM_GetCanTalonProfileParamSlot1_CloseLoopRampRate(int32_t index) {
   return SimCanTalonData[index]->GetProfileParamSlot1_CloseLoopRampRate();
+}
+
+void HALSIM_SetCanTalonProfileParamSlot1_CloseLoopRampRate(int32_t index, int32_t profileParamSlot1_CloseLoopRampRate) {
+  SimCanTalonData[index]->SetProfileParamSlot1_CloseLoopRampRate(profileParamSlot1_CloseLoopRampRate);
 }
 
 double HALSIM_GetCanTalonProfileParamSoftLimitForThreshold(int32_t index) {
   return SimCanTalonData[index]->GetProfileParamSoftLimitForThreshold();
 }
 
+void HALSIM_SetCanTalonProfileParamSoftLimitForThreshold(int32_t index, double profileParamSoftLimitForThreshold) {
+  SimCanTalonData[index]->SetProfileParamSoftLimitForThreshold(profileParamSoftLimitForThreshold);
+}
+
 double HALSIM_GetCanTalonProfileParamSoftLimitRevThreshold(int32_t index) {
   return SimCanTalonData[index]->GetProfileParamSoftLimitRevThreshold();
+}
+
+void HALSIM_SetCanTalonProfileParamSoftLimitRevThreshold(int32_t index, double profileParamSoftLimitRevThreshold) {
+  SimCanTalonData[index]->SetProfileParamSoftLimitRevThreshold(profileParamSoftLimitRevThreshold);
 }
 
 double HALSIM_GetCanTalonProfileParamSoftLimitForEnable(int32_t index) {
   return SimCanTalonData[index]->GetProfileParamSoftLimitForEnable();
 }
 
+void HALSIM_SetCanTalonProfileParamSoftLimitForEnable(int32_t index, double profileParamSoftLimitForEnable) {
+  SimCanTalonData[index]->SetProfileParamSoftLimitForEnable(profileParamSoftLimitForEnable);
+}
+
 double HALSIM_GetCanTalonProfileParamSoftLimitRevEnable(int32_t index) {
   return SimCanTalonData[index]->GetProfileParamSoftLimitRevEnable();
+}
+
+void HALSIM_SetCanTalonProfileParamSoftLimitRevEnable(int32_t index, double profileParamSoftLimitRevEnable) {
+  SimCanTalonData[index]->SetProfileParamSoftLimitRevEnable(profileParamSoftLimitRevEnable);
 }
 
 double HALSIM_GetCanTalonOnBoot_BrakeMode(int32_t index) {
   return SimCanTalonData[index]->GetOnBoot_BrakeMode();
 }
 
+void HALSIM_SetCanTalonOnBoot_BrakeMode(int32_t index, double onBoot_BrakeMode) {
+  SimCanTalonData[index]->SetOnBoot_BrakeMode(onBoot_BrakeMode);
+}
+
 double HALSIM_GetCanTalonOnBoot_LimitSwitch_Forward_NormallyClosed(int32_t index) {
   return SimCanTalonData[index]->GetOnBoot_LimitSwitch_Forward_NormallyClosed();
+}
+
+void HALSIM_SetCanTalonOnBoot_LimitSwitch_Forward_NormallyClosed(int32_t index, double onBoot_LimitSwitch_Forward_NormallyClosed) {
+  SimCanTalonData[index]->SetOnBoot_LimitSwitch_Forward_NormallyClosed(onBoot_LimitSwitch_Forward_NormallyClosed);
 }
 
 double HALSIM_GetCanTalonOnBoot_LimitSwitch_Reverse_NormallyClosed(int32_t index) {
   return SimCanTalonData[index]->GetOnBoot_LimitSwitch_Reverse_NormallyClosed();
 }
 
+void HALSIM_SetCanTalonOnBoot_LimitSwitch_Reverse_NormallyClosed(int32_t index, double onBoot_LimitSwitch_Reverse_NormallyClosed) {
+  SimCanTalonData[index]->SetOnBoot_LimitSwitch_Reverse_NormallyClosed(onBoot_LimitSwitch_Reverse_NormallyClosed);
+}
+
 double HALSIM_GetCanTalonOnBoot_LimitSwitch_Forward_Disable(int32_t index) {
   return SimCanTalonData[index]->GetOnBoot_LimitSwitch_Forward_Disable();
+}
+
+void HALSIM_SetCanTalonOnBoot_LimitSwitch_Forward_Disable(int32_t index, double onBoot_LimitSwitch_Forward_Disable) {
+  SimCanTalonData[index]->SetOnBoot_LimitSwitch_Forward_Disable(onBoot_LimitSwitch_Forward_Disable);
 }
 
 double HALSIM_GetCanTalonOnBoot_LimitSwitch_Reverse_Disable(int32_t index) {
   return SimCanTalonData[index]->GetOnBoot_LimitSwitch_Reverse_Disable();
 }
 
+void HALSIM_SetCanTalonOnBoot_LimitSwitch_Reverse_Disable(int32_t index, double onBoot_LimitSwitch_Reverse_Disable) {
+  SimCanTalonData[index]->SetOnBoot_LimitSwitch_Reverse_Disable(onBoot_LimitSwitch_Reverse_Disable);
+}
+
 double HALSIM_GetCanTalonFault_OverTemp(int32_t index) {
   return SimCanTalonData[index]->GetFault_OverTemp();
+}
+
+void HALSIM_SetCanTalonFault_OverTemp(int32_t index, double fault_OverTemp) {
+  SimCanTalonData[index]->SetFault_OverTemp(fault_OverTemp);
 }
 
 double HALSIM_GetCanTalonFault_UnderVoltage(int32_t index) {
   return SimCanTalonData[index]->GetFault_UnderVoltage();
 }
 
+void HALSIM_SetCanTalonFault_UnderVoltage(int32_t index, double fault_UnderVoltage) {
+  SimCanTalonData[index]->SetFault_UnderVoltage(fault_UnderVoltage);
+}
+
 double HALSIM_GetCanTalonFault_ForLim(int32_t index) {
   return SimCanTalonData[index]->GetFault_ForLim();
+}
+
+void HALSIM_SetCanTalonFault_ForLim(int32_t index, double fault_ForLim) {
+  SimCanTalonData[index]->SetFault_ForLim(fault_ForLim);
 }
 
 double HALSIM_GetCanTalonFault_RevLim(int32_t index) {
   return SimCanTalonData[index]->GetFault_RevLim();
 }
 
+void HALSIM_SetCanTalonFault_RevLim(int32_t index, double fault_RevLim) {
+  SimCanTalonData[index]->SetFault_RevLim(fault_RevLim);
+}
+
 double HALSIM_GetCanTalonFault_HardwareFailure(int32_t index) {
   return SimCanTalonData[index]->GetFault_HardwareFailure();
+}
+
+void HALSIM_SetCanTalonFault_HardwareFailure(int32_t index, double fault_HardwareFailure) {
+  SimCanTalonData[index]->SetFault_HardwareFailure(fault_HardwareFailure);
 }
 
 double HALSIM_GetCanTalonFault_ForSoftLim(int32_t index) {
   return SimCanTalonData[index]->GetFault_ForSoftLim();
 }
 
+void HALSIM_SetCanTalonFault_ForSoftLim(int32_t index, double fault_ForSoftLim) {
+  SimCanTalonData[index]->SetFault_ForSoftLim(fault_ForSoftLim);
+}
+
 double HALSIM_GetCanTalonFault_RevSoftLim(int32_t index) {
   return SimCanTalonData[index]->GetFault_RevSoftLim();
+}
+
+void HALSIM_SetCanTalonFault_RevSoftLim(int32_t index, double fault_RevSoftLim) {
+  SimCanTalonData[index]->SetFault_RevSoftLim(fault_RevSoftLim);
 }
 
 double HALSIM_GetCanTalonStckyFault_OverTemp(int32_t index) {
   return SimCanTalonData[index]->GetStckyFault_OverTemp();
 }
 
+void HALSIM_SetCanTalonStckyFault_OverTemp(int32_t index, double stckyFault_OverTemp) {
+  SimCanTalonData[index]->SetStckyFault_OverTemp(stckyFault_OverTemp);
+}
+
 double HALSIM_GetCanTalonStckyFault_UnderVoltage(int32_t index) {
   return SimCanTalonData[index]->GetStckyFault_UnderVoltage();
+}
+
+void HALSIM_SetCanTalonStckyFault_UnderVoltage(int32_t index, double stckyFault_UnderVoltage) {
+  SimCanTalonData[index]->SetStckyFault_UnderVoltage(stckyFault_UnderVoltage);
 }
 
 double HALSIM_GetCanTalonStckyFault_ForLim(int32_t index) {
   return SimCanTalonData[index]->GetStckyFault_ForLim();
 }
 
+void HALSIM_SetCanTalonStckyFault_ForLim(int32_t index, double stckyFault_ForLim) {
+  SimCanTalonData[index]->SetStckyFault_ForLim(stckyFault_ForLim);
+}
+
 double HALSIM_GetCanTalonStckyFault_RevLim(int32_t index) {
   return SimCanTalonData[index]->GetStckyFault_RevLim();
+}
+
+void HALSIM_SetCanTalonStckyFault_RevLim(int32_t index, double stckyFault_RevLim) {
+  SimCanTalonData[index]->SetStckyFault_RevLim(stckyFault_RevLim);
 }
 
 double HALSIM_GetCanTalonStckyFault_ForSoftLim(int32_t index) {
   return SimCanTalonData[index]->GetStckyFault_ForSoftLim();
 }
 
+void HALSIM_SetCanTalonStckyFault_ForSoftLim(int32_t index, double stckyFault_ForSoftLim) {
+  SimCanTalonData[index]->SetStckyFault_ForSoftLim(stckyFault_ForSoftLim);
+}
+
 double HALSIM_GetCanTalonStckyFault_RevSoftLim(int32_t index) {
   return SimCanTalonData[index]->GetStckyFault_RevSoftLim();
+}
+
+void HALSIM_SetCanTalonStckyFault_RevSoftLim(int32_t index, double stckyFault_RevSoftLim) {
+  SimCanTalonData[index]->SetStckyFault_RevSoftLim(stckyFault_RevSoftLim);
 }
 
 double HALSIM_GetCanTalonAppliedThrottle(int32_t index) {
   return SimCanTalonData[index]->GetAppliedThrottle();
 }
 
+void HALSIM_SetCanTalonAppliedThrottle(int32_t index, double appliedThrottle) {
+  SimCanTalonData[index]->SetAppliedThrottle(appliedThrottle);
+}
+
 double HALSIM_GetCanTalonCloseLoopErr(int32_t index) {
   return SimCanTalonData[index]->GetCloseLoopErr();
+}
+
+void HALSIM_SetCanTalonCloseLoopErr(int32_t index, double closeLoopErr) {
+  SimCanTalonData[index]->SetCloseLoopErr(closeLoopErr);
 }
 
 double HALSIM_GetCanTalonFeedbackDeviceSelect(int32_t index) {
   return SimCanTalonData[index]->GetFeedbackDeviceSelect();
 }
 
+void HALSIM_SetCanTalonFeedbackDeviceSelect(int32_t index, double feedbackDeviceSelect) {
+  SimCanTalonData[index]->SetFeedbackDeviceSelect(feedbackDeviceSelect);
+}
+
 HAL_Bool HALSIM_GetCanTalonRevMotDuringCloseLoopEn(int32_t index) {
   return SimCanTalonData[index]->GetRevMotDuringCloseLoopEn();
+}
+
+void HALSIM_SetCanTalonRevMotDuringCloseLoopEn(int32_t index, HAL_Bool revMotDuringCloseLoopEn) {
+  SimCanTalonData[index]->SetRevMotDuringCloseLoopEn(revMotDuringCloseLoopEn);
 }
 
 double HALSIM_GetCanTalonModeSelect(int32_t index) {
   return SimCanTalonData[index]->GetModeSelect();
 }
 
+void HALSIM_SetCanTalonModeSelect(int32_t index, double modeSelect) {
+  SimCanTalonData[index]->SetModeSelect(modeSelect);
+}
+
 double HALSIM_GetCanTalonProfileSlotSelect(int32_t index) {
   return SimCanTalonData[index]->GetProfileSlotSelect();
+}
+
+void HALSIM_SetCanTalonProfileSlotSelect(int32_t index, double profileSlotSelect) {
+  SimCanTalonData[index]->SetProfileSlotSelect(profileSlotSelect);
 }
 
 double HALSIM_GetCanTalonRampThrottle(int32_t index) {
   return SimCanTalonData[index]->GetRampThrottle();
 }
 
+void HALSIM_SetCanTalonRampThrottle(int32_t index, double rampThrottle) {
+  SimCanTalonData[index]->SetRampThrottle(rampThrottle);
+}
+
 HAL_Bool HALSIM_GetCanTalonRevFeedbackSensor(int32_t index) {
   return SimCanTalonData[index]->GetRevFeedbackSensor();
+}
+
+void HALSIM_SetCanTalonRevFeedbackSensor(int32_t index, HAL_Bool revFeedbackSensor) {
+  SimCanTalonData[index]->SetRevFeedbackSensor(revFeedbackSensor);
 }
 
 double HALSIM_GetCanTalonLimitSwitchEn(int32_t index) {
   return SimCanTalonData[index]->GetLimitSwitchEn();
 }
 
+void HALSIM_SetCanTalonLimitSwitchEn(int32_t index, double limitSwitchEn) {
+  SimCanTalonData[index]->SetLimitSwitchEn(limitSwitchEn);
+}
+
 HAL_Bool HALSIM_GetCanTalonLimitSwitchClosedFor(int32_t index) {
   return SimCanTalonData[index]->GetLimitSwitchClosedFor();
+}
+
+void HALSIM_SetCanTalonLimitSwitchClosedFor(int32_t index, HAL_Bool limitSwitchClosedFor) {
+  SimCanTalonData[index]->SetLimitSwitchClosedFor(limitSwitchClosedFor);
 }
 
 HAL_Bool HALSIM_GetCanTalonLimitSwitchClosedRev(int32_t index) {
   return SimCanTalonData[index]->GetLimitSwitchClosedRev();
 }
 
+void HALSIM_SetCanTalonLimitSwitchClosedRev(int32_t index, HAL_Bool limitSwitchClosedRev) {
+  SimCanTalonData[index]->SetLimitSwitchClosedRev(limitSwitchClosedRev);
+}
+
 double HALSIM_GetCanTalonSensorPosition(int32_t index) {
   return SimCanTalonData[index]->GetSensorPosition();
+}
+
+void HALSIM_SetCanTalonSensorPosition(int32_t index, double sensorPosition) {
+  SimCanTalonData[index]->SetSensorPosition(sensorPosition);
 }
 
 double HALSIM_GetCanTalonSensorVelocity(int32_t index) {
   return SimCanTalonData[index]->GetSensorVelocity();
 }
 
+void HALSIM_SetCanTalonSensorVelocity(int32_t index, double sensorVelocity) {
+  SimCanTalonData[index]->SetSensorVelocity(sensorVelocity);
+}
+
 double HALSIM_GetCanTalonCurrent(int32_t index) {
   return SimCanTalonData[index]->GetCurrent();
+}
+
+void HALSIM_SetCanTalonCurrent(int32_t index, double current) {
+  SimCanTalonData[index]->SetCurrent(current);
 }
 
 HAL_Bool HALSIM_GetCanTalonBrakeIsEnabled(int32_t index) {
   return SimCanTalonData[index]->GetBrakeIsEnabled();
 }
 
+void HALSIM_SetCanTalonBrakeIsEnabled(int32_t index, HAL_Bool brakeIsEnabled) {
+  SimCanTalonData[index]->SetBrakeIsEnabled(brakeIsEnabled);
+}
+
 double HALSIM_GetCanTalonEncPosition(int32_t index) {
   return SimCanTalonData[index]->GetEncPosition();
+}
+
+void HALSIM_SetCanTalonEncPosition(int32_t index, double encPosition) {
+  SimCanTalonData[index]->SetEncPosition(encPosition);
 }
 
 double HALSIM_GetCanTalonEncVel(int32_t index) {
   return SimCanTalonData[index]->GetEncVel();
 }
 
+void HALSIM_SetCanTalonEncVel(int32_t index, double encVel) {
+  SimCanTalonData[index]->SetEncVel(encVel);
+}
+
 double HALSIM_GetCanTalonEncIndexRiseEvents(int32_t index) {
   return SimCanTalonData[index]->GetEncIndexRiseEvents();
+}
+
+void HALSIM_SetCanTalonEncIndexRiseEvents(int32_t index, double encIndexRiseEvents) {
+  SimCanTalonData[index]->SetEncIndexRiseEvents(encIndexRiseEvents);
 }
 
 double HALSIM_GetCanTalonQuadApin(int32_t index) {
   return SimCanTalonData[index]->GetQuadApin();
 }
 
+void HALSIM_SetCanTalonQuadApin(int32_t index, double quadApin) {
+  SimCanTalonData[index]->SetQuadApin(quadApin);
+}
+
 double HALSIM_GetCanTalonQuadBpin(int32_t index) {
   return SimCanTalonData[index]->GetQuadBpin();
+}
+
+void HALSIM_SetCanTalonQuadBpin(int32_t index, double quadBpin) {
+  SimCanTalonData[index]->SetQuadBpin(quadBpin);
 }
 
 double HALSIM_GetCanTalonQuadIdxpin(int32_t index) {
   return SimCanTalonData[index]->GetQuadIdxpin();
 }
 
+void HALSIM_SetCanTalonQuadIdxpin(int32_t index, double quadIdxpin) {
+  SimCanTalonData[index]->SetQuadIdxpin(quadIdxpin);
+}
+
 double HALSIM_GetCanTalonAnalogInWithOv(int32_t index) {
   return SimCanTalonData[index]->GetAnalogInWithOv();
+}
+
+void HALSIM_SetCanTalonAnalogInWithOv(int32_t index, double analogInWithOv) {
+  SimCanTalonData[index]->SetAnalogInWithOv(analogInWithOv);
 }
 
 double HALSIM_GetCanTalonAnalogInVel(int32_t index) {
   return SimCanTalonData[index]->GetAnalogInVel();
 }
 
+void HALSIM_SetCanTalonAnalogInVel(int32_t index, double analogInVel) {
+  SimCanTalonData[index]->SetAnalogInVel(analogInVel);
+}
+
 double HALSIM_GetCanTalonTemp(int32_t index) {
   return SimCanTalonData[index]->GetTemp();
+}
+
+void HALSIM_SetCanTalonTemp(int32_t index, double temp) {
+  SimCanTalonData[index]->SetTemp(temp);
 }
 
 double HALSIM_GetCanTalonBatteryV(int32_t index) {
   return SimCanTalonData[index]->GetBatteryV();
 }
 
+void HALSIM_SetCanTalonBatteryV(int32_t index, double batteryV) {
+  SimCanTalonData[index]->SetBatteryV(batteryV);
+}
+
 double HALSIM_GetCanTalonResetCount(int32_t index) {
   return SimCanTalonData[index]->GetResetCount();
+}
+
+void HALSIM_SetCanTalonResetCount(int32_t index, double resetCount) {
+  SimCanTalonData[index]->SetResetCount(resetCount);
 }
 
 double HALSIM_GetCanTalonResetFlags(int32_t index) {
   return SimCanTalonData[index]->GetResetFlags();
 }
 
+void HALSIM_SetCanTalonResetFlags(int32_t index, double resetFlags) {
+  SimCanTalonData[index]->SetResetFlags(resetFlags);
+}
+
 double HALSIM_GetCanTalonFirmVers(int32_t index) {
   return SimCanTalonData[index]->GetFirmVers();
+}
+
+void HALSIM_SetCanTalonFirmVers(int32_t index, double firmVers) {
+  SimCanTalonData[index]->SetFirmVers(firmVers);
 }
 
 double HALSIM_GetCanTalonSettingsChanged(int32_t index) {
   return SimCanTalonData[index]->GetSettingsChanged();
 }
 
+void HALSIM_SetCanTalonSettingsChanged(int32_t index, double settingsChanged) {
+  SimCanTalonData[index]->SetSettingsChanged(settingsChanged);
+}
+
 double HALSIM_GetCanTalonQuadFilterEn(int32_t index) {
   return SimCanTalonData[index]->GetQuadFilterEn();
+}
+
+void HALSIM_SetCanTalonQuadFilterEn(int32_t index, double quadFilterEn) {
+  SimCanTalonData[index]->SetQuadFilterEn(quadFilterEn);
 }
 
 double HALSIM_GetCanTalonPidIaccum(int32_t index) {
   return SimCanTalonData[index]->GetPidIaccum();
 }
 
+void HALSIM_SetCanTalonPidIaccum(int32_t index, double pidIaccum) {
+  SimCanTalonData[index]->SetPidIaccum(pidIaccum);
+}
+
 double HALSIM_GetCanTalonAinPosition(int32_t index) {
   return SimCanTalonData[index]->GetAinPosition();
+}
+
+void HALSIM_SetCanTalonAinPosition(int32_t index, double ainPosition) {
+  SimCanTalonData[index]->SetAinPosition(ainPosition);
 }
 
 double HALSIM_GetCanTalonProfileParamSlot0_AllowableClosedLoopErr(int32_t index) {
   return SimCanTalonData[index]->GetProfileParamSlot0_AllowableClosedLoopErr();
 }
 
+void HALSIM_SetCanTalonProfileParamSlot0_AllowableClosedLoopErr(int32_t index, double profileParamSlot0_AllowableClosedLoopErr) {
+  SimCanTalonData[index]->SetProfileParamSlot0_AllowableClosedLoopErr(profileParamSlot0_AllowableClosedLoopErr);
+}
+
 double HALSIM_GetCanTalonProfileParamSlot1_AllowableClosedLoopErr(int32_t index) {
   return SimCanTalonData[index]->GetProfileParamSlot1_AllowableClosedLoopErr();
+}
+
+void HALSIM_SetCanTalonProfileParamSlot1_AllowableClosedLoopErr(int32_t index, double profileParamSlot1_AllowableClosedLoopErr) {
+  SimCanTalonData[index]->SetProfileParamSlot1_AllowableClosedLoopErr(profileParamSlot1_AllowableClosedLoopErr);
 }
 
 double HALSIM_GetCanTalonNumberEncoderCPR(int32_t index) {
   return SimCanTalonData[index]->GetNumberEncoderCPR();
 }
 
+void HALSIM_SetCanTalonNumberEncoderCPR(int32_t index, double numberEncoderCPR) {
+  SimCanTalonData[index]->SetNumberEncoderCPR(numberEncoderCPR);
+}
+
 double HALSIM_GetCanTalonNumberPotTurns(int32_t index) {
   return SimCanTalonData[index]->GetNumberPotTurns();
+}
+
+void HALSIM_SetCanTalonNumberPotTurns(int32_t index, double numberPotTurns) {
+  SimCanTalonData[index]->SetNumberPotTurns(numberPotTurns);
 }
 
 double HALSIM_GetCanTalonm_overrideLimitSwitch(int32_t index) {
   return SimCanTalonData[index]->Getm_overrideLimitSwitch();
 }
 
+void HALSIM_SetCanTalonm_overrideLimitSwitch(int32_t index, double m_overrideLimitSwitch) {
+  SimCanTalonData[index]->Setm_overrideLimitSwitch(m_overrideLimitSwitch);
+}
+
 double HALSIM_GetCanTalonm_overrideBrakeType(int32_t index) {
   return SimCanTalonData[index]->Getm_overrideBrakeType();
+}
+
+void HALSIM_SetCanTalonm_overrideBrakeType(int32_t index, double m_overrideBrakeType) {
+  SimCanTalonData[index]->Setm_overrideBrakeType(m_overrideBrakeType);
 }
 
 double HALSIM_GetCanTalonm_demand(int32_t index) {
   return SimCanTalonData[index]->Getm_demand();
 }
 
+void HALSIM_SetCanTalonm_demand(int32_t index, double m_demand) {
+  SimCanTalonData[index]->Setm_demand(m_demand);
+}
+
 double HALSIM_GetCanTalonm_percentVBusValue(int32_t index) {
   return SimCanTalonData[index]->Getm_percentVBusValue();
 }
 
+void HALSIM_SetCanTalonm_percentVBusValue(int32_t index, double m_percentVBusValue) {
+  SimCanTalonData[index]->Setm_percentVBusValue(m_percentVBusValue);
+}
+
 double HALSIM_GetCanTalonm_voltageCompensationRate(int32_t index) {
   return SimCanTalonData[index]->Getm_voltageCompensationRate();
+}
+
+void HALSIM_SetCanTalonm_voltageCompensationRate(int32_t index, double m_voltageCompensationRate) {
+  SimCanTalonData[index]->Setm_voltageCompensationRate(m_voltageCompensationRate);
 }
 
 }

@@ -1,5 +1,7 @@
 #include "AccelerometerDataInternal.h"
 
+#include "../PortsInternal.h"
+
 using namespace hal;
 
 std::unique_ptr<std::shared_ptr<AccelerometerData>[]> hal::SimAccelerometerData = std::make_unique<std::shared_ptr<AccelerometerData>[]>(1);
@@ -79,12 +81,24 @@ double HALSIM_GetAccelerometerX(int32_t index) {
   return SimAccelerometerData[index]->GetX();
 }
 
+void HALSIM_SetAccelerometerX(int32_t index, double x) {
+  SimAccelerometerData[index]->SetX(x);
+}
+
 double HALSIM_GetAccelerometerY(int32_t index) {
   return SimAccelerometerData[index]->GetY();
 }
 
+void HALSIM_SetAccelerometerY(int32_t index, double y) {
+  SimAccelerometerData[index]->SetY(y);
+}
+
 double HALSIM_GetAccelerometerZ(int32_t index) {
   return SimAccelerometerData[index]->GetZ();
+}
+
+void HALSIM_SetAccelerometerZ(int32_t index, double z) {
+  SimAccelerometerData[index]->SetZ(z);
 }
 
 }

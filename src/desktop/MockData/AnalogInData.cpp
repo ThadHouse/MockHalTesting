@@ -4,7 +4,7 @@
 
 using namespace hal;
 
-std::unique_ptr<std::shared_ptr<AnalogInData>[]> hal::SimAnalogInData = std::make_unique<std::shared_ptr<AnalogInData>[]>(kNumAnalogOutputs);
+std::unique_ptr<std::shared_ptr<AnalogInData>[]> hal::SimAnalogInData = std::make_unique<std::shared_ptr<AnalogInData>[]>(kNumAnalogInputs);
 void AnalogInData::ResetData() {
   m_initialized = false;
   m_averageBits = 7;
@@ -134,6 +134,10 @@ double HALSIM_GetAnalogInVoltage(int32_t index) {
   return SimAnalogInData[index]->GetVoltage();
 }
 
+void HALSIM_SetAnalogInVoltage(int32_t index, double voltage) {
+  SimAnalogInData[index]->SetVoltage(voltage);
+}
+
 HAL_Bool HALSIM_GetAnalogInAccumulatorInitialized(int32_t index) {
   return SimAnalogInData[index]->GetAccumulatorInitialized();
 }
@@ -142,8 +146,16 @@ int64_t HALSIM_GetAnalogInAccumulatorValue(int32_t index) {
   return SimAnalogInData[index]->GetAccumulatorValue();
 }
 
+void HALSIM_SetAnalogInAccumulatorValue(int32_t index, int64_t accumulatorValue) {
+  SimAnalogInData[index]->SetAccumulatorValue(accumulatorValue);
+}
+
 int64_t HALSIM_GetAnalogInAccumulatorCount(int32_t index) {
   return SimAnalogInData[index]->GetAccumulatorCount();
+}
+
+void HALSIM_SetAnalogInAccumulatorCount(int32_t index, int64_t accumulatorCount) {
+  SimAnalogInData[index]->SetAccumulatorCount(accumulatorCount);
 }
 
 int32_t HALSIM_GetAnalogInAccumlatorCenter(int32_t index) {

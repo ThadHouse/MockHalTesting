@@ -90,12 +90,24 @@ int HALSIM_GetPWMRawValue(int32_t index) {
   return SimPWMData[index]->GetRawValue();
 }
 
+void HALSIM_SetPWMRawValue(int32_t index, int rawValue) {
+  SimPWMData[index]->SetRawValue(rawValue);
+}
+
 double HALSIM_GetPWMSpeed(int32_t index) {
   return SimPWMData[index]->GetSpeed();
 }
 
+void HALSIM_SetPWMSpeed(int32_t index, double speed) {
+  SimPWMData[index]->SetSpeed(speed);
+}
+
 double HALSIM_GetPWMPosition(int32_t index) {
   return SimPWMData[index]->GetPosition();
+}
+
+void HALSIM_SetPWMPosition(int32_t index, double position) {
+  SimPWMData[index]->SetPosition(position);
 }
 
 int HALSIM_GetPWMPeriodScale(int32_t index) {

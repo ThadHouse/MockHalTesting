@@ -1,4 +1,5 @@
 #include "AnalogGyroDataInternal.h"
+
 #include "../PortsInternal.h"
 
 using namespace hal;
@@ -49,8 +50,16 @@ double HALSIM_GetAnalogGyroAngle(int32_t index) {
   return SimAnalogGyroData[index]->GetAngle();
 }
 
+void HALSIM_SetAnalogGyroAngle(int32_t index, double angle) {
+  SimAnalogGyroData[index]->SetAngle(angle);
+}
+
 double HALSIM_GetAnalogGyroRate(int32_t index) {
   return SimAnalogGyroData[index]->GetRate();
+}
+
+void HALSIM_SetAnalogGyroRate(int32_t index, double rate) {
+  SimAnalogGyroData[index]->SetRate(rate);
 }
 
 HAL_Bool HALSIM_GetAnalogGyroInitialized(int32_t index) {

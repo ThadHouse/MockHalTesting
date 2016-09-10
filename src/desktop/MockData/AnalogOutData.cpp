@@ -4,7 +4,7 @@
 
 using namespace hal;
 
-std::unique_ptr<std::shared_ptr<AnalogOutData>[]> hal::SimAnalogOutData = std::make_unique<std::shared_ptr<AnalogOutData>[]>(kNumAnalogInputs);
+std::unique_ptr<std::shared_ptr<AnalogOutData>[]> hal::SimAnalogOutData = std::make_unique<std::shared_ptr<AnalogOutData>[]>(kNumAnalogOutputs);
 void AnalogOutData::ResetData() {
   m_voltage = 0.0;
   m_initialized = 0.0;
