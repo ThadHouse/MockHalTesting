@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "MockData/AccelerometerData.h"
-#include "MockData/NotifyListener.h"
+#include "MockData/NotifyListenerVector.h"
 
 namespace hal {
 class AccelerometerData {
@@ -42,15 +42,15 @@ class AccelerometerData {
   virtual void ResetData();
  private:
   std::atomic<HAL_Bool> m_active = false;
-  std::shared_ptr<UidVector<NotifyListener>> m_activeCallbacks = nullptr;
+  std::shared_ptr<NotifyListenerVector> m_activeCallbacks = nullptr;
   std::atomic<HAL_AccelerometerRange> m_range = (HAL_AccelerometerRange)0;
-  std::shared_ptr<UidVector<NotifyListener>> m_rangeCallbacks = nullptr;
+  std::shared_ptr<NotifyListenerVector> m_rangeCallbacks = nullptr;
   std::atomic<double> m_x = 0.0;
-  std::shared_ptr<UidVector<NotifyListener>> m_xCallbacks = nullptr;
+  std::shared_ptr<NotifyListenerVector> m_xCallbacks = nullptr;
   std::atomic<double> m_y = 0.0;
-  std::shared_ptr<UidVector<NotifyListener>> m_yCallbacks = nullptr;
+  std::shared_ptr<NotifyListenerVector> m_yCallbacks = nullptr;
   std::atomic<double> m_z = 0.0;
-  std::shared_ptr<UidVector<NotifyListener>> m_zCallbacks = nullptr;
+  std::shared_ptr<NotifyListenerVector> m_zCallbacks = nullptr;
 };
 extern std::unique_ptr<std::shared_ptr<AccelerometerData>[]> SimAccelerometerData;
 }

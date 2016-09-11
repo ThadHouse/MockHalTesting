@@ -1,7 +1,6 @@
 #pragma once
 
 #include "HAL_Value.h"
-#include "UidVector.h"
 
 typedef void (*HAL_NotifyCallback)(const char* name, void* param, const struct HAL_Value *value);
 
