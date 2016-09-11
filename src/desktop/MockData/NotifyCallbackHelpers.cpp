@@ -2,16 +2,14 @@
 
 using namespace hal;
 
-std::shared_ptr<NotifyListenerVector> RegisterCallback(std::shared_ptr<NotifyListenerVector> currentVector, const char* name, HAL_NotifyCallback callback, void* param, const HAL_Value* value, int32_t* newUid) {
-  if (callback == nullptr) {
-    *newUid = -1;
-    return nullptr;
+std::shared_ptr<NotifyListenerVector> RegisterCallback(std::shared_ptr<NotifyListenerVector> currentVector, const char* name, HAL_NotifyCallback callback, void* param, int32_t* newUid) {
+  std::shared_ptr<NotifyListenerVector> newCallbacks;
+  if (currentVector == nullptr) {
+    newCallbacks = std::make_shared<NotifyListenerVector>();
+  } else {
+    newCallbacks = std::make_shared<NotifyListenerVector>(*currentVector);
   }
-  auto newCallbacks = std::make_shared<NotifyListenerVector>(*currentVector);
   *newUid = newCallbacks->emplace_back(param, callback);
-  if (value != nullptr) {
-    callback(name, param, value);
-  }
   return newCallbacks;
 }
 

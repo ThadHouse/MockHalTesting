@@ -7,6 +7,7 @@
 extern "C" {
 #endif
 
+void HALSIM_ResetAccelerometerData(int32_t index);
 int32_t HALSIM_RegisterAccelerometerActiveCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
 void HALSIM_CancelAccelerometerActiveCallback(int32_t index, int32_t uid);
 HAL_Bool HALSIM_GetAccelerometerActive(int32_t index);

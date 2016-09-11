@@ -11,39 +11,40 @@ class AccelerometerData {
  public:
   int32_t RegisterActiveCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
   void CancelActiveCallback(int32_t uid);
-  void InvokeActiveCallback(const HAL_Value* value);
+  void InvokeActiveCallback(HAL_Value value);
   HAL_Bool GetActive();
   void SetActive(HAL_Bool active);
 
   int32_t RegisterRangeCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
   void CancelRangeCallback(int32_t uid);
-  void InvokeRangeCallback(const HAL_Value* value);
+  void InvokeRangeCallback(HAL_Value value);
   HAL_AccelerometerRange GetRange();
   void SetRange(HAL_AccelerometerRange range);
 
   int32_t RegisterXCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
   void CancelXCallback(int32_t uid);
-  void InvokeXCallback(const HAL_Value* value);
+  void InvokeXCallback(HAL_Value value);
   double GetX();
   void SetX(double x);
 
   int32_t RegisterYCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
   void CancelYCallback(int32_t uid);
-  void InvokeYCallback(const HAL_Value* value);
+  void InvokeYCallback(HAL_Value value);
   double GetY();
   void SetY(double y);
 
   int32_t RegisterZCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
   void CancelZCallback(int32_t uid);
-  void InvokeZCallback(const HAL_Value* value);
+  void InvokeZCallback(HAL_Value value);
   double GetZ();
   void SetZ(double z);
 
   virtual void ResetData();
  private:
+  std::mutex m_registerMutex;
   std::atomic<HAL_Bool> m_active = false;
   std::shared_ptr<NotifyListenerVector> m_activeCallbacks = nullptr;
-  std::atomic<HAL_AccelerometerRange> m_range = (HAL_AccelerometerRange)0;
+  std::atomic<HAL_AccelerometerRange> m_range = static_cast<HAL_AccelerometerRange>(0);
   std::shared_ptr<NotifyListenerVector> m_rangeCallbacks = nullptr;
   std::atomic<double> m_x = 0.0;
   std::shared_ptr<NotifyListenerVector> m_xCallbacks = nullptr;
@@ -52,5 +53,5 @@ class AccelerometerData {
   std::atomic<double> m_z = 0.0;
   std::shared_ptr<NotifyListenerVector> m_zCallbacks = nullptr;
 };
-extern std::unique_ptr<std::shared_ptr<AccelerometerData>[]> SimAccelerometerData;
+extern AccelerometerData SimAccelerometerData[];
 }

@@ -23,7 +23,7 @@ model {
                 linker.withArguments { args ->
                     if (file(VS_2015_LIB_DIR).exists()) {
                         if (platform.architecture.name == 'x86') {
-                            args << "/LIBPATH:$VS_2015_LIB_DIR/x86" << "-DEFAULTLIB:../libraries/windows/FRC_NetworkCommunication.lib"
+                            args << "/LIBPATH:$VS_2015_LIB_DIR/x86"
                         } else {
                             args << "/LIBPATH:$VS_2015_LIB_DIR/x64"
                         }
