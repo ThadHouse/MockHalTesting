@@ -22,8 +22,10 @@ int32_t AccelerometerData::RegisterActiveCallback(HAL_NotifyCallback callback, v
   // Return an invalid value on a null callback
   if (callback == nullptr) return -1;
   const char* variableName = "Active";
+  // Create a copy of the callbacks to to add to
   auto newCallbacks = std::make_shared<UidVector<NotifyListener>>(*m_activeCallbacks);
-  int uid = newCallbacks->emplace_back(variableName, param, callback);
+  // Add callbacks to copy to ensure an existing list never changes
+  int uid = newCallbacks->emplace_back(param, callback);
   if (initialNotify) {
     callback(variableName, param, &MakeBoolean(GetActive()));
   }
@@ -31,16 +33,20 @@ int32_t AccelerometerData::RegisterActiveCallback(HAL_NotifyCallback callback, v
   return uid;
 }
 void AccelerometerData::CancelActiveCallback(int32_t uid) {
+  // Create a copy of the callbacks to erase from
   auto newCallbacks = std::make_shared<UidVector<NotifyListener>>(*m_activeCallbacks);
   newCallbacks->erase(uid);
   m_activeCallbacks = newCallbacks;
 }
 void AccelerometerData::InvokeActiveCallback(const HAL_Value* value) {
-  auto newCallbacks = std::make_shared<UidVector<NotifyListener>>(*m_activeCallbacks);
+  // Return if no callbacks are assigned
+  if (m_activeCallbacks == nullptr) return;
+  // Get a copy of the shared_ptr, then iterate and callback listeners
+  auto newCallbacks = m_activeCallbacks;
   for (std::size_t i=0; i<newCallbacks->size(); ++i) {
     if (!(*newCallbacks)[i]) continue; //removed
     auto listener = (*newCallbacks)[i];
-    listener.callback(listener.key.c_str(), listener.param, value);
+    listener.callback("Active", listener.param, value);
   }
 }
 
@@ -59,8 +65,10 @@ int32_t AccelerometerData::RegisterRangeCallback(HAL_NotifyCallback callback, vo
   // Return an invalid value on a null callback
   if (callback == nullptr) return -1;
   const char* variableName = "Range";
+  // Create a copy of the callbacks to to add to
   auto newCallbacks = std::make_shared<UidVector<NotifyListener>>(*m_rangeCallbacks);
-  int uid = newCallbacks->emplace_back(variableName, param, callback);
+  // Add callbacks to copy to ensure an existing list never changes
+  int uid = newCallbacks->emplace_back(param, callback);
   if (initialNotify) {
     callback(variableName, param, &MakeEnum(GetRange()));
   }
@@ -68,16 +76,20 @@ int32_t AccelerometerData::RegisterRangeCallback(HAL_NotifyCallback callback, vo
   return uid;
 }
 void AccelerometerData::CancelRangeCallback(int32_t uid) {
+  // Create a copy of the callbacks to erase from
   auto newCallbacks = std::make_shared<UidVector<NotifyListener>>(*m_rangeCallbacks);
   newCallbacks->erase(uid);
   m_activeCallbacks = newCallbacks;
 }
 void AccelerometerData::InvokeRangeCallback(const HAL_Value* value) {
-  auto newCallbacks = std::make_shared<UidVector<NotifyListener>>(*m_rangeCallbacks);
+  // Return if no callbacks are assigned
+  if (m_rangeCallbacks == nullptr) return;
+  // Get a copy of the shared_ptr, then iterate and callback listeners
+  auto newCallbacks = m_rangeCallbacks;
   for (std::size_t i=0; i<newCallbacks->size(); ++i) {
     if (!(*newCallbacks)[i]) continue; //removed
     auto listener = (*newCallbacks)[i];
-    listener.callback(listener.key.c_str(), listener.param, value);
+    listener.callback("Range", listener.param, value);
   }
 }
 
@@ -96,8 +108,10 @@ int32_t AccelerometerData::RegisterXCallback(HAL_NotifyCallback callback, void* 
   // Return an invalid value on a null callback
   if (callback == nullptr) return -1;
   const char* variableName = "X";
+  // Create a copy of the callbacks to to add to
   auto newCallbacks = std::make_shared<UidVector<NotifyListener>>(*m_xCallbacks);
-  int uid = newCallbacks->emplace_back(variableName, param, callback);
+  // Add callbacks to copy to ensure an existing list never changes
+  int uid = newCallbacks->emplace_back(param, callback);
   if (initialNotify) {
     callback(variableName, param, &MakeDouble(GetX()));
   }
@@ -105,16 +119,20 @@ int32_t AccelerometerData::RegisterXCallback(HAL_NotifyCallback callback, void* 
   return uid;
 }
 void AccelerometerData::CancelXCallback(int32_t uid) {
+  // Create a copy of the callbacks to erase from
   auto newCallbacks = std::make_shared<UidVector<NotifyListener>>(*m_xCallbacks);
   newCallbacks->erase(uid);
   m_activeCallbacks = newCallbacks;
 }
 void AccelerometerData::InvokeXCallback(const HAL_Value* value) {
-  auto newCallbacks = std::make_shared<UidVector<NotifyListener>>(*m_xCallbacks);
+  // Return if no callbacks are assigned
+  if (m_xCallbacks == nullptr) return;
+  // Get a copy of the shared_ptr, then iterate and callback listeners
+  auto newCallbacks = m_xCallbacks;
   for (std::size_t i=0; i<newCallbacks->size(); ++i) {
     if (!(*newCallbacks)[i]) continue; //removed
     auto listener = (*newCallbacks)[i];
-    listener.callback(listener.key.c_str(), listener.param, value);
+    listener.callback("X", listener.param, value);
   }
 }
 
@@ -133,8 +151,10 @@ int32_t AccelerometerData::RegisterYCallback(HAL_NotifyCallback callback, void* 
   // Return an invalid value on a null callback
   if (callback == nullptr) return -1;
   const char* variableName = "Y";
+  // Create a copy of the callbacks to to add to
   auto newCallbacks = std::make_shared<UidVector<NotifyListener>>(*m_yCallbacks);
-  int uid = newCallbacks->emplace_back(variableName, param, callback);
+  // Add callbacks to copy to ensure an existing list never changes
+  int uid = newCallbacks->emplace_back(param, callback);
   if (initialNotify) {
     callback(variableName, param, &MakeDouble(GetY()));
   }
@@ -142,16 +162,20 @@ int32_t AccelerometerData::RegisterYCallback(HAL_NotifyCallback callback, void* 
   return uid;
 }
 void AccelerometerData::CancelYCallback(int32_t uid) {
+  // Create a copy of the callbacks to erase from
   auto newCallbacks = std::make_shared<UidVector<NotifyListener>>(*m_yCallbacks);
   newCallbacks->erase(uid);
   m_activeCallbacks = newCallbacks;
 }
 void AccelerometerData::InvokeYCallback(const HAL_Value* value) {
-  auto newCallbacks = std::make_shared<UidVector<NotifyListener>>(*m_yCallbacks);
+  // Return if no callbacks are assigned
+  if (m_yCallbacks == nullptr) return;
+  // Get a copy of the shared_ptr, then iterate and callback listeners
+  auto newCallbacks = m_yCallbacks;
   for (std::size_t i=0; i<newCallbacks->size(); ++i) {
     if (!(*newCallbacks)[i]) continue; //removed
     auto listener = (*newCallbacks)[i];
-    listener.callback(listener.key.c_str(), listener.param, value);
+    listener.callback("Y", listener.param, value);
   }
 }
 
@@ -170,8 +194,10 @@ int32_t AccelerometerData::RegisterZCallback(HAL_NotifyCallback callback, void* 
   // Return an invalid value on a null callback
   if (callback == nullptr) return -1;
   const char* variableName = "Z";
+  // Create a copy of the callbacks to to add to
   auto newCallbacks = std::make_shared<UidVector<NotifyListener>>(*m_zCallbacks);
-  int uid = newCallbacks->emplace_back(variableName, param, callback);
+  // Add callbacks to copy to ensure an existing list never changes
+  int uid = newCallbacks->emplace_back(param, callback);
   if (initialNotify) {
     callback(variableName, param, &MakeDouble(GetZ()));
   }
@@ -179,16 +205,20 @@ int32_t AccelerometerData::RegisterZCallback(HAL_NotifyCallback callback, void* 
   return uid;
 }
 void AccelerometerData::CancelZCallback(int32_t uid) {
+  // Create a copy of the callbacks to erase from
   auto newCallbacks = std::make_shared<UidVector<NotifyListener>>(*m_zCallbacks);
   newCallbacks->erase(uid);
   m_activeCallbacks = newCallbacks;
 }
 void AccelerometerData::InvokeZCallback(const HAL_Value* value) {
-  auto newCallbacks = std::make_shared<UidVector<NotifyListener>>(*m_zCallbacks);
+  // Return if no callbacks are assigned
+  if (m_zCallbacks == nullptr) return;
+  // Get a copy of the shared_ptr, then iterate and callback listeners
+  auto newCallbacks = m_zCallbacks;
   for (std::size_t i=0; i<newCallbacks->size(); ++i) {
     if (!(*newCallbacks)[i]) continue; //removed
     auto listener = (*newCallbacks)[i];
-    listener.callback(listener.key.c_str(), listener.param, value);
+    listener.callback("Z", listener.param, value);
   }
 }
 

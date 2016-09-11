@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "MockData/AccelerometerData.h"
-#include "MockData/DataBase.h"
+#include "MockData/NotifyListener.h"
 
 namespace hal {
 class AccelerometerData {
