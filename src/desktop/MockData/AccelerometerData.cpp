@@ -9,7 +9,7 @@ std::unique_ptr<std::shared_ptr<AccelerometerData>[]> hal::SimAccelerometerData 
 void AccelerometerData::ResetData() {
   m_active = false;
   m_activeCallbacks = nullptr;
-  m_range = (HAL_AccelerometerRange)0;
+  m_range = static_cast<HAL_AccelerometerRange>(0);
   m_rangeCallbacks = nullptr;
   m_x = 0.0;
   m_xCallbacks = nullptr;
