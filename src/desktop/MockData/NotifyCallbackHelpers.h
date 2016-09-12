@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "MockData/NotifyListenerVector.h"
 
 std::shared_ptr<hal::NotifyListenerVector> RegisterCallback(std::shared_ptr<hal::NotifyListenerVector> currentVector, 
