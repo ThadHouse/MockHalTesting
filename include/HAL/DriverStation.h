@@ -54,12 +54,12 @@ enum HAL_AllianceStationID {
 #define HAL_kMaxJoystickPOVs 12
 
 struct HAL_JoystickAxes {
-  uint16_t count;
+  int16_t count;
   float axes[HAL_kMaxJoystickAxes];
 };
 
 struct HAL_JoystickPOVs {
-  uint16_t count;
+  int16_t count;
   int16_t povs[HAL_kMaxJoystickPOVs];
 };
 
@@ -82,7 +82,7 @@ struct HAL_JoystickDescriptor {
 extern "C" {
 #endif
 int32_t HAL_SetErrorData(const char* errors, int32_t errorsLength,
-                         int32_t wait_ms);
+                         int32_t waitMs);
 int32_t HAL_SendError(HAL_Bool isError, int32_t errorCode, HAL_Bool isLVCode,
                       const char* details, const char* location,
                       const char* callStack, HAL_Bool printMsg);

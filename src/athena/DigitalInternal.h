@@ -9,6 +9,8 @@
 
 #include <stdint.h>
 
+#include <memory>
+
 #include "ChipObject.h"
 #include "HAL/AnalogTrigger.h"
 #include "HAL/Ports.h"
@@ -18,10 +20,12 @@
 #include "PortsInternal.h"
 
 namespace hal {
-constexpr uint32_t kMXPDigitalPWMOffset = 6;  // MXP pins when used as digital
-                                              // output pwm are offset by 6 from
-                                              // actual value
-constexpr uint32_t kExpectedLoopTiming = 40;
+/**
+ * MXP channels when used as digital output PWM are offset from actual value
+ */
+constexpr int32_t kMXPDigitalPWMOffset = 6;
+
+constexpr int32_t kExpectedLoopTiming = 40;
 
 /**
  * kDefaultPwmPeriod is in ms
@@ -62,7 +66,7 @@ extern std::unique_ptr<tPWM> pwmSystem;
 extern bool digitalSystemsInitialized;
 
 struct DigitalPort {
-  uint8_t pin;
+  uint8_t channel;
   bool configSet = false;
   bool eliminateDeadband = false;
   int32_t maxPwm = 0;
@@ -73,13 +77,13 @@ struct DigitalPort {
 };
 
 extern DigitalHandleResource<HAL_DigitalHandle, DigitalPort,
-                             kNumDigitalPins + kNumPWMHeaders>
-    digitalPinHandles;
+                             kNumDigitalChannels + kNumPWMHeaders>
+    digitalChannelHandles;
 
 void initializeDigital(int32_t* status);
 bool remapDigitalSource(HAL_Handle digitalSourceHandle,
-                        HAL_AnalogTriggerType analogTriggerType, uint8_t& pin,
-                        uint8_t& module, bool& analogTrigger);
-int32_t remapMXPPWMChannel(int32_t pin);
-int32_t remapMXPChannel(int32_t pin);
+                        HAL_AnalogTriggerType analogTriggerType,
+                        uint8_t& channel, uint8_t& module, bool& analogTrigger);
+int32_t remapMXPPWMChannel(int32_t channel);
+int32_t remapMXPChannel(int32_t channel);
 }  // namespace hal

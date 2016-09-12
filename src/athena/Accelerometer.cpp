@@ -7,10 +7,11 @@
 
 #include "HAL/Accelerometer.h"
 
+#include <stdint.h>
+
 #include <cassert>
 #include <cstdio>
-
-#include <stdint.h>
+#include <memory>
 
 #include "ChipObject.h"
 #include "HAL/HAL.h"
@@ -25,7 +26,7 @@ static const uint8_t kControlTxRx = 1;
 static const uint8_t kControlStart = 2;
 static const uint8_t kControlStop = 4;
 
-static tAccel* accel = 0;
+static std::unique_ptr<tAccel> accel;
 static HAL_AccelerometerRange accelerometerRange;
 
 // Register addresses
@@ -84,7 +85,7 @@ static void initializeAccelerometer() {
   int32_t status;
 
   if (!accel) {
-    accel = tAccel::create(&status);
+    accel.reset(tAccel::create(&status));
 
     // Enable I2C
     accel->writeCNFG(1, &status);
@@ -124,8 +125,6 @@ static void writeRegister(Register reg, uint8_t data) {
   while (accel->readSTAT(&status) & 1) {
     if (HAL_GetFPGATime(&status) > initialTime + 1000) break;
   }
-
-  std::fflush(stdout);
 }
 
 static uint8_t readRegister(Register reg) {
@@ -154,8 +153,6 @@ static uint8_t readRegister(Register reg) {
   while (accel->readSTAT(&status) & 1) {
     if (HAL_GetFPGATime(&status) > initialTime + 1000) break;
   }
-
-  std::fflush(stdout);
 
   return accel->readDATI(&status);
 }
@@ -219,7 +216,7 @@ void HAL_SetAccelerometerRange(HAL_AccelerometerRange range) {
 double HAL_GetAccelerometerX() {
   initializeAccelerometer();
 
-  int raw =
+  int32_t raw =
       (readRegister(kReg_OutXMSB) << 4) | (readRegister(kReg_OutXLSB) >> 4);
   return unpackAxis(raw);
 }
@@ -232,7 +229,7 @@ double HAL_GetAccelerometerX() {
 double HAL_GetAccelerometerY() {
   initializeAccelerometer();
 
-  int raw =
+  int32_t raw =
       (readRegister(kReg_OutYMSB) << 4) | (readRegister(kReg_OutYLSB) >> 4);
   return unpackAxis(raw);
 }
@@ -245,7 +242,7 @@ double HAL_GetAccelerometerY() {
 double HAL_GetAccelerometerZ() {
   initializeAccelerometer();
 
-  int raw =
+  int32_t raw =
       (readRegister(kReg_OutZMSB) << 4) | (readRegister(kReg_OutZLSB) >> 4);
   return unpackAxis(raw);
 }

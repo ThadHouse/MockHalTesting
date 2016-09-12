@@ -5,7 +5,7 @@ model {
                 cppCompiler.withArguments { args ->
                     args << '-std=c++11' << '-Wall' << '-Wextra' << '-Werror' << '-pedantic-errors'
                     args << '-fPIC' << '-m32'
-                    args << '-Wno-unused-parameter' << '-Wno-missing-field-initializers' << '-Wno-unused-private-field'
+                    args << '-Wno-unused-parameter' << '-Wno-missing-field-initializers' << '-Wno-unused-private-field' << "-DMOCK"
                 }
                 linker.withArguments { args ->
                     args << '-m32'
@@ -15,7 +15,7 @@ model {
                 cppCompiler.withArguments { args ->
                     args << '-std=c++11' << '-Wall' << '-Wextra' << '-Werror' << '-pedantic-errors'
                     args << '-fPIC'
-                    args << '-Wno-missing-field-initializers' << '-Wno-unused-private-field' << '-Wno-unused-parameter'
+                    args << '-Wno-missing-field-initializers' << '-Wno-unused-private-field' << '-Wno-unused-parameter' << "-DMOCK"
                 }
             }
         }

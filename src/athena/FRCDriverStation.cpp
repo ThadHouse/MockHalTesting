@@ -5,18 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "HAL/HAL.h"
-
 #include <cstdlib>
 #include <cstring>
 #include <limits>
 
 #include "FRC_NetworkCommunication/FRCComm.h"
+#include "HAL/HAL.h"
 #include "HAL/cpp/priority_condition_variable.h"
 #include "HAL/cpp/priority_mutex.h"
 
+static_assert(sizeof(int32_t) >= sizeof(int),
+              "FRC_NetworkComm status variable is larger than 32 bits");
+
 struct HAL_JoystickAxesInt {
-  uint16_t count;
+  int16_t count;
   int16_t axes[HAL_kMaxJoystickAxes];
 };
 
@@ -26,8 +28,8 @@ static priority_mutex newDSDataAvailableMutex;
 
 extern "C" {
 int32_t HAL_SetErrorData(const char* errors, int32_t errorsLength,
-                         int32_t wait_ms) {
-  return setErrorData(errors, errorsLength, wait_ms);
+                         int32_t waitMs) {
+  return setErrorData(errors, errorsLength, waitMs);
 }
 
 int32_t HAL_SendError(HAL_Bool isError, int32_t errorCode, HAL_Bool isLVCode,
@@ -37,17 +39,17 @@ int32_t HAL_SendError(HAL_Bool isError, int32_t errorCode, HAL_Bool isLVCode,
   // messages and only printing again if they're longer than 1 second old.
   static constexpr int KEEP_MSGS = 5;
   std::lock_guard<priority_mutex> lock(msgMutex);
-  static std::string prev_msg[KEEP_MSGS];
-  static uint64_t prev_msg_time[KEEP_MSGS] = {0, 0, 0};
+  static std::string prevMsg[KEEP_MSGS];
+  static uint64_t prevMsgTime[KEEP_MSGS] = {0, 0, 0};
 
   int32_t status = 0;
   uint64_t curTime = HAL_GetFPGATime(&status);
   int i;
   for (i = 0; i < KEEP_MSGS; ++i) {
-    if (prev_msg[i] == details) break;
+    if (prevMsg[i] == details) break;
   }
   int retval = 0;
-  if (i == KEEP_MSGS || (curTime - prev_msg_time[i]) >= 1000000) {
+  if (i == KEEP_MSGS || (curTime - prevMsgTime[i]) >= 1000000) {
     retval = FRC_NetworkCommunication_sendError(isError, errorCode, isLVCode,
                                                 details, location, callStack);
     if (printMsg) {
@@ -62,16 +64,16 @@ int32_t HAL_SendError(HAL_Bool isError, int32_t errorCode, HAL_Bool isLVCode,
     if (i == KEEP_MSGS) {
       // replace the oldest one
       i = 0;
-      uint64_t first = prev_msg_time[0];
+      uint64_t first = prevMsgTime[0];
       for (int j = 1; j < KEEP_MSGS; ++j) {
-        if (prev_msg_time[j] < first) {
-          first = prev_msg_time[j];
+        if (prevMsgTime[j] < first) {
+          first = prevMsgTime[j];
           i = j;
         }
       }
-      prev_msg[i] = details;
+      prevMsg[i] = details;
     }
-    prev_msg_time[i] = curTime;
+    prevMsgTime[i] = curTime;
   }
   return retval;
 }
@@ -96,11 +98,11 @@ int32_t HAL_GetJoystickAxes(int32_t joystickNum, HAL_JoystickAxes* axes) {
       joystickNum, reinterpret_cast<JoystickAxes_t*>(&axesInt),
       HAL_kMaxJoystickAxes);
 
-  // copy int values to float values
+  // copy integer values to float values
   axes->count = axesInt.count;
   // current scaling is -128 to 127, can easily be patched in the future by
   // changing this function.
-  for (unsigned int i = 0; i < axesInt.count; i++) {
+  for (int32_t i = 0; i < axesInt.count; i++) {
     int8_t value = axesInt.axes[i];
     if (value < 0) {
       axes->axes[i] = value / 128.0f;

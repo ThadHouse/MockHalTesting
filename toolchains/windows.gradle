@@ -15,7 +15,7 @@ model {
 
             eachPlatform {
                 cppCompiler.withArguments { args ->
-                    args << '/EHsc' << '/DNOMINMAX' << '/D_SCL_SECURE_NO_WARNINGS' << '/D_WINSOCK_DEPRECATED_NO_WARNINGS'
+                    args << '/EHsc' << '/DNOMINMAX' << '/D_SCL_SECURE_NO_WARNINGS' << '/D_WINSOCK_DEPRECATED_NO_WARNINGS' << '/DMOCK'
                     if (file(VS_2015_INCLUDE_DIR).exists()) {
                         args << "/I$VS_2015_INCLUDE_DIR"
                     }

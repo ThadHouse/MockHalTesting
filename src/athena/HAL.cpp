@@ -39,20 +39,20 @@ using namespace hal;
 
 extern "C" {
 
-HAL_PortHandle HAL_GetPort(int32_t pin) {
+HAL_PortHandle HAL_GetPort(int32_t channel) {
   // Dont allow a number that wouldn't fit in a uint8_t
-  if (pin < 0 || pin >= 255) return HAL_kInvalidHandle;
-  return createPortHandle(pin, 1);
+  if (channel < 0 || channel >= 255) return HAL_kInvalidHandle;
+  return createPortHandle(channel, 1);
 }
 
 /**
  * @deprecated Uses module numbers
  */
-HAL_PortHandle HAL_GetPortWithModule(int32_t module, int32_t pin) {
+HAL_PortHandle HAL_GetPortWithModule(int32_t module, int32_t channel) {
   // Dont allow a number that wouldn't fit in a uint8_t
-  if (pin < 0 || pin >= 255) return HAL_kInvalidHandle;
+  if (channel < 0 || channel >= 255) return HAL_kInvalidHandle;
   if (module < 0 || module >= 255) return HAL_kInvalidHandle;
-  return createPortHandle(pin, module);
+  return createPortHandle(channel, module);
 }
 
 const char* HAL_GetErrorMessage(int32_t code) {
@@ -210,7 +210,8 @@ uint64_t HAL_GetFPGATime(int32_t* status) {
   // check for rollover
   if (fpgaTime < prevFPGATime) ++timeEpoch;
   prevFPGATime = fpgaTime;
-  return (((uint64_t)timeEpoch) << 32) | ((uint64_t)fpgaTime);
+  return static_cast<uint64_t>(timeEpoch) << 32 |
+         static_cast<uint64_t>(fpgaTime);
 }
 
 /**
@@ -249,11 +250,10 @@ static void HALCleanupAtExit() {
   setNewDataSem(nullptr);
 }
 
-static void timerRollover(uint64_t currentTime, void*) {
+static void timerRollover(uint64_t currentTime, HAL_NotifierHandle handle) {
   // reschedule timer for next rollover
   int32_t status = 0;
-  HAL_UpdateNotifierAlarm(rolloverNotifier, currentTime + 0x80000000ULL,
-                          &status);
+  HAL_UpdateNotifierAlarm(handle, currentTime + 0x80000000ULL, &status);
 }
 
 /**

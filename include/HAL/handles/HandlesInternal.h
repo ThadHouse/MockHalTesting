@@ -47,11 +47,11 @@ enum class HAL_HandleEnum {
 
 static inline int16_t getHandleIndex(HAL_Handle handle) {
   // mask and return last 16 bits
-  return (int16_t)(handle & 0xffff);
+  return static_cast<int16_t>(handle & 0xffff);
 }
 static inline HAL_HandleEnum getHandleType(HAL_Handle handle) {
   // mask first 8 bits and cast to enum
-  return (HAL_HandleEnum)((handle >> 24) & 0xff);
+  return static_cast<HAL_HandleEnum>((handle >> 24) & 0xff);
 }
 static inline bool isHandleType(HAL_Handle handle, HAL_HandleEnum handleType) {
   return handleType == getHandleType(handle);
@@ -64,7 +64,7 @@ static inline int16_t getHandleTypedIndex(HAL_Handle handle,
 
 /* specialized functions for Port handle
  * Port Handle Data Layout
- * Bits 0-7:   Pin Number
+ * Bits 0-7:   Channel Number
  * Bits 8-15:  Module Number
  * Bits 16-23: Unused
  * Bits 24-30: Handle Type
@@ -72,18 +72,18 @@ static inline int16_t getHandleTypedIndex(HAL_Handle handle,
  */
 
 // using a 16 bit value so we can store 0-255 and still report error
-static inline int16_t getPortHandlePin(HAL_PortHandle handle) {
+static inline int16_t getPortHandleChannel(HAL_PortHandle handle) {
   if (!isHandleType(handle, HAL_HandleEnum::Port)) return InvalidHandleIndex;
-  return (uint8_t)(handle & 0xff);
+  return static_cast<uint8_t>(handle & 0xff);
 }
 
 // using a 16 bit value so we can store 0-255 and still report error
 static inline int16_t getPortHandleModule(HAL_PortHandle handle) {
   if (!isHandleType(handle, HAL_HandleEnum::Port)) return InvalidHandleIndex;
-  return (uint8_t)((handle >> 8) & 0xff);
+  return static_cast<uint8_t>((handle >> 8) & 0xff);
 }
 
-HAL_PortHandle createPortHandle(uint8_t pin, uint8_t module);
+HAL_PortHandle createPortHandle(uint8_t channel, uint8_t module);
 
 HAL_Handle createHandle(int16_t index, HAL_HandleEnum handleType);
 }  // namespace hal
