@@ -1,6 +1,5 @@
 #pragma once
 
-#include "MockData/llvm/StringRef.h"
 #include "HAL/Types.h"
 
 /** HAL data types. */
