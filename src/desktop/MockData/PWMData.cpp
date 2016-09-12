@@ -5,7 +5,7 @@
 
 using namespace hal;
 
-PWMData hal::SimPWMData[kNumPWMPins];
+PWMData hal::SimPWMData[kNumPWMChannels];
 void PWMData::ResetData() {
   m_initialized = false;
   m_initializedCallbacks = nullptr;

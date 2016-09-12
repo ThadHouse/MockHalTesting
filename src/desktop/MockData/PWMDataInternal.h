@@ -48,17 +48,17 @@ class PWMData {
   virtual void ResetData();
  private:
   std::mutex m_registerMutex;
-  std::atomic<HAL_Bool> m_initialized = false;
+  std::atomic<HAL_Bool> m_initialized {false};
   std::shared_ptr<NotifyListenerVector> m_initializedCallbacks = nullptr;
-  std::atomic<int32_t> m_rawValue = 0;
+  std::atomic<int32_t> m_rawValue {0};
   std::shared_ptr<NotifyListenerVector> m_rawValueCallbacks = nullptr;
-  std::atomic<double> m_speed = 0;
+  std::atomic<double> m_speed {0};
   std::shared_ptr<NotifyListenerVector> m_speedCallbacks = nullptr;
-  std::atomic<double> m_position = 0;
+  std::atomic<double> m_position {0};
   std::shared_ptr<NotifyListenerVector> m_positionCallbacks = nullptr;
-  std::atomic<int32_t> m_periodScale = 0;
+  std::atomic<int32_t> m_periodScale {0};
   std::shared_ptr<NotifyListenerVector> m_periodScaleCallbacks = nullptr;
-  std::atomic<HAL_Bool> m_zeroLatch = false;
+  std::atomic<HAL_Bool> m_zeroLatch {false};
   std::shared_ptr<NotifyListenerVector> m_zeroLatchCallbacks = nullptr;
 };
 extern PWMData SimPWMData[];

@@ -42,15 +42,15 @@ class DIOData {
   virtual void ResetData();
  private:
   std::mutex m_registerMutex;
-  std::atomic<HAL_Bool> m_initialized = false;
+  std::atomic<HAL_Bool> m_initialized {false};
   std::shared_ptr<NotifyListenerVector> m_initializedCallbacks = nullptr;
-  std::atomic<HAL_Bool> m_value = true;
+  std::atomic<HAL_Bool> m_value {true};
   std::shared_ptr<NotifyListenerVector> m_valueCallbacks = nullptr;
-  std::atomic<double> m_pulseLength = 0.0;
+  std::atomic<double> m_pulseLength {0.0};
   std::shared_ptr<NotifyListenerVector> m_pulseLengthCallbacks = nullptr;
-  std::atomic<HAL_Bool> m_isInput = true;
+  std::atomic<HAL_Bool> m_isInput {true};
   std::shared_ptr<NotifyListenerVector> m_isInputCallbacks = nullptr;
-  std::atomic<int32_t> m_filterIndex = -1;
+  std::atomic<int32_t> m_filterIndex {-1};
   std::shared_ptr<NotifyListenerVector> m_filterIndexCallbacks = nullptr;
 };
 extern DIOData SimDIOData[];

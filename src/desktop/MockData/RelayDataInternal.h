@@ -30,11 +30,11 @@ class RelayData {
   virtual void ResetData();
  private:
   std::mutex m_registerMutex;
-  std::atomic<HAL_Bool> m_initialized = false;
+  std::atomic<HAL_Bool> m_initialized {false};
   std::shared_ptr<NotifyListenerVector> m_initializedCallbacks = nullptr;
-  std::atomic<HAL_Bool> m_forward = false;
+  std::atomic<HAL_Bool> m_forward {false};
   std::shared_ptr<NotifyListenerVector> m_forwardCallbacks = nullptr;
-  std::atomic<HAL_Bool> m_reverse = false;
+  std::atomic<HAL_Bool> m_reverse {false};
   std::shared_ptr<NotifyListenerVector> m_reverseCallbacks = nullptr;
 };
 extern RelayData SimRelayData[];

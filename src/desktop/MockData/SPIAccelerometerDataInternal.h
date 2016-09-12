@@ -42,15 +42,15 @@ class SPIAccelerometerData {
   virtual void ResetData();
  private:
   std::mutex m_registerMutex;
-  std::atomic<HAL_Bool> m_active = false;
+  std::atomic<HAL_Bool> m_active {false};
   std::shared_ptr<NotifyListenerVector> m_activeCallbacks = nullptr;
-  std::atomic<int32_t> m_range = 0;
+  std::atomic<int32_t> m_range {0};
   std::shared_ptr<NotifyListenerVector> m_rangeCallbacks = nullptr;
-  std::atomic<double> m_x = 0.0;
+  std::atomic<double> m_x {0.0};
   std::shared_ptr<NotifyListenerVector> m_xCallbacks = nullptr;
-  std::atomic<double> m_y = 0.0;
+  std::atomic<double> m_y {0.0};
   std::shared_ptr<NotifyListenerVector> m_yCallbacks = nullptr;
-  std::atomic<double> m_z = 0.0;
+  std::atomic<double> m_z {0.0};
   std::shared_ptr<NotifyListenerVector> m_zCallbacks = nullptr;
 };
 extern SPIAccelerometerData SimSPIAccelerometerData[];

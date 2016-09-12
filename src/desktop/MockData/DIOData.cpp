@@ -5,7 +5,7 @@
 
 using namespace hal;
 
-DIOData hal::SimDIOData[kNumDigitalPins];
+DIOData hal::SimDIOData[kNumDigitalChannels];
 void DIOData::ResetData() {
   m_initialized = false;
   m_initializedCallbacks = nullptr;

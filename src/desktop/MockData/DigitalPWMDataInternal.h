@@ -30,11 +30,11 @@ class DigitalPWMData {
   virtual void ResetData();
  private:
   std::mutex m_registerMutex;
-  std::atomic<HAL_Bool> m_initialized = false;
+  std::atomic<HAL_Bool> m_initialized {false};
   std::shared_ptr<NotifyListenerVector> m_initializedCallbacks = nullptr;
-  std::atomic<double> m_dutyCycle = false;
+  std::atomic<double> m_dutyCycle {false};
   std::shared_ptr<NotifyListenerVector> m_dutyCycleCallbacks = nullptr;
-  std::atomic<int32_t> m_pin = 0;
+  std::atomic<int32_t> m_pin {0};
   std::shared_ptr<NotifyListenerVector> m_pinCallbacks = nullptr;
 };
 extern DigitalPWMData SimDigitalPWMData[];

@@ -30,11 +30,11 @@ class AnalogGyroData {
   virtual void ResetData();
  private:
   std::mutex m_registerMutex;
-  std::atomic<double> m_angle = 0.0;
+  std::atomic<double> m_angle {0.0};
   std::shared_ptr<NotifyListenerVector> m_angleCallbacks = nullptr;
-  std::atomic<double> m_rate = 0.0;
+  std::atomic<double> m_rate {0.0};
   std::shared_ptr<NotifyListenerVector> m_rateCallbacks = nullptr;
-  std::atomic<HAL_Bool> m_initialized = false;
+  std::atomic<HAL_Bool> m_initialized {false};
   std::shared_ptr<NotifyListenerVector> m_initializedCallbacks = nullptr;
 };
 extern AnalogGyroData SimAnalogGyroData[];

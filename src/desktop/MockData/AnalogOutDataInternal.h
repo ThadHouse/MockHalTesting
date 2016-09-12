@@ -24,9 +24,9 @@ class AnalogOutData {
   virtual void ResetData();
  private:
   std::mutex m_registerMutex;
-  std::atomic<double> m_voltage = 0.0;
+  std::atomic<double> m_voltage {0.0};
   std::shared_ptr<NotifyListenerVector> m_voltageCallbacks = nullptr;
-  std::atomic<HAL_Bool> m_initialized = 0;
+  std::atomic<HAL_Bool> m_initialized {0};
   std::shared_ptr<NotifyListenerVector> m_initializedCallbacks = nullptr;
 };
 extern AnalogOutData SimAnalogOutData[];

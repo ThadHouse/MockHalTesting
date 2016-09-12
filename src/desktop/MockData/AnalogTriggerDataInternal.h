@@ -30,11 +30,11 @@ class AnalogTriggerData {
   virtual void ResetData();
  private:
   std::mutex m_registerMutex;
-  std::atomic<HAL_Bool> m_initialized = 0;
+  std::atomic<HAL_Bool> m_initialized {0};
   std::shared_ptr<NotifyListenerVector> m_initializedCallbacks = nullptr;
-  std::atomic<double> m_triggerLowerBound = 0;
+  std::atomic<double> m_triggerLowerBound {0};
   std::shared_ptr<NotifyListenerVector> m_triggerLowerBoundCallbacks = nullptr;
-  std::atomic<double> m_triggerUpperBound = 0;
+  std::atomic<double> m_triggerUpperBound {0};
   std::shared_ptr<NotifyListenerVector> m_triggerUpperBoundCallbacks = nullptr;
 };
 extern AnalogTriggerData SimAnalogTriggerData[];
