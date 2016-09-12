@@ -4,6 +4,7 @@
 #include "HAL/handles/HandlesInternal.h"
 #include "HAL/handles/IndexedHandleResource.h"
 #include "PortsInternal.h"
+#include "MockData/AnalogOutDataInternal.h"
 
 using namespace hal;
 
@@ -37,6 +38,43 @@ HAL_AnalogOutputHandle HAL_InitializeAnalogOutputPort(HAL_PortHandle portHandle,
   }
 
   port->channel = static_cast<uint8_t>(channel);
+
+  // Initialize sim analog input
+  SimAnalogOutData[channel].SetInitialized(true);
   return handle;
+}
+
+void HALFreeAnalogOutputPort(HAL_AnalogOutputHandle analogOutputHandle) {
+  // no status, so no need to check for a proper free.
+  auto port = analogOutputHandles.Get(analogOutputHandle);
+  if (port == nullptr) return;
+  analogOutputHandles.Free(analogOutputHandle);
+  SimAnalogOutData[port->channel].SetInitialized(false);
+}
+
+HAL_Bool HAL_CheckAnalogOutputChannel(int32_t channel) {
+  return channel < kNumAnalogOutputs && channel >= 0;
+}
+
+void HAL_SetAnalogOutput(HAL_AnalogOutputHandle analogOutputHandle,
+                         double voltage, int32_t* status) {
+  auto port = analogOutputHandles.Get(analogOutputHandle);
+  if (port == nullptr) {
+    *status = HAL_HANDLE_ERROR;
+    return;
+  }
+
+  SimAnalogOutData[port->channel].SetVoltage(voltage);
+}
+
+double HAL_GetAnalogOutput(HAL_AnalogOutputHandle analogOutputHandle,
+                           int32_t* status) {
+  auto port = analogOutputHandles.Get(analogOutputHandle);
+  if (port == nullptr) {
+    *status = HAL_HANDLE_ERROR;
+    return 0.0;
+  }
+
+  return SimAnalogOutData[port->channel].GetVoltage();
 }
 }
