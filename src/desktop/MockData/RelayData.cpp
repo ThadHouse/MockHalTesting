@@ -7,46 +7,83 @@ using namespace hal;
 
 RelayData hal::SimRelayData[kNumRelayHeaders];
 void RelayData::ResetData() {
-  m_initialized = false;
-  m_initializedCallbacks = nullptr;
+  m_initializedForward = false;
+  m_initializedForwardCallbacks = nullptr;
+  m_initializedReverse = false;
+  m_initializedReverseCallbacks = nullptr;
   m_forward = false;
   m_forwardCallbacks = nullptr;
   m_reverse = false;
   m_reverseCallbacks = nullptr;
 }
 
-int32_t RelayData::RegisterInitializedCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+int32_t RelayData::RegisterInitializedForwardCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
   if (callback == nullptr) return -1;
   int32_t newUid = 0;
  {
     std::lock_guard<std::mutex> lock(m_registerMutex);
-    m_initializedCallbacks = RegisterCallback(m_initializedCallbacks, "Initialized", callback, param, &newUid);
+    m_initializedForwardCallbacks = RegisterCallback(m_initializedForwardCallbacks, "InitializedForward", callback, param, &newUid);
   }
   if (initialNotify) {
     // We know that the callback is not null because of earlier null check
-    HAL_Value value = MakeBoolean(GetInitialized());
-    callback("Initialized", param, &value);
+    HAL_Value value = MakeBoolean(GetInitializedForward());
+    callback("InitializedForward", param, &value);
   }
   return newUid;
 }
 
-void RelayData::CancelInitializedCallback(int32_t uid) {
-  m_initializedCallbacks = CancelCallback(m_initializedCallbacks, uid);
+void RelayData::CancelInitializedForwardCallback(int32_t uid) {
+  m_initializedForwardCallbacks = CancelCallback(m_initializedForwardCallbacks, uid);
 }
 
-void RelayData::InvokeInitializedCallback(HAL_Value value) {
-  InvokeCallback(m_initializedCallbacks, "Initialized", &value);
+void RelayData::InvokeInitializedForwardCallback(HAL_Value value) {
+  InvokeCallback(m_initializedForwardCallbacks, "InitializedForward", &value);
 }
 
-HAL_Bool RelayData::GetInitialized() {
-  return m_initialized;
+HAL_Bool RelayData::GetInitializedForward() {
+  return m_initializedForward;
 }
 
-void RelayData::SetInitialized(HAL_Bool initialized) {
-  HAL_Bool oldValue = m_initialized.exchange(initialized);
+void RelayData::SetInitializedForward(HAL_Bool initialized) {
+  HAL_Bool oldValue = m_initializedForward.exchange(initialized);
   if (oldValue != initialized) {
-    InvokeInitializedCallback(MakeBoolean(initialized));
+    InvokeInitializedForwardCallback(MakeBoolean(initialized));
+  }
+}
+
+int32_t RelayData::RegisterInitializedReverseCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+  // Must return -1 on a null callback for error handling
+  if (callback == nullptr) return -1;
+  int32_t newUid = 0;
+ {
+    std::lock_guard<std::mutex> lock(m_registerMutex);
+    m_initializedReverseCallbacks = RegisterCallback(m_initializedReverseCallbacks, "InitializedReverse", callback, param, &newUid);
+  }
+  if (initialNotify) {
+    // We know that the callback is not null because of earlier null check
+    HAL_Value value = MakeBoolean(GetInitializedReverse());
+    callback("InitializedReverse", param, &value);
+  }
+  return newUid;
+}
+
+void RelayData::CancelInitializedReverseCallback(int32_t uid) {
+  m_initializedReverseCallbacks = CancelCallback(m_initializedReverseCallbacks, uid);
+}
+
+void RelayData::InvokeInitializedReverseCallback(HAL_Value value) {
+  InvokeCallback(m_initializedReverseCallbacks, "InitializedReverse", &value);
+}
+
+HAL_Bool RelayData::GetInitializedReverse() {
+  return m_initializedReverse;
+}
+
+void RelayData::SetInitializedReverse(HAL_Bool initialized) {
+  HAL_Bool oldValue = m_initializedReverse.exchange(initialized);
+  if (oldValue != initialized) {
+    InvokeInitializedReverseCallback(MakeBoolean(initialized));
   }
 }
 
@@ -125,16 +162,28 @@ void HALSIM_ResetRelayData(int32_t index) {
   SimRelayData[index].ResetData();
 }
 
-int32_t HALSIM_RegisterRelayInitializedCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
-  return SimRelayData[index].RegisterInitializedCallback(callback, param, initialNotify);
+int32_t HALSIM_RegisterRelayInitializedForwardCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+  return SimRelayData[index].RegisterInitializedForwardCallback(callback, param, initialNotify);
 }
 
-void HALSIM_CancelRelayInitializedCallback(int32_t index, int32_t uid) {
-  SimRelayData[index].CancelInitializedCallback(uid);
+void HALSIM_CancelRelayInitializedForwardCallback(int32_t index, int32_t uid) {
+  SimRelayData[index].CancelInitializedForwardCallback(uid);
 }
 
-HAL_Bool HALSIM_GetRelayInitialized(int32_t index) {
-  return SimRelayData[index].GetInitialized();
+HAL_Bool HALSIM_GetRelayInitializedForward(int32_t index) {
+  return SimRelayData[index].GetInitializedForward();
+}
+
+int32_t HALSIM_RegisterRelayInitializedReverseCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+  return SimRelayData[index].RegisterInitializedReverseCallback(callback, param, initialNotify);
+}
+
+void HALSIM_CancelRelayInitializedReverseCallback(int32_t index, int32_t uid) {
+  SimRelayData[index].CancelInitializedReverseCallback(uid);
+}
+
+HAL_Bool HALSIM_GetRelayInitializedReverse(int32_t index) {
+  return SimRelayData[index].GetInitializedReverse();
 }
 
 int32_t HALSIM_RegisterRelayForwardCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {

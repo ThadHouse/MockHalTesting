@@ -9,11 +9,18 @@
 namespace hal {
 class RelayData {
  public:
-  int32_t RegisterInitializedCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
-  void CancelInitializedCallback(int32_t uid);
-  void InvokeInitializedCallback(HAL_Value value);
-  HAL_Bool GetInitialized();
-  void SetInitialized(HAL_Bool initialized);
+  int32_t RegisterInitializedForwardCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
+  void CancelInitializedForwardCallback(int32_t uid);
+  void InvokeInitializedForwardCallback(HAL_Value value);
+  HAL_Bool GetInitializedForward();
+  void SetInitializedForward(HAL_Bool initialized);
+  
+  int32_t RegisterInitializedReverseCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
+  void CancelInitializedReverseCallback(int32_t uid);
+  void InvokeInitializedReverseCallback(HAL_Value value);
+  HAL_Bool GetInitializedReverse();
+  void SetInitializedReverse(HAL_Bool initialized);
+
 
   int32_t RegisterForwardCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
   void CancelForwardCallback(int32_t uid);
@@ -30,8 +37,10 @@ class RelayData {
   virtual void ResetData();
  private:
   std::mutex m_registerMutex;
-  std::atomic<HAL_Bool> m_initialized {false};
-  std::shared_ptr<NotifyListenerVector> m_initializedCallbacks = nullptr;
+  std::atomic<HAL_Bool> m_initializedForward {false};
+  std::shared_ptr<NotifyListenerVector> m_initializedForwardCallbacks = nullptr;
+  std::atomic<HAL_Bool> m_initializedReverse {false};
+  std::shared_ptr<NotifyListenerVector> m_initializedReverseCallbacks = nullptr;
   std::atomic<HAL_Bool> m_forward {false};
   std::shared_ptr<NotifyListenerVector> m_forwardCallbacks = nullptr;
   std::atomic<HAL_Bool> m_reverse {false};

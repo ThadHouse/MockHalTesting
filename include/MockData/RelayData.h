@@ -8,9 +8,13 @@ extern "C" {
 #endif
 
 void HALSIM_ResetRelayData(int32_t index);
-int32_t HALSIM_RegisterRelayInitializedCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
-void HALSIM_CancelRelayInitializedCallback(int32_t index, int32_t uid);
-HAL_Bool HALSIM_GetRelayInitialized(int32_t index);
+int32_t HALSIM_RegisterRelayInitializedForwardCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
+void HALSIM_CancelRelayInitializedForwardCallback(int32_t index, int32_t uid);
+HAL_Bool HALSIM_GetRelayForwardInitialized(int32_t index);
+
+int32_t HALSIM_RegisterRelayInitializedReverseCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
+void HALSIM_CancelRelayInitializedReverseCallback(int32_t index, int32_t uid);
+HAL_Bool HALSIM_GetRelayReverseInitialized(int32_t index);
 
 int32_t HALSIM_RegisterRelayForwardCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
 void HALSIM_CancelRelayForwardCallback(int32_t index, int32_t uid);
