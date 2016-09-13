@@ -2,7 +2,36 @@
 
 using namespace hal;
 
-unsigned int NotifyListenerVector::emplace_back(void* param, HAL_NotifyCallback callback) {
+NotifyListenerVector::NotifyListenerVector(const NotifyListenerVector* copyFrom, 
+                                           const private_init&) : 
+                                           m_vector(copyFrom->m_vector), 
+                                           m_free(copyFrom->m_free){
+  
+}
+
+NotifyListenerVector::NotifyListenerVector(void* param, HAL_NotifyCallback callback, 
+                                           unsigned int* newUid) {
+  *newUid = emplace_back_impl(param, callback);
+}
+
+std::shared_ptr<NotifyListenerVector> NotifyListenerVector::emplace_back(void* param, 
+    HAL_NotifyCallback callback, unsigned int* newUid) {
+  auto newVector = std::make_unique<NotifyListenerVector>(this, private_init());
+  newVector->m_vector = m_vector;
+  newVector->m_free = m_free;
+  *newUid = newVector->emplace_back_impl(param, callback);
+  return newVector;  
+}
+
+std::shared_ptr<NotifyListenerVector> NotifyListenerVector::erase(unsigned int uid) {
+  auto newVector = std::make_unique<NotifyListenerVector>(this, private_init());
+  newVector->m_vector = m_vector;
+  newVector->m_free = m_free;
+  newVector->erase_impl(uid);
+  return newVector;  
+}
+
+unsigned int NotifyListenerVector::emplace_back_impl(void* param, HAL_NotifyCallback callback) {
   unsigned int uid;
   if (m_free.empty()) {
     uid = m_vector.size();
@@ -15,7 +44,7 @@ unsigned int NotifyListenerVector::emplace_back(void* param, HAL_NotifyCallback 
   return uid + 1;
 }
 
-void NotifyListenerVector::erase(unsigned int uid) {
+void NotifyListenerVector::erase_impl(unsigned int uid) {
   --uid;
   if (uid >= m_vector.size() || !m_vector[uid]) return;
   m_free.push_back(uid);

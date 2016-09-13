@@ -5,18 +5,16 @@ using namespace hal;
 std::shared_ptr<NotifyListenerVector> RegisterCallback(std::shared_ptr<NotifyListenerVector> currentVector, const char* name, HAL_NotifyCallback callback, void* param, int32_t* newUid) {
   std::shared_ptr<NotifyListenerVector> newCallbacks;
   if (currentVector == nullptr) {
-    newCallbacks = std::make_shared<NotifyListenerVector>();
+    newCallbacks = std::make_shared<NotifyListenerVector>(param, callback, reinterpret_cast<unsigned int*>(newUid));
   } else {
-    newCallbacks = std::make_shared<NotifyListenerVector>(*currentVector);
+    newCallbacks = currentVector->emplace_back(param, callback, reinterpret_cast<unsigned int*>(newUid));
   }
-  *newUid = newCallbacks->emplace_back(param, callback);
   return newCallbacks;
 }
 
 std::shared_ptr<NotifyListenerVector> CancelCallback(std::shared_ptr<NotifyListenerVector> currentVector, int32_t uid) {
   // Create a copy of the callbacks to erase from
-  auto newCallbacks = std::make_shared<NotifyListenerVector>(*currentVector);
-  newCallbacks->erase(uid);
+  auto newCallbacks = currentVector->erase(uid);
   return newCallbacks;
 }
 
