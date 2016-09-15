@@ -530,11 +530,6 @@ HALSIM_SetSPIAccelerometerZ
 ;HAL_GetCounterPeriod
 ;HAL_GetCounterSamplesToAverage
 ;HAL_GetCounterStopped
-;HAL_GetFPGAEncoder
-;HAL_GetFPGAEncoderDirection
-;HAL_GetFPGAEncoderPeriod
-;HAL_GetFPGAEncoderSamplesToAverage
-;HAL_GetFPGAEncoderStopped
 ;HAL_GetJoystickAxes
 ;HAL_GetJoystickAxisType
 ;HAL_GetJoystickButtons
@@ -557,7 +552,6 @@ HALSIM_SetSPIAccelerometerZ
 ;HAL_InitializeCompressor
 ;HAL_InitializeCounter
 ;HAL_InitializeDriverStation
-;HAL_InitializeFPGAEncoder
 ;HAL_InitializeInterrupts
 ;HAL_InitializeNotifier
 ;HAL_InitializeSolenoidPort
@@ -573,7 +567,6 @@ HALSIM_SetSPIAccelerometerZ
 ;HAL_ResetAccumulator
 ;HAL_ResetAnalogGyro
 ;HAL_ResetCounter
-;HAL_ResetFPGAEncoder
 ;HAL_SendError
 ;HAL_SetAccumulatorCenter
 ;HAL_SetAccumulatorDeadband
@@ -602,10 +595,6 @@ HALSIM_SetSPIAccelerometerZ
 ;HAL_SetCounterUpSourceEdge
 ;HAL_SetCounterUpdateWhenEmpty
 ;HAL_SetErrorData
-;HAL_SetFPGAEncoderIndexSource
-;HAL_SetFPGAEncoderMaxPeriod
-;HAL_SetFPGAEncoderReverseDirection
-;HAL_SetFPGAEncoderSamplesToAverage
 ;HAL_SetInterruptUpSourceEdge
 ;HAL_SetJoystickOutputs
 ;HAL_SetSolenoid
