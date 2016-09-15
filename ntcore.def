@@ -550,8 +550,6 @@ HALSIM_SetSPIAccelerometerZ
 ;HAL_GetPCMSolenoidVoltageStickyFault
 ;HAL_GetRuntimeType
 ;HAL_GetSolenoid
-;HAL_GetTaskPriority
-;HAL_GetUserStatus5V
 ;HAL_InitAccumulator
 ;HAL_InitializeAnalogGyro
 ;HAL_InitializeAnalogInputPort
