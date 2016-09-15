@@ -5,7 +5,7 @@
 
 using namespace hal;
 
-EncoderData hal::SimEncoderData[kNumEncoders];
+EncoderData hal::SimEncoderData[kNumEncoders + kNumCounters];
 void EncoderData::ResetData() {
   m_initialized = false;
   m_initializedCallbacks = nullptr;
