@@ -471,7 +471,7 @@ HALSIM_SetSPIAccelerometerZ
 
 ;Missing Symbols
 
-;HAL_AttachInterruptHandler
+HAL_AttachInterruptHandler
 ;HAL_CalibrateAnalogGyro
 ;HAL_CheckAnalogInputChannel
 ;HAL_CheckAnalogModule
@@ -479,13 +479,13 @@ HALSIM_SetSPIAccelerometerZ
 ;HAL_CheckSolenoidChannel
 ;HAL_CheckSolenoidModule
 ;HAL_CleanAnalogTrigger
-;HAL_CleanInterrupts
+HAL_CleanInterrupts
 ;HAL_CleanNotifier
 ;HAL_ClearAllPCMStickyFaults
 ;HAL_ClearCounterDownSource
 ;HAL_ClearCounterUpSource
-;HAL_DisableInterrupts
-;HAL_EnableInterrupts
+HAL_DisableInterrupts
+HAL_EnableInterrupts
 ;HAL_FreeAnalogGyro
 ;HAL_FreeAnalogInputPort
 ;HAL_FreeAnalogOutputPort
@@ -552,7 +552,7 @@ HALSIM_SetSPIAccelerometerZ
 ;HAL_InitializeCompressor
 ;HAL_InitializeCounter
 ;HAL_InitializeDriverStation
-;HAL_InitializeInterrupts
+HAL_InitializeInterrupts
 ;HAL_InitializeNotifier
 ;HAL_InitializeSolenoidPort
 ;HAL_IsAccumulatorChannel
@@ -561,9 +561,9 @@ HALSIM_SetSPIAccelerometerZ
 ;HAL_ObserveUserProgramStarting
 ;HAL_ObserveUserProgramTeleop
 ;HAL_ObserveUserProgramTest
-;HAL_ReadInterruptFallingTimestamp
-;HAL_ReadInterruptRisingTimestamp
-;HAL_RequestInterrupts
+HAL_ReadInterruptFallingTimestamp
+HAL_ReadInterruptRisingTimestamp
+HAL_RequestInterrupts
 ;HAL_ResetAccumulator
 ;HAL_ResetAnalogGyro
 ;HAL_ResetCounter
@@ -595,11 +595,11 @@ HALSIM_SetSPIAccelerometerZ
 ;HAL_SetCounterUpSourceEdge
 ;HAL_SetCounterUpdateWhenEmpty
 ;HAL_SetErrorData
-;HAL_SetInterruptUpSourceEdge
+HAL_SetInterruptUpSourceEdge
 ;HAL_SetJoystickOutputs
 ;HAL_SetSolenoid
 ;HAL_SetupAnalogGyro
 ;HAL_StopNotifierAlarm
 ;HAL_UpdateNotifierAlarm
 ;HAL_WaitForDSData
-;HAL_WaitForInterrupt
+HAL_WaitForInterrupt
