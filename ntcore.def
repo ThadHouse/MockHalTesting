@@ -480,7 +480,7 @@ HAL_AttachInterruptHandler
 ;HAL_CheckSolenoidModule
 ;HAL_CleanAnalogTrigger
 HAL_CleanInterrupts
-;HAL_CleanNotifier
+HAL_CleanNotifier
 ;HAL_ClearAllPCMStickyFaults
 ;HAL_ClearCounterDownSource
 ;HAL_ClearCounterUpSource
@@ -539,7 +539,7 @@ HAL_GetAnalogVoltsToValue
 ;HAL_GetJoystickPOVs
 ;HAL_GetJoystickType
 ;HAL_GetMatchTime
-;HAL_GetNotifierParam
+HAL_GetNotifierParam
 ;HAL_GetPCMSolenoidBlackList
 ;HAL_GetPCMSolenoidVoltageFault
 ;HAL_GetPCMSolenoidVoltageStickyFault
@@ -553,7 +553,7 @@ HAL_InitializeAnalogInputPort
 ;HAL_InitializeCounter
 ;HAL_InitializeDriverStation
 HAL_InitializeInterrupts
-;HAL_InitializeNotifier
+HAL_InitializeNotifier
 ;HAL_InitializeSolenoidPort
 HAL_IsAccumulatorChannel
 ;HAL_ObserveUserProgramAutonomous
@@ -599,7 +599,7 @@ HAL_SetInterruptUpSourceEdge
 ;HAL_SetJoystickOutputs
 ;HAL_SetSolenoid
 ;HAL_SetupAnalogGyro
-;HAL_StopNotifierAlarm
-;HAL_UpdateNotifierAlarm
+HAL_StopNotifierAlarm
+HAL_UpdateNotifierAlarm
 ;HAL_WaitForDSData
 HAL_WaitForInterrupt
