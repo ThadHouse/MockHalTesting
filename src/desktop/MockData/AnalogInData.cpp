@@ -21,10 +21,10 @@ void AnalogInData::ResetData() {
   m_accumulatorValueCallbacks = nullptr;
   m_accumulatorCount = 0;
   m_accumulatorCountCallbacks = nullptr;
-  m_accumlatorCenter = 0;
-  m_accumlatorCenterCallbacks = nullptr;
-  m_accumlatorDeadband = 0;
-  m_accumlatorDeadbandCallbacks = nullptr;
+  m_accumulatorCenter = 0;
+  m_accumulatorCenterCallbacks = nullptr;
+  m_accumulatorDeadband = 0;
+  m_accumulatorDeadbandCallbacks = nullptr;
 }
 
 int32_t AnalogInData::RegisterInitializedCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
@@ -272,73 +272,73 @@ void AnalogInData::SetAccumulatorCount(int64_t accumulatorCount) {
   }
 }
 
-int32_t AnalogInData::RegisterAccumlatorCenterCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+int32_t AnalogInData::RegisterAccumulatorCenterCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
   if (callback == nullptr) return -1;
   int32_t newUid = 0;
  {
     std::lock_guard<std::mutex> lock(m_registerMutex);
-    m_accumlatorCenterCallbacks = RegisterCallback(m_accumlatorCenterCallbacks, "AccumlatorCenter", callback, param, &newUid);
+    m_accumulatorCenterCallbacks = RegisterCallback(m_accumulatorCenterCallbacks, "AccumulatorCenter", callback, param, &newUid);
   }
   if (initialNotify) {
     // We know that the callback is not null because of earlier null check
-    HAL_Value value = MakeInt(GetAccumlatorCenter());
-    callback("AccumlatorCenter", param, &value);
+    HAL_Value value = MakeInt(GetAccumulatorCenter());
+    callback("AccumulatorCenter", param, &value);
   }
   return newUid;
 }
 
-void AnalogInData::CancelAccumlatorCenterCallback(int32_t uid) {
-  m_accumlatorCenterCallbacks = CancelCallback(m_accumlatorCenterCallbacks, uid);
+void AnalogInData::CancelAccumulatorCenterCallback(int32_t uid) {
+  m_accumulatorCenterCallbacks = CancelCallback(m_accumulatorCenterCallbacks, uid);
 }
 
-void AnalogInData::InvokeAccumlatorCenterCallback(HAL_Value value) {
-  InvokeCallback(m_accumlatorCenterCallbacks, "AccumlatorCenter", &value);
+void AnalogInData::InvokeAccumulatorCenterCallback(HAL_Value value) {
+  InvokeCallback(m_accumulatorCenterCallbacks, "AccumulatorCenter", &value);
 }
 
-int32_t AnalogInData::GetAccumlatorCenter() {
-  return m_accumlatorCenter;
+int32_t AnalogInData::GetAccumulatorCenter() {
+  return m_accumulatorCenter;
 }
 
-void AnalogInData::SetAccumlatorCenter(int32_t accumlatorCenter) {
-  int32_t oldValue = m_accumlatorCenter.exchange(accumlatorCenter);
-  if (oldValue != accumlatorCenter) {
-    InvokeAccumlatorCenterCallback(MakeInt(accumlatorCenter));
+void AnalogInData::SetAccumulatorCenter(int32_t AccumulatorCenter) {
+  int32_t oldValue = m_accumulatorCenter.exchange(AccumulatorCenter);
+  if (oldValue != AccumulatorCenter) {
+    InvokeAccumulatorCenterCallback(MakeInt(AccumulatorCenter));
   }
 }
 
-int32_t AnalogInData::RegisterAccumlatorDeadbandCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+int32_t AnalogInData::RegisterAccumulatorDeadbandCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   // Must return -1 on a null callback for error handling
   if (callback == nullptr) return -1;
   int32_t newUid = 0;
  {
     std::lock_guard<std::mutex> lock(m_registerMutex);
-    m_accumlatorDeadbandCallbacks = RegisterCallback(m_accumlatorDeadbandCallbacks, "AccumlatorDeadband", callback, param, &newUid);
+    m_accumulatorDeadbandCallbacks = RegisterCallback(m_accumulatorDeadbandCallbacks, "AccumulatorDeadband", callback, param, &newUid);
   }
   if (initialNotify) {
     // We know that the callback is not null because of earlier null check
-    HAL_Value value = MakeInt(GetAccumlatorDeadband());
-    callback("AccumlatorDeadband", param, &value);
+    HAL_Value value = MakeInt(GetAccumulatorDeadband());
+    callback("AccumulatorDeadband", param, &value);
   }
   return newUid;
 }
 
-void AnalogInData::CancelAccumlatorDeadbandCallback(int32_t uid) {
-  m_accumlatorDeadbandCallbacks = CancelCallback(m_accumlatorDeadbandCallbacks, uid);
+void AnalogInData::CancelAccumulatorDeadbandCallback(int32_t uid) {
+  m_accumulatorDeadbandCallbacks = CancelCallback(m_accumulatorDeadbandCallbacks, uid);
 }
 
-void AnalogInData::InvokeAccumlatorDeadbandCallback(HAL_Value value) {
-  InvokeCallback(m_accumlatorDeadbandCallbacks, "AccumlatorDeadband", &value);
+void AnalogInData::InvokeAccumulatorDeadbandCallback(HAL_Value value) {
+  InvokeCallback(m_accumulatorDeadbandCallbacks, "AccumulatorDeadband", &value);
 }
 
-int32_t AnalogInData::GetAccumlatorDeadband() {
-  return m_accumlatorDeadband;
+int32_t AnalogInData::GetAccumulatorDeadband() {
+  return m_accumulatorDeadband;
 }
 
-void AnalogInData::SetAccumlatorDeadband(int32_t accumlatorDeadband) {
-  int32_t oldValue = m_accumlatorDeadband.exchange(accumlatorDeadband);
-  if (oldValue != accumlatorDeadband) {
-    InvokeAccumlatorDeadbandCallback(MakeInt(accumlatorDeadband));
+void AnalogInData::SetAccumulatorDeadband(int32_t AccumulatorDeadband) {
+  int32_t oldValue = m_accumulatorDeadband.exchange(AccumulatorDeadband);
+  if (oldValue != AccumulatorDeadband) {
+    InvokeAccumulatorDeadbandCallback(MakeInt(AccumulatorDeadband));
   }
 }
 
@@ -443,28 +443,28 @@ void HALSIM_SetAnalogInAccumulatorCount(int32_t index, int64_t accumulatorCount)
   SimAnalogInData[index].SetAccumulatorCount(accumulatorCount);
 }
 
-int32_t HALSIM_RegisterAnalogInAccumlatorCenterCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
-  return SimAnalogInData[index].RegisterAccumlatorCenterCallback(callback, param, initialNotify);
+int32_t HALSIM_RegisterAnalogInAccumulatorCenterCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+  return SimAnalogInData[index].RegisterAccumulatorCenterCallback(callback, param, initialNotify);
 }
 
-void HALSIM_CancelAnalogInAccumlatorCenterCallback(int32_t index, int32_t uid) {
-  SimAnalogInData[index].CancelAccumlatorCenterCallback(uid);
+void HALSIM_CancelAnalogInAccumulatorCenterCallback(int32_t index, int32_t uid) {
+  SimAnalogInData[index].CancelAccumulatorCenterCallback(uid);
 }
 
-int32_t HALSIM_GetAnalogInAccumlatorCenter(int32_t index) {
-  return SimAnalogInData[index].GetAccumlatorCenter();
+int32_t HALSIM_GetAnalogInAccumulatorCenter(int32_t index) {
+  return SimAnalogInData[index].GetAccumulatorCenter();
 }
 
-int32_t HALSIM_RegisterAnalogInAccumlatorDeadbandCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
-  return SimAnalogInData[index].RegisterAccumlatorDeadbandCallback(callback, param, initialNotify);
+int32_t HALSIM_RegisterAnalogInAccumulatorDeadbandCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+  return SimAnalogInData[index].RegisterAccumulatorDeadbandCallback(callback, param, initialNotify);
 }
 
-void HALSIM_CancelAnalogInAccumlatorDeadbandCallback(int32_t index, int32_t uid) {
-  SimAnalogInData[index].CancelAccumlatorDeadbandCallback(uid);
+void HALSIM_CancelAnalogInAccumulatorDeadbandCallback(int32_t index, int32_t uid) {
+  SimAnalogInData[index].CancelAccumulatorDeadbandCallback(uid);
 }
 
-int32_t HALSIM_GetAnalogInAccumlatorDeadband(int32_t index) {
-  return SimAnalogInData[index].GetAccumlatorDeadband();
+int32_t HALSIM_GetAnalogInAccumulatorDeadband(int32_t index) {
+  return SimAnalogInData[index].GetAccumulatorDeadband();
 }
 
 }

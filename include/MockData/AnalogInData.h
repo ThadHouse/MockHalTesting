@@ -39,13 +39,13 @@ void HALSIM_CancelAnalogInAccumulatorCountCallback(int32_t index, int32_t uid);
 int64_t HALSIM_GetAnalogInAccumulatorCount(int32_t index);
 void HALSIM_SetAnalogInAccumulatorCount(int32_t index, int64_t accumulatorCount);
 
-int32_t HALSIM_RegisterAnalogInAccumlatorCenterCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
-void HALSIM_CancelAnalogInAccumlatorCenterCallback(int32_t index, int32_t uid);
-int32_t HALSIM_GetAnalogInAccumlatorCenter(int32_t index);
+int32_t HALSIM_RegisterAnalogInAccumulatorCenterCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
+void HALSIM_CancelAnalogInAccumulatorCenterCallback(int32_t index, int32_t uid);
+int32_t HALSIM_GetAnalogInAccumulatorCenter(int32_t index);
 
-int32_t HALSIM_RegisterAnalogInAccumlatorDeadbandCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
-void HALSIM_CancelAnalogInAccumlatorDeadbandCallback(int32_t index, int32_t uid);
-int32_t HALSIM_GetAnalogInAccumlatorDeadband(int32_t index);
+int32_t HALSIM_RegisterAnalogInAccumulatorDeadbandCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
+void HALSIM_CancelAnalogInAccumulatorDeadbandCallback(int32_t index, int32_t uid);
+int32_t HALSIM_GetAnalogInAccumulatorDeadband(int32_t index);
 
 #ifdef __cplusplus
 }

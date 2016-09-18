@@ -51,17 +51,17 @@ class AnalogInData {
   int64_t GetAccumulatorCount();
   void SetAccumulatorCount(int64_t accumulatorCount);
 
-  int32_t RegisterAccumlatorCenterCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
-  void CancelAccumlatorCenterCallback(int32_t uid);
-  void InvokeAccumlatorCenterCallback(HAL_Value value);
-  int32_t GetAccumlatorCenter();
-  void SetAccumlatorCenter(int32_t accumlatorCenter);
+  int32_t RegisterAccumulatorCenterCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
+  void CancelAccumulatorCenterCallback(int32_t uid);
+  void InvokeAccumulatorCenterCallback(HAL_Value value);
+  int32_t GetAccumulatorCenter();
+  void SetAccumulatorCenter(int32_t accumulatorCenter);
 
-  int32_t RegisterAccumlatorDeadbandCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
-  void CancelAccumlatorDeadbandCallback(int32_t uid);
-  void InvokeAccumlatorDeadbandCallback(HAL_Value value);
-  int32_t GetAccumlatorDeadband();
-  void SetAccumlatorDeadband(int32_t accumlatorDeadband);
+  int32_t RegisterAccumulatorDeadbandCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
+  void CancelAccumulatorDeadbandCallback(int32_t uid);
+  void InvokeAccumulatorDeadbandCallback(HAL_Value value);
+  int32_t GetAccumulatorDeadband();
+  void SetAccumulatorDeadband(int32_t accumulatorDeadband);
 
   virtual void ResetData();
  private:
@@ -80,10 +80,10 @@ class AnalogInData {
   std::shared_ptr<NotifyListenerVector> m_accumulatorValueCallbacks = nullptr;
   std::atomic<int64_t> m_accumulatorCount {0};
   std::shared_ptr<NotifyListenerVector> m_accumulatorCountCallbacks = nullptr;
-  std::atomic<int32_t> m_accumlatorCenter {0};
-  std::shared_ptr<NotifyListenerVector> m_accumlatorCenterCallbacks = nullptr;
-  std::atomic<int32_t> m_accumlatorDeadband {0};
-  std::shared_ptr<NotifyListenerVector> m_accumlatorDeadbandCallbacks = nullptr;
+  std::atomic<int32_t> m_accumulatorCenter {0};
+  std::shared_ptr<NotifyListenerVector> m_accumulatorCenterCallbacks = nullptr;
+  std::atomic<int32_t> m_accumulatorDeadband {0};
+  std::shared_ptr<NotifyListenerVector> m_accumulatorDeadbandCallbacks = nullptr;
 };
 extern AnalogInData SimAnalogInData[];
 }
