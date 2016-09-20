@@ -472,7 +472,7 @@ HALSIM_SetSPIAccelerometerZ
 ;Missing Symbols
 
 HAL_AttachInterruptHandler
-;HAL_CalibrateAnalogGyro
+HAL_CalibrateAnalogGyro
 ;HAL_CheckAnalogInputChannel
 ;HAL_CheckAnalogModule
 ;HAL_CheckCompressorModule
