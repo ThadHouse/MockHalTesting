@@ -44,7 +44,7 @@ HAL_AnalogOutputHandle HAL_InitializeAnalogOutputPort(HAL_PortHandle portHandle,
   return handle;
 }
 
-void HALFreeAnalogOutputPort(HAL_AnalogOutputHandle analogOutputHandle) {
+void HAL_FreeAnalogOutputPort(HAL_AnalogOutputHandle analogOutputHandle) {
   // no status, so no need to check for a proper free.
   auto port = analogOutputHandles.Get(analogOutputHandle);
   if (port == nullptr) return;
