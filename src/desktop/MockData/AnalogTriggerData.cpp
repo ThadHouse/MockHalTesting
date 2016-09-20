@@ -13,6 +13,8 @@ void AnalogTriggerData::ResetData() {
   m_triggerLowerBoundCallbacks = nullptr;
   m_triggerUpperBound = 0;
   m_triggerUpperBoundCallbacks = nullptr;
+  m_triggerMode = static_cast<HALSIM_AnalogTriggerMode>(0);
+  m_triggerModeCallbacks = nullptr;
 }
 
 int32_t AnalogTriggerData::RegisterInitializedCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
@@ -120,6 +122,41 @@ void AnalogTriggerData::SetTriggerUpperBound(double triggerUpperBound) {
   }
 }
 
+int32_t AnalogTriggerData::RegisterTriggerModeCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+  // Must return -1 on a null callback for error handling
+  if (callback == nullptr) return -1;
+  int32_t newUid = 0;
+ {
+    std::lock_guard<std::mutex> lock(m_registerMutex);
+    m_triggerModeCallbacks = RegisterCallback(m_triggerModeCallbacks, "TriggerMode", callback, param, &newUid);
+  }
+  if (initialNotify) {
+    // We know that the callback is not null because of earlier null check
+    HAL_Value value = MakeEnum(GetTriggerMode());
+    callback("TriggerMode", param, &value);
+  }
+  return newUid;
+}
+
+void AnalogTriggerData::CancelTriggerModeCallback(int32_t uid) {
+  m_triggerModeCallbacks = CancelCallback(m_triggerModeCallbacks, uid);
+}
+
+void AnalogTriggerData::InvokeTriggerModeCallback(HAL_Value value) {
+  InvokeCallback(m_triggerModeCallbacks, "TriggerMode", &value);
+}
+
+HALSIM_AnalogTriggerMode AnalogTriggerData::GetTriggerMode() {
+  return m_triggerMode;
+}
+
+void AnalogTriggerData::SetTriggerMode(HALSIM_AnalogTriggerMode triggerMode) {
+  HALSIM_AnalogTriggerMode oldValue = m_triggerMode.exchange(triggerMode);
+  if (oldValue != triggerMode) {
+    InvokeTriggerModeCallback(MakeEnum(triggerMode));
+  }
+}
+
 extern "C" {
 void HALSIM_ResetAnalogTriggerData(int32_t index) {
   SimAnalogTriggerData[index].ResetData();
@@ -159,6 +196,18 @@ void HALSIM_CancelAnalogTriggerTriggerUpperBoundCallback(int32_t index, int32_t 
 
 double HALSIM_GetAnalogTriggerTriggerUpperBound(int32_t index) {
   return SimAnalogTriggerData[index].GetTriggerUpperBound();
+}
+
+int32_t HALSIM_RegisterAnalogTriggerTriggerModeCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
+  return SimAnalogTriggerData[index].RegisterTriggerModeCallback(callback, param, initialNotify);
+}
+
+void HALSIM_CancelAnalogTriggerTriggerModeCallback(int32_t index, int32_t uid) {
+  SimAnalogTriggerData[index].CancelTriggerModeCallback(uid);
+}
+
+HALSIM_AnalogTriggerMode HALSIM_GetAnalogTriggerTriggerMode(int32_t index) {
+  return SimAnalogTriggerData[index].GetTriggerMode();
 }
 
 }

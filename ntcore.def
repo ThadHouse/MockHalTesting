@@ -478,7 +478,7 @@ HAL_AttachInterruptHandler
 ;HAL_CheckCompressorModule
 ;HAL_CheckSolenoidChannel
 ;HAL_CheckSolenoidModule
-;HAL_CleanAnalogTrigger
+HAL_CleanAnalogTrigger
 HAL_CleanInterrupts
 HAL_CleanNotifier
 ;HAL_ClearAllPCMStickyFaults
@@ -508,9 +508,9 @@ HAL_GetAnalogLSBWeight
 HAL_GetAnalogOffset
 HAL_GetAnalogOversampleBits
 HAL_GetAnalogSampleRate
-;HAL_GetAnalogTriggerInWindow
-;HAL_GetAnalogTriggerOutput
-;HAL_GetAnalogTriggerTriggerState
+HAL_GetAnalogTriggerInWindow
+HAL_GetAnalogTriggerOutput
+HAL_GetAnalogTriggerTriggerState
 HAL_GetAnalogValue
 HAL_GetAnalogVoltage
 HAL_GetAnalogVoltsToValue
@@ -548,7 +548,7 @@ HAL_GetNotifierParam
 HAL_InitAccumulator
 HAL_InitializeAnalogGyro
 HAL_InitializeAnalogInputPort
-;HAL_InitializeAnalogTrigger
+HAL_InitializeAnalogTrigger
 ;HAL_InitializeCompressor
 ;HAL_InitializeCounter
 ;HAL_InitializeDriverStation
@@ -576,10 +576,10 @@ HAL_SetAnalogGyroParameters
 HAL_SetAnalogGyroVoltsPerDegreePerSecond
 HAL_SetAnalogOversampleBits
 HAL_SetAnalogSampleRate
-;HAL_SetAnalogTriggerAveraged
-;HAL_SetAnalogTriggerFiltered
-;HAL_SetAnalogTriggerLimitsRaw
-;HAL_SetAnalogTriggerLimitsVoltage
+HAL_SetAnalogTriggerAveraged
+HAL_SetAnalogTriggerFiltered
+HAL_SetAnalogTriggerLimitsRaw
+HAL_SetAnalogTriggerLimitsVoltage
 ;HAL_SetCompressorClosedLoopControl
 ;HAL_SetCounterAverageSize
 ;HAL_SetCounterDownSource

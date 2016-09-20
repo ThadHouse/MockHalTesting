@@ -3,6 +3,12 @@
 #include "HAL/HAL.h"
 #include "NotifyListener.h"
 
+enum HALSIM_AnalogTriggerMode : int32_t {
+  HALSIM_AnalogTriggerUnassigned,
+  HALSIM_AnalogTriggerFiltered,
+  HALSIM_AnalogTriggerAveraged
+};
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -19,6 +25,10 @@ double HALSIM_GetAnalogTriggerTriggerLowerBound(int32_t index);
 int32_t HALSIM_RegisterAnalogTriggerTriggerUpperBoundCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
 void HALSIM_CancelAnalogTriggerTriggerUpperBoundCallback(int32_t index, int32_t uid);
 double HALSIM_GetAnalogTriggerTriggerUpperBound(int32_t index);
+
+int32_t HALSIM_RegisterAnalogTriggerTriggerModeCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
+void HALSIM_CancelAnalogTriggerTriggerModeCallback(int32_t index, int32_t uid);
+HALSIM_AnalogTriggerMode HALSIM_GetAnalogTriggerTriggerMode(int32_t index);
 
 #ifdef __cplusplus
 }

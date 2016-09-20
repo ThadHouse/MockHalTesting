@@ -57,6 +57,8 @@ HAL_GyroHandle HAL_InitializeAnalogGyro(HAL_AnalogInputHandle analogHandle,
   gyro->handle = analogHandle;
   gyro->index = channel;
 
+  SimAnalogGyroData[channel].SetInitialized(true);
+
   return handle;
 }
 
@@ -65,7 +67,10 @@ void HAL_SetupAnalogGyro(HAL_GyroHandle handle, int32_t* status) {
 }
 
 void HAL_FreeAnalogGyro(HAL_GyroHandle handle) {
+  auto gyro = analogGyroHandles.Get(handle);
   analogGyroHandles.Free(handle);
+  if (gyro == nullptr) return;
+  SimAnalogGyroData[gyro->index].SetInitialized(false);
 }
 
 void HAL_SetAnalogGyroParameters(HAL_GyroHandle handle,

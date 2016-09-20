@@ -27,6 +27,12 @@ class AnalogTriggerData {
   double GetTriggerUpperBound();
   void SetTriggerUpperBound(double triggerUpperBound);
 
+  int32_t RegisterTriggerModeCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
+  void CancelTriggerModeCallback(int32_t uid);
+  void InvokeTriggerModeCallback(HAL_Value value);
+  HALSIM_AnalogTriggerMode GetTriggerMode();
+  void SetTriggerMode(HALSIM_AnalogTriggerMode triggerMode);
+
   virtual void ResetData();
  private:
   std::mutex m_registerMutex;
@@ -36,6 +42,8 @@ class AnalogTriggerData {
   std::shared_ptr<NotifyListenerVector> m_triggerLowerBoundCallbacks = nullptr;
   std::atomic<double> m_triggerUpperBound {0};
   std::shared_ptr<NotifyListenerVector> m_triggerUpperBoundCallbacks = nullptr;
+  std::atomic<HALSIM_AnalogTriggerMode> m_triggerMode {static_cast<HALSIM_AnalogTriggerMode>(0)};
+  std::shared_ptr<NotifyListenerVector> m_triggerModeCallbacks = nullptr;
 };
 extern AnalogTriggerData SimAnalogTriggerData[];
 }
