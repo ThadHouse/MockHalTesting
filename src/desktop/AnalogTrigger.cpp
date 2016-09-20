@@ -11,7 +11,6 @@
 
 namespace {
 struct AnalogTrigger {
-  //std::unique_ptr<tAnalogTrigger> trigger;
   HAL_AnalogInputHandle analogHandle;
   uint8_t index;
   HAL_Bool trigState;
@@ -68,6 +67,23 @@ void HAL_CleanAnalogTrigger(HAL_AnalogTriggerHandle analogTriggerHandle,
 
     double voltage = LSBWeight * 1.0e-9 * value - offset * 1.0e-9;
     return voltage;
+}
+
+
+int32_t hal::GetAnalogTriggerInputIndex(HAL_AnalogTriggerHandle handle, int32_t* status) {
+  auto trigger = analogTriggerHandles.Get(handle);
+  if (trigger == nullptr) {
+    *status = HAL_HANDLE_ERROR;
+    return -1;
+  }
+
+  auto analog_port = analogInputHandles.Get(trigger->analogHandle);
+  if (analog_port == nullptr) {
+    *status = HAL_HANDLE_ERROR;
+    return -1;
+  }
+
+  return analog_port->channel;
 }
 
 void HAL_SetAnalogTriggerLimitsRaw(HAL_AnalogTriggerHandle analogTriggerHandle,

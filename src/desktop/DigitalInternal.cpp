@@ -69,4 +69,14 @@ bool remapDigitalSource(HAL_Handle digitalSourceHandle,
     return false;
   }
 }
+
+int32_t GetDigitalInputChannel(HAL_DigitalHandle handle, int32_t* status) {
+  auto digital = digitalChannelHandles.Get(handle, HAL_HandleEnum::DIO);
+  if (digital == nullptr) {
+    *status = HAL_HANDLE_ERROR;
+    return -1;
+  }
+
+  return digital->channel;
+}
 }  // namespace hal
