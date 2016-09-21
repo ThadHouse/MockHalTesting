@@ -289,7 +289,7 @@ int64_t HAL_WaitForInterrupt(HAL_InterruptHandle interruptHandle,
   }
 
   if (interrupt->isAnalog) {
-    // Do analog
+    return WaitForInterruptAnalog(interruptHandle, interrupt.get(), timeout, ignorePrevious);
   } else {
     return WaitForInterruptDigital(interruptHandle, interrupt.get(), timeout, ignorePrevious);
   }
@@ -324,6 +324,38 @@ static void ProcessInterruptDigitalAsynchronous(const char* name, void* param, c
   callback(digitalIndex, interrupt->callbackParam);
 }
 
+static void ProcessInterruptAnalogAsynchronous(const char* name, void* param, const struct HAL_Value *value) {
+  // void* is a HAL handle
+  HAL_InterruptHandle handle = reinterpret_cast<HAL_InterruptHandle>(param);
+  auto interrupt = interruptHandles.Get(handle);
+  if (interrupt == nullptr) return;
+  // Have a valid interrupt
+  if (value->type != HAL_Type::HAL_DOUBLE) return;
+  double dVal = value->data.v_double;
+  int32_t status = 0;
+  bool retVal = GetAnalogTriggerValue(interrupt->portHandle, interrupt->trigType, &status);
+  if (status != 0) return;
+  // If no change in interrupt, return;
+  if (retVal == interrupt->previousState) return;
+  if (interrupt->previousState) {
+    interrupt->previousState = retVal;
+    if (!interrupt->fireOnDown) return;
+    // set timestamps
+  } else {
+    interrupt->previousState = retVal;
+    if (!interrupt->fireOnUp) return;
+  }
+
+  status = 0;
+  int32_t analogIndex = GetAnalogTriggerInputIndex(interrupt->portHandle, &status);
+  if (status != 0) return;
+
+  // run callback
+  auto callback = interrupt->callbackFunction;
+  if (callback == nullptr) return;
+  callback(analogIndex, interrupt->callbackParam);
+}
+
 
 static void EnableInterruptsDigital(HAL_InterruptHandle handle, Interrupt* interrupt) {
   int32_t status = 0;
@@ -335,6 +367,20 @@ static void EnableInterruptsDigital(HAL_InterruptHandle handle, Interrupt* inter
   int32_t uid = SimDIOData[digitalIndex].RegisterValueCallback(&ProcessInterruptDigitalAsynchronous, reinterpret_cast<void*>(handle), false);
   interrupt->callbackId = uid;
 }
+
+static void EnableInterruptsAnalog(HAL_InterruptHandle handle, Interrupt* interrupt) {
+  int32_t status = 0;
+  int32_t analogIndex = GetAnalogTriggerInputIndex(interrupt->portHandle, &status);
+  if (status != 0) return;
+
+  status = 0;
+  interrupt->previousState = GetAnalogTriggerValue(interrupt->portHandle, interrupt->trigType, &status);
+  if (status != 0) return;
+
+  int32_t uid = SimAnalogInData[analogIndex].RegisterVoltageCallback(&ProcessInterruptAnalogAsynchronous, reinterpret_cast<void*>(handle), false);
+  interrupt->callbackId = uid;
+}
+
 void HAL_EnableInterrupts(HAL_InterruptHandle interruptHandle, int32_t* status) {
   auto interrupt = interruptHandles.Get(interruptHandle);
   if (interrupt == nullptr) {
@@ -355,9 +401,9 @@ void HAL_EnableInterrupts(HAL_InterruptHandle interruptHandle, int32_t* status) 
   }
 
   if (interrupt->isAnalog) {
-    // Do analog
+    EnableInterruptsAnalog(interruptHandle, interrupt.get());
   } else {
-    return EnableInterruptsDigital(interruptHandle, interrupt.get());
+    EnableInterruptsDigital(interruptHandle, interrupt.get());
   }
 }
 void HAL_DisableInterrupts(HAL_InterruptHandle interruptHandle,
