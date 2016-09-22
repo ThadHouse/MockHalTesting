@@ -28,14 +28,14 @@ publishing {
             }
         }
         cpp(MavenPublication) {
-            artifact nat.ntcoreZip
-            artifact ntcoreSourceZip
+            artifact nat.mockhalZip
+            artifact mockhalSourceZip
             if (project.buildArm) {
-                artifact project(':arm').ntcoreZip
+                artifact project(':arm').mockhalZip
             }
 
             if (project.hasProperty('makeDesktop')) {
-                artifact nat.ntcoreZip, {
+                artifact nat.mockhalZip, {
                     classifier = 'desktop'
                 }
             }

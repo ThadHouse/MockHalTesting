@@ -67,7 +67,7 @@ def setupModel = { project, isArm ->
         }
 
         components {
-            ntcore(NativeLibrarySpec) {
+            mockhal(NativeLibrarySpec) {
                 if (isArm) {
                     targetPlatform 'arm'
                 } else {
@@ -113,12 +113,12 @@ def setupModel = { project, isArm ->
     }
 }
 
-def ntcoreZipTask = { project ->
-    project.ext.ntcoreZip = project.tasks.create("${project.isArm ? 'arm' : 'native'}NtcoreZip", Zip) {
-        description = 'Creates platform-specific zip of the desktop ntcore libraries.'
+def mockhalZipTask = { project ->
+    project.ext.mockhalZip = project.tasks.create("${project.isArm ? 'arm' : 'native'}mockhalZip", Zip) {
+        description = 'Creates platform-specific zip of the desktop mockhal libraries.'
         group = 'WPILib'
         destinationDir = project.buildDir
-        baseName = 'ntcore'
+        baseName = 'mockhal'
         classifier = "${project.buildPlatform}"
 
         from(file('include')) {
@@ -146,9 +146,9 @@ def ntcoreZipTask = { project ->
         }
     }
 
-    project.build.dependsOn project.ntcoreZip
+    project.build.dependsOn project.mockhalZip
 
-    def releaseTasks = [project.ntcoreZip]
+    def releaseTasks = [project.mockhalZip]
 
     if (includeJava) {
         releaseTasks.add(project.jar)
@@ -158,9 +158,9 @@ def ntcoreZipTask = { project ->
 
     project.tasks.whenTaskAdded { task ->
         def name = task.name.toLowerCase()
-        if (name.contains("ntcoresharedlibrary") || name.contains("ntcorestaticlibrary") ||
-            name.contains("ntcoretest")) {
-            project.ntcoreZip.dependsOn task
+        if (name.contains("mockhalsharedlibrary") || name.contains("mockhalstaticlibrary") ||
+            name.contains("mockhaltest")) {
+            project.mockhalZip.dependsOn task
         }
     }
 }
@@ -178,7 +178,7 @@ if (buildArm) {
         }
 
         setupModel(project, true)
-        ntcoreZipTask(project)
+        mockhalZipTask(project)
     }
 }
 
@@ -196,7 +196,7 @@ project(':native') {
     } else if (OperatingSystem.current().isWindows()) {
         apply from: '../toolchains/windows.gradle'
     } else {
-        throw new GradleException("ntcore does not support building on ${OperatingSystem.current().getFamilyName()}.")
+        throw new GradleException("mockhal does not support building on ${OperatingSystem.current().getFamilyName()}.")
     }
 
    // if (!project.hasProperty("withoutTests")) {
@@ -208,14 +208,14 @@ project(':native') {
     }
 
     setupModel(project, false)
-    ntcoreZipTask(project)
+    mockhalZipTask(project)
 }
 
-task ntcoreSourceZip(type: Zip) {
-    description = 'Creates a sources-zip of the ntcore source files'
+task mockhalSourceZip(type: Zip) {
+    description = 'Creates a sources-zip of the mockhal source files'
     group = 'WPILib'
     destinationDir = project.buildDir
-    baseName = 'ntcore'
+    baseName = 'mockhal'
     classifier = "sources"
 
     from ('src') {
@@ -239,9 +239,9 @@ task ntcoreSourceZip(type: Zip) {
     }
 }
 
-// Empty task for build so that ntcoreSourceZip will be build when running ./gradlew build
+// Empty task for build so that mockhalSourceZip will be build when running ./gradlew build
 task build
 
-build.dependsOn ntcoreSourceZip
+build.dependsOn mockhalSourceZip
 
 apply from: 'publish.gradle'
