@@ -8,6 +8,7 @@
 #include "HAL/HAL.h"
 
 #include "HAL/Errors.h"
+#include "HAL/DriverStation.h"
 #include "ErrorsInternal.h"
 #include "HAL/handles/HandlesInternal.h"
 #include "MockData/RoboRioDataInternal.h"
@@ -191,6 +192,7 @@ HAL_Bool HAL_GetBrownedOut(int32_t* status) {
 }
 
 int32_t HAL_Initialize(int32_t mode) { 
+  HAL_InitializeDriverStation();
   return 1; // Add initialization if we need to at a later point
 }
 
