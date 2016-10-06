@@ -21,7 +21,7 @@ namespace hal {
     controlWord->test = 0;
     controlWord->eStop = 0;
     controlWord->fmsAttached = 0;
-    controlWord->dsAttached = 0;
+    controlWord->dsAttached = 1;
     controlWord->control_reserved = 0;
     return 0;
   }
