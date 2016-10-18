@@ -5,7 +5,7 @@
 
 using namespace hal;
 
-EncoderData hal::SimEncoderData[kNumEncoders + kNumCounters];
+EncoderData hal::SimEncoderData[kNumEncoders];
 void EncoderData::ResetData() {
   m_initialized = false;
   m_initializedCallbacks = nullptr;
@@ -322,6 +322,10 @@ HAL_Bool HALSIM_GetEncoderInitialized(int32_t index) {
   return SimEncoderData[index].GetInitialized();
 }
 
+void HALSIM_SetEncoderInitialized(int32_t index, HAL_Bool initialized) {
+  SimEncoderData[index].SetInitialized(initialized);
+}
+
 int32_t HALSIM_RegisterEncoderCountCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   return SimEncoderData[index].RegisterCountCallback(callback, param, initialNotify);
 }
@@ -366,6 +370,10 @@ HAL_Bool HALSIM_GetEncoderReset(int32_t index) {
   return SimEncoderData[index].GetReset();
 }
 
+void HALSIM_SetEncoderReset(int32_t index, HAL_Bool reset) {
+  SimEncoderData[index].SetReset(reset);
+}
+
 int32_t HALSIM_RegisterEncoderMaxPeriodCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   return SimEncoderData[index].RegisterMaxPeriodCallback(callback, param, initialNotify);
 }
@@ -376,6 +384,10 @@ void HALSIM_CancelEncoderMaxPeriodCallback(int32_t index, int32_t uid) {
 
 double HALSIM_GetEncoderMaxPeriod(int32_t index) {
   return SimEncoderData[index].GetMaxPeriod();
+}
+
+void HALSIM_SetEncoderMaxPeriod(int32_t index, double maxPeriod) {
+  SimEncoderData[index].SetMaxPeriod(maxPeriod);
 }
 
 int32_t HALSIM_RegisterEncoderDirectionCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
@@ -406,6 +418,10 @@ HAL_Bool HALSIM_GetEncoderReverseDirection(int32_t index) {
   return SimEncoderData[index].GetReverseDirection();
 }
 
+void HALSIM_SetEncoderReverseDirection(int32_t index, HAL_Bool reverseDirection) {
+  SimEncoderData[index].SetReverseDirection(reverseDirection);
+}
+
 int32_t HALSIM_RegisterEncoderSamplesToAverageCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   return SimEncoderData[index].RegisterSamplesToAverageCallback(callback, param, initialNotify);
 }
@@ -416,6 +432,10 @@ void HALSIM_CancelEncoderSamplesToAverageCallback(int32_t index, int32_t uid) {
 
 int32_t HALSIM_GetEncoderSamplesToAverage(int32_t index) {
   return SimEncoderData[index].GetSamplesToAverage();
+}
+
+void HALSIM_SetEncoderSamplesToAverage(int32_t index, int32_t samplesToAverage) {
+  SimEncoderData[index].SetSamplesToAverage(samplesToAverage);
 }
 
 }

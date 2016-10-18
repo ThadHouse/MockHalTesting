@@ -169,4 +169,8 @@ HAL_Bool HALSIM_GetAnalogGyroInitialized(int32_t index) {
   return SimAnalogGyroData[index].GetInitialized();
 }
 
+void HALSIM_SetAnalogGyroInitialized(int32_t index, HAL_Bool initialized) {
+  SimAnalogGyroData[index].SetInitialized(initialized);
+}
+
 }

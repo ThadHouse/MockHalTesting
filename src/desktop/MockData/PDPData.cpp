@@ -176,6 +176,10 @@ HAL_Bool HALSIM_GetPDPInitialized(int32_t index) {
   return SimPDPData[index].GetInitialized();
 }
 
+void HALSIM_SetPDPInitialized(int32_t index, HAL_Bool initialized) {
+  SimPDPData[index].SetInitialized(initialized);
+}
+
 int32_t HALSIM_RegisterPDPTemperatureCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   return SimPDPData[index].RegisterTemperatureCallback(callback, param, initialNotify);
 }

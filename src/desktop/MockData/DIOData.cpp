@@ -211,6 +211,10 @@ HAL_Bool HALSIM_GetDIOInitialized(int32_t index) {
   return SimDIOData[index].GetInitialized();
 }
 
+void HALSIM_SetDIOInitialized(int32_t index, HAL_Bool initialized) {
+  SimDIOData[index].SetInitialized(initialized);
+}
+
 int32_t HALSIM_RegisterDIOValueCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   return SimDIOData[index].RegisterValueCallback(callback, param, initialNotify);
 }
@@ -239,6 +243,10 @@ double HALSIM_GetDIOPulseLength(int32_t index) {
   return SimDIOData[index].GetPulseLength();
 }
 
+void HALSIM_SetDIOPulseLength(int32_t index, double pulseLength) {
+  SimDIOData[index].SetPulseLength(pulseLength);
+}
+
 int32_t HALSIM_RegisterDIOIsInputCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   return SimDIOData[index].RegisterIsInputCallback(callback, param, initialNotify);
 }
@@ -251,6 +259,10 @@ HAL_Bool HALSIM_GetDIOIsInput(int32_t index) {
   return SimDIOData[index].GetIsInput();
 }
 
+void HALSIM_SetDIOIsInput(int32_t index, HAL_Bool isInput) {
+  SimDIOData[index].SetIsInput(isInput);
+}
+
 int32_t HALSIM_RegisterDIOFilterIndexCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   return SimDIOData[index].RegisterFilterIndexCallback(callback, param, initialNotify);
 }
@@ -261,6 +273,10 @@ void HALSIM_CancelDIOFilterIndexCallback(int32_t index, int32_t uid) {
 
 int32_t HALSIM_GetDIOFilterIndex(int32_t index) {
   return SimDIOData[index].GetFilterIndex();
+}
+
+void HALSIM_SetDIOFilterIndex(int32_t index, int32_t filterIndex) {
+  SimDIOData[index].SetFilterIndex(filterIndex);
 }
 
 }

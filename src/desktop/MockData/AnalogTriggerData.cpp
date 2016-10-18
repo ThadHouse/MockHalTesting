@@ -174,6 +174,10 @@ HAL_Bool HALSIM_GetAnalogTriggerInitialized(int32_t index) {
   return SimAnalogTriggerData[index].GetInitialized();
 }
 
+void HALSIM_SetAnalogTriggerInitialized(int32_t index, HAL_Bool initialized) {
+  SimAnalogTriggerData[index].SetInitialized(initialized);
+}
+
 int32_t HALSIM_RegisterAnalogTriggerTriggerLowerBoundCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   return SimAnalogTriggerData[index].RegisterTriggerLowerBoundCallback(callback, param, initialNotify);
 }
@@ -184,6 +188,10 @@ void HALSIM_CancelAnalogTriggerTriggerLowerBoundCallback(int32_t index, int32_t 
 
 double HALSIM_GetAnalogTriggerTriggerLowerBound(int32_t index) {
   return SimAnalogTriggerData[index].GetTriggerLowerBound();
+}
+
+void HALSIM_SetAnalogTriggerTriggerLowerBound(int32_t index, double triggerLowerBound) {
+  SimAnalogTriggerData[index].SetTriggerLowerBound(triggerLowerBound);
 }
 
 int32_t HALSIM_RegisterAnalogTriggerTriggerUpperBoundCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
@@ -198,6 +206,10 @@ double HALSIM_GetAnalogTriggerTriggerUpperBound(int32_t index) {
   return SimAnalogTriggerData[index].GetTriggerUpperBound();
 }
 
+void HALSIM_SetAnalogTriggerTriggerUpperBound(int32_t index, double triggerUpperBound) {
+  SimAnalogTriggerData[index].SetTriggerUpperBound(triggerUpperBound);
+}
+
 int32_t HALSIM_RegisterAnalogTriggerTriggerModeCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   return SimAnalogTriggerData[index].RegisterTriggerModeCallback(callback, param, initialNotify);
 }
@@ -208,6 +220,10 @@ void HALSIM_CancelAnalogTriggerTriggerModeCallback(int32_t index, int32_t uid) {
 
 HALSIM_AnalogTriggerMode HALSIM_GetAnalogTriggerTriggerMode(int32_t index) {
   return SimAnalogTriggerData[index].GetTriggerMode();
+}
+
+void HALSIM_SetAnalogTriggerTriggerMode(int32_t index, HALSIM_AnalogTriggerMode triggerMode) {
+  SimAnalogTriggerData[index].SetTriggerMode(triggerMode);
 }
 
 }

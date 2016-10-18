@@ -11,6 +11,7 @@ void HALSIM_ResetPDPData(int32_t index);
 int32_t HALSIM_RegisterPDPInitializedCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
 void HALSIM_CancelPDPInitializedCallback(int32_t index, int32_t uid);
 HAL_Bool HALSIM_GetPDPInitialized(int32_t index);
+void HALSIM_SetPDPInitialized(int32_t index, HAL_Bool initialized);
 
 int32_t HALSIM_RegisterPDPTemperatureCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
 void HALSIM_CancelPDPTemperatureCallback(int32_t index, int32_t uid);

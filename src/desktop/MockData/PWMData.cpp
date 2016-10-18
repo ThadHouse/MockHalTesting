@@ -248,6 +248,10 @@ HAL_Bool HALSIM_GetPWMInitialized(int32_t index) {
   return SimPWMData[index].GetInitialized();
 }
 
+void HALSIM_SetPWMInitialized(int32_t index, HAL_Bool initialized) {
+  SimPWMData[index].SetInitialized(initialized);
+}
+
 int32_t HALSIM_RegisterPWMRawValueCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   return SimPWMData[index].RegisterRawValueCallback(callback, param, initialNotify);
 }
@@ -308,6 +312,10 @@ int32_t HALSIM_GetPWMPeriodScale(int32_t index) {
   return SimPWMData[index].GetPeriodScale();
 }
 
+void HALSIM_SetPWMPeriodScale(int32_t index, int32_t periodScale) {
+  SimPWMData[index].SetPeriodScale(periodScale);
+}
+
 int32_t HALSIM_RegisterPWMZeroLatchCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   return SimPWMData[index].RegisterZeroLatchCallback(callback, param, initialNotify);
 }
@@ -318,6 +326,10 @@ void HALSIM_CancelPWMZeroLatchCallback(int32_t index, int32_t uid) {
 
 HAL_Bool HALSIM_GetPWMZeroLatch(int32_t index) {
   return SimPWMData[index].GetZeroLatch();
+}
+
+void HALSIM_SetPWMZeroLatch(int32_t index, HAL_Bool zeroLatch) {
+  SimPWMData[index].SetZeroLatch(zeroLatch);
 }
 
 }

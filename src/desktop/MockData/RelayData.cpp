@@ -45,10 +45,10 @@ HAL_Bool RelayData::GetInitializedForward() {
   return m_initializedForward;
 }
 
-void RelayData::SetInitializedForward(HAL_Bool initialized) {
-  HAL_Bool oldValue = m_initializedForward.exchange(initialized);
-  if (oldValue != initialized) {
-    InvokeInitializedForwardCallback(MakeBoolean(initialized));
+void RelayData::SetInitializedForward(HAL_Bool initializedForward) {
+  HAL_Bool oldValue = m_initializedForward.exchange(initializedForward);
+  if (oldValue != initializedForward) {
+    InvokeInitializedForwardCallback(MakeBoolean(initializedForward));
   }
 }
 
@@ -80,10 +80,10 @@ HAL_Bool RelayData::GetInitializedReverse() {
   return m_initializedReverse;
 }
 
-void RelayData::SetInitializedReverse(HAL_Bool initialized) {
-  HAL_Bool oldValue = m_initializedReverse.exchange(initialized);
-  if (oldValue != initialized) {
-    InvokeInitializedReverseCallback(MakeBoolean(initialized));
+void RelayData::SetInitializedReverse(HAL_Bool initializedReverse) {
+  HAL_Bool oldValue = m_initializedReverse.exchange(initializedReverse);
+  if (oldValue != initializedReverse) {
+    InvokeInitializedReverseCallback(MakeBoolean(initializedReverse));
   }
 }
 
@@ -174,6 +174,10 @@ HAL_Bool HALSIM_GetRelayInitializedForward(int32_t index) {
   return SimRelayData[index].GetInitializedForward();
 }
 
+void HALSIM_SetRelayInitializedForward(int32_t index, HAL_Bool initializedForward) {
+  SimRelayData[index].SetInitializedForward(initializedForward);
+}
+
 int32_t HALSIM_RegisterRelayInitializedReverseCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   return SimRelayData[index].RegisterInitializedReverseCallback(callback, param, initialNotify);
 }
@@ -184,6 +188,10 @@ void HALSIM_CancelRelayInitializedReverseCallback(int32_t index, int32_t uid) {
 
 HAL_Bool HALSIM_GetRelayInitializedReverse(int32_t index) {
   return SimRelayData[index].GetInitializedReverse();
+}
+
+void HALSIM_SetRelayInitializedReverse(int32_t index, HAL_Bool initializedReverse) {
+  SimRelayData[index].SetInitializedReverse(initializedReverse);
 }
 
 int32_t HALSIM_RegisterRelayForwardCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
@@ -198,6 +206,10 @@ HAL_Bool HALSIM_GetRelayForward(int32_t index) {
   return SimRelayData[index].GetForward();
 }
 
+void HALSIM_SetRelayForward(int32_t index, HAL_Bool forward) {
+  SimRelayData[index].SetForward(forward);
+}
+
 int32_t HALSIM_RegisterRelayReverseCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   return SimRelayData[index].RegisterReverseCallback(callback, param, initialNotify);
 }
@@ -208,6 +220,10 @@ void HALSIM_CancelRelayReverseCallback(int32_t index, int32_t uid) {
 
 HAL_Bool HALSIM_GetRelayReverse(int32_t index) {
   return SimRelayData[index].GetReverse();
+}
+
+void HALSIM_SetRelayReverse(int32_t index, HAL_Bool reverse) {
+  SimRelayData[index].SetReverse(reverse);
 }
 
 }

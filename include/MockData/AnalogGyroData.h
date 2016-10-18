@@ -21,6 +21,7 @@ void HALSIM_SetAnalogGyroRate(int32_t index, double rate);
 int32_t HALSIM_RegisterAnalogGyroInitializedCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
 void HALSIM_CancelAnalogGyroInitializedCallback(int32_t index, int32_t uid);
 HAL_Bool HALSIM_GetAnalogGyroInitialized(int32_t index);
+void HALSIM_SetAnalogGyroInitialized(int32_t index, HAL_Bool initialized);
 
 #ifdef __cplusplus
 }

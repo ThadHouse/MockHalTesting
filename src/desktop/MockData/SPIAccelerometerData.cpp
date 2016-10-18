@@ -211,6 +211,10 @@ HAL_Bool HALSIM_GetSPIAccelerometerActive(int32_t index) {
   return SimSPIAccelerometerData[index].GetActive();
 }
 
+void HALSIM_SetSPIAccelerometerActive(int32_t index, HAL_Bool active) {
+  SimSPIAccelerometerData[index].SetActive(active);
+}
+
 int32_t HALSIM_RegisterSPIAccelerometerRangeCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   return SimSPIAccelerometerData[index].RegisterRangeCallback(callback, param, initialNotify);
 }
@@ -221,6 +225,10 @@ void HALSIM_CancelSPIAccelerometerRangeCallback(int32_t index, int32_t uid) {
 
 int32_t HALSIM_GetSPIAccelerometerRange(int32_t index) {
   return SimSPIAccelerometerData[index].GetRange();
+}
+
+void HALSIM_SetSPIAccelerometerRange(int32_t index, int32_t range) {
+  SimSPIAccelerometerData[index].SetRange(range);
 }
 
 int32_t HALSIM_RegisterSPIAccelerometerXCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {

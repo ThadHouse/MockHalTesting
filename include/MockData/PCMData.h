@@ -11,14 +11,17 @@ void HALSIM_ResetPCMData(int32_t index);
 int32_t HALSIM_RegisterPCMSolenoidInitializedCallback(int32_t index, int32_t channel, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
 void HALSIM_CancelPCMSolenoidInitializedCallback(int32_t index, int32_t channel, int32_t uid);
 HAL_Bool HALSIM_GetPCMSolenoidInitialized(int32_t index, int32_t channel);
+void HALSIM_SetPCMSolenoidInitialized(int32_t index, int32_t channel, HAL_Bool solenoidInitialized);
 
 int32_t HALSIM_RegisterPCMSolenoidOutputCallback(int32_t index, int32_t channel, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
 void HALSIM_CancelPCMSolenoidOutputCallback(int32_t index, int32_t channel, int32_t uid);
 HAL_Bool HALSIM_GetPCMSolenoidOutput(int32_t index, int32_t channel);
+void HALSIM_SetPCMSolenoidOutput(int32_t index, int32_t channel, HAL_Bool solenoidOutput);
 
 int32_t HALSIM_RegisterPCMCompressorInitializedCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
 void HALSIM_CancelPCMCompressorInitializedCallback(int32_t index, int32_t uid);
 HAL_Bool HALSIM_GetPCMCompressorInitialized(int32_t index);
+void HALSIM_SetPCMCompressorInitialized(int32_t index, HAL_Bool compressorInitialized);
 
 int32_t HALSIM_RegisterPCMCompressorOnCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
 void HALSIM_CancelPCMCompressorOnCallback(int32_t index, int32_t uid);
@@ -28,6 +31,7 @@ void HALSIM_SetPCMCompressorOn(int32_t index, HAL_Bool compressorOn);
 int32_t HALSIM_RegisterPCMClosedLoopEnabledCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
 void HALSIM_CancelPCMClosedLoopEnabledCallback(int32_t index, int32_t uid);
 HAL_Bool HALSIM_GetPCMClosedLoopEnabled(int32_t index);
+void HALSIM_SetPCMClosedLoopEnabled(int32_t index, HAL_Bool closedLoopEnabled);
 
 int32_t HALSIM_RegisterPCMPressureSwitchCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
 void HALSIM_CancelPCMPressureSwitchCallback(int32_t index, int32_t uid);

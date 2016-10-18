@@ -13,14 +13,13 @@ class RelayData {
   void CancelInitializedForwardCallback(int32_t uid);
   void InvokeInitializedForwardCallback(HAL_Value value);
   HAL_Bool GetInitializedForward();
-  void SetInitializedForward(HAL_Bool initialized);
-  
+  void SetInitializedForward(HAL_Bool initializedForward);
+
   int32_t RegisterInitializedReverseCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
   void CancelInitializedReverseCallback(int32_t uid);
   void InvokeInitializedReverseCallback(HAL_Value value);
   HAL_Bool GetInitializedReverse();
-  void SetInitializedReverse(HAL_Bool initialized);
-
+  void SetInitializedReverse(HAL_Bool initializedReverse);
 
   int32_t RegisterForwardCallback(HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify);
   void CancelForwardCallback(int32_t uid);

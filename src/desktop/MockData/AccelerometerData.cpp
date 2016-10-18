@@ -211,6 +211,10 @@ HAL_Bool HALSIM_GetAccelerometerActive(int32_t index) {
   return SimAccelerometerData[index].GetActive();
 }
 
+void HALSIM_SetAccelerometerActive(int32_t index, HAL_Bool active) {
+  SimAccelerometerData[index].SetActive(active);
+}
+
 int32_t HALSIM_RegisterAccelerometerRangeCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   return SimAccelerometerData[index].RegisterRangeCallback(callback, param, initialNotify);
 }
@@ -221,6 +225,10 @@ void HALSIM_CancelAccelerometerRangeCallback(int32_t index, int32_t uid) {
 
 HAL_AccelerometerRange HALSIM_GetAccelerometerRange(int32_t index) {
   return SimAccelerometerData[index].GetRange();
+}
+
+void HALSIM_SetAccelerometerRange(int32_t index, HAL_AccelerometerRange range) {
+  SimAccelerometerData[index].SetRange(range);
 }
 
 int32_t HALSIM_RegisterAccelerometerXCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {

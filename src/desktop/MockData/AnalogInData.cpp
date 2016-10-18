@@ -300,10 +300,10 @@ int32_t AnalogInData::GetAccumulatorCenter() {
   return m_accumulatorCenter;
 }
 
-void AnalogInData::SetAccumulatorCenter(int32_t AccumulatorCenter) {
-  int32_t oldValue = m_accumulatorCenter.exchange(AccumulatorCenter);
-  if (oldValue != AccumulatorCenter) {
-    InvokeAccumulatorCenterCallback(MakeInt(AccumulatorCenter));
+void AnalogInData::SetAccumulatorCenter(int32_t accumulatorCenter) {
+  int32_t oldValue = m_accumulatorCenter.exchange(accumulatorCenter);
+  if (oldValue != accumulatorCenter) {
+    InvokeAccumulatorCenterCallback(MakeInt(accumulatorCenter));
   }
 }
 
@@ -335,10 +335,10 @@ int32_t AnalogInData::GetAccumulatorDeadband() {
   return m_accumulatorDeadband;
 }
 
-void AnalogInData::SetAccumulatorDeadband(int32_t AccumulatorDeadband) {
-  int32_t oldValue = m_accumulatorDeadband.exchange(AccumulatorDeadband);
-  if (oldValue != AccumulatorDeadband) {
-    InvokeAccumulatorDeadbandCallback(MakeInt(AccumulatorDeadband));
+void AnalogInData::SetAccumulatorDeadband(int32_t accumulatorDeadband) {
+  int32_t oldValue = m_accumulatorDeadband.exchange(accumulatorDeadband);
+  if (oldValue != accumulatorDeadband) {
+    InvokeAccumulatorDeadbandCallback(MakeInt(accumulatorDeadband));
   }
 }
 
@@ -359,6 +359,10 @@ HAL_Bool HALSIM_GetAnalogInInitialized(int32_t index) {
   return SimAnalogInData[index].GetInitialized();
 }
 
+void HALSIM_SetAnalogInInitialized(int32_t index, HAL_Bool initialized) {
+  SimAnalogInData[index].SetInitialized(initialized);
+}
+
 int32_t HALSIM_RegisterAnalogInAverageBitsCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   return SimAnalogInData[index].RegisterAverageBitsCallback(callback, param, initialNotify);
 }
@@ -371,6 +375,10 @@ int32_t HALSIM_GetAnalogInAverageBits(int32_t index) {
   return SimAnalogInData[index].GetAverageBits();
 }
 
+void HALSIM_SetAnalogInAverageBits(int32_t index, int32_t averageBits) {
+  SimAnalogInData[index].SetAverageBits(averageBits);
+}
+
 int32_t HALSIM_RegisterAnalogInOversampleBitsCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   return SimAnalogInData[index].RegisterOversampleBitsCallback(callback, param, initialNotify);
 }
@@ -381,6 +389,10 @@ void HALSIM_CancelAnalogInOversampleBitsCallback(int32_t index, int32_t uid) {
 
 int32_t HALSIM_GetAnalogInOversampleBits(int32_t index) {
   return SimAnalogInData[index].GetOversampleBits();
+}
+
+void HALSIM_SetAnalogInOversampleBits(int32_t index, int32_t oversampleBits) {
+  SimAnalogInData[index].SetOversampleBits(oversampleBits);
 }
 
 int32_t HALSIM_RegisterAnalogInVoltageCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
@@ -409,6 +421,10 @@ void HALSIM_CancelAnalogInAccumulatorInitializedCallback(int32_t index, int32_t 
 
 HAL_Bool HALSIM_GetAnalogInAccumulatorInitialized(int32_t index) {
   return SimAnalogInData[index].GetAccumulatorInitialized();
+}
+
+void HALSIM_SetAnalogInAccumulatorInitialized(int32_t index, HAL_Bool accumulatorInitialized) {
+  SimAnalogInData[index].SetAccumulatorInitialized(accumulatorInitialized);
 }
 
 int32_t HALSIM_RegisterAnalogInAccumulatorValueCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
@@ -455,6 +471,10 @@ int32_t HALSIM_GetAnalogInAccumulatorCenter(int32_t index) {
   return SimAnalogInData[index].GetAccumulatorCenter();
 }
 
+void HALSIM_SetAnalogInAccumulatorCenter(int32_t index, int32_t accumulatorCenter) {
+  SimAnalogInData[index].SetAccumulatorCenter(accumulatorCenter);
+}
+
 int32_t HALSIM_RegisterAnalogInAccumulatorDeadbandCallback(int32_t index, HAL_NotifyCallback callback, void* param, HAL_Bool initialNotify) {
   return SimAnalogInData[index].RegisterAccumulatorDeadbandCallback(callback, param, initialNotify);
 }
@@ -465,6 +485,10 @@ void HALSIM_CancelAnalogInAccumulatorDeadbandCallback(int32_t index, int32_t uid
 
 int32_t HALSIM_GetAnalogInAccumulatorDeadband(int32_t index) {
   return SimAnalogInData[index].GetAccumulatorDeadband();
+}
+
+void HALSIM_SetAnalogInAccumulatorDeadband(int32_t index, int32_t accumulatorDeadband) {
+  SimAnalogInData[index].SetAccumulatorDeadband(accumulatorDeadband);
 }
 
 }
