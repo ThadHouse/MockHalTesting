@@ -26,7 +26,7 @@
 
 .vs/
 *.def
-!ntcore.def
+!mockhal.def
 *.opensdf
 *.vcxproj
 *.vcxproj.user
