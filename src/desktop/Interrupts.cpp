@@ -76,6 +76,10 @@ HAL_InterruptHandle HAL_InitializeInterrupts(HAL_Bool watcher, int32_t* status) 
 
   anInterrupt->index = getHandleIndex(handle);
   anInterrupt->callbackId = -1;
+
+  anInterrupt->watcher = watcher;
+
+  return handle;
 }
 void HAL_CleanInterrupts(HAL_InterruptHandle interruptHandle, int32_t* status) {
   HAL_DisableInterrupts(interruptHandle, status);
@@ -395,7 +399,7 @@ void HAL_EnableInterrupts(HAL_InterruptHandle interruptHandle, int32_t* status) 
   }
 
   // EnableInterrupts has already been called
-  if (interrupt->callbackId < 0) {
+  if (interrupt->callbackId >= 0) {
     // We can double enable safely.
     return;
   }
@@ -419,6 +423,10 @@ void HAL_DisableInterrupts(HAL_InterruptHandle interruptHandle,
 
   if (interrupt->isAnalog) {
     // Do analog
+    int32_t status = 0;
+    int32_t analogIndex = GetAnalogTriggerInputIndex(interrupt->portHandle, &status);
+    if (status != 0) return;
+    SimAnalogInData[analogIndex].CancelVoltageCallback(interrupt->callbackId);
   } else {
     int32_t status = 0;
     int32_t digitalIndex = GetDigitalInputChannel(interrupt->portHandle, &status);

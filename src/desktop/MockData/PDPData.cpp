@@ -13,7 +13,7 @@ void PDPData::ResetData() {
   m_temperatureCallbacks = nullptr;
   m_voltage = 12.0;
   m_voltageCallbacks = nullptr;
-  for (int i = 0; i < kNumPWMChannels; i++) {
+  for (int i = 0; i < kNumPDPChannels; i++) {
     m_current[i] = 0;
     m_currentCallbacks[i] = nullptr;
   }
