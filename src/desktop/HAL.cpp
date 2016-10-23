@@ -142,7 +142,10 @@ const char* HAL_GetErrorMessage(int32_t code) {
   }
 }
 
-// TODO: Add Runtime Detector
+/**
+ * Returns the runtime type of this HAL
+ */
+HAL_RuntimeType HAL_GetRuntimeType() { return HAL_Mock; }
 
 /**
  * Return the FPGA Version number.
