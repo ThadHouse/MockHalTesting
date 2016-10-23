@@ -1,6 +1,7 @@
 LIBRARY MOCKHAL
 EXPORTS
 
+HAL_GetRuntimeType
 HAL_AllocateDigitalPWM
 HAL_CheckAnalogOutputChannel
 HAL_CheckDIOChannel
