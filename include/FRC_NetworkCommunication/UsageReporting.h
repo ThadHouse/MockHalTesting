@@ -2,8 +2,8 @@
 #ifndef __UsageReporting_h__
 #define __UsageReporting_h__
 
-#ifdef WIN32
-#include <vxWorks_compat.h>
+#ifdef _WIN32
+#include <stdint.h>
 #define EXPORT_FUNC __declspec(dllexport) __cdecl
 #elif defined (__vxworks)
 #include <vxWorks.h>
@@ -30,7 +30,7 @@ namespace nUsageReporting
         kResourceType_AnalogTrigger,
         kResourceType_AnalogTriggerOutput,
         kResourceType_CANJaguar,
-        kResourceType_Compressor,
+        kResourceType_Compressor, // 10
         kResourceType_Counter,
         kResourceType_Dashboard,
         kResourceType_DigitalInput,
@@ -40,7 +40,7 @@ namespace nUsageReporting
         kResourceType_DriverStationLCD,
         kResourceType_Encoder,
         kResourceType_GearTooth,
-        kResourceType_Gyro,
+        kResourceType_Gyro, // 20
         kResourceType_I2C,
         kResourceType_Framework,
         kResourceType_Jaguar,
@@ -50,7 +50,7 @@ namespace nUsageReporting
         kResourceType_PIDController,
         kResourceType_Preferences,
         kResourceType_PWM,
-        kResourceType_Relay,
+        kResourceType_Relay, // 30
         kResourceType_RobotDrive,
         kResourceType_SerialPort,
         kResourceType_Servo,
@@ -60,7 +60,7 @@ namespace nUsageReporting
         kResourceType_Ultrasonic,
         kResourceType_Victor,
         kResourceType_Button,
-        kResourceType_Command,
+        kResourceType_Command, // 40
         kResourceType_AxisCamera,
         kResourceType_PCVideoServer,
         kResourceType_SmartDashboard,
@@ -70,7 +70,7 @@ namespace nUsageReporting
         kResourceType_HiTechnicCompass,
         kResourceType_SRF08,
         kResourceType_AnalogOutput,
-        kResourceType_VictorSP,
+        kResourceType_VictorSP, // 50
         kResourceType_TalonSRX,
         kResourceType_CANTalonSRX,
         kResourceType_ADXL362,
@@ -78,6 +78,7 @@ namespace nUsageReporting
         kResourceType_RevSPARK,
         kResourceType_MindsensorsSD540,
         kResourceType_DigitalFilter,
+        kResourceType_ADIS16448,
     } tResourceType;
 
     typedef enum
@@ -86,6 +87,7 @@ namespace nUsageReporting
         kLanguage_CPlusPlus = 2,
         kLanguage_Java = 3,
         kLanguage_Python = 4,
+        kLanguage_DotNet = 5,
 
         kCANPlugin_BlackJagBridge = 1,
         kCANPlugin_2CAN = 2,

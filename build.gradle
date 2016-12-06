@@ -7,7 +7,7 @@ if (!hasProperty('repo')) {
     }
 }
 
-ext.buildArm = !project.hasProperty('skipArm')
+ext.buildArm = project.hasProperty('buildArm')
 
 if (hasProperty('makeDesktop')) {
     println 'Making desktop classifier jar. NOTE: This desktop version should only be used for local testing.' +

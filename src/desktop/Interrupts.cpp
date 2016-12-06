@@ -57,7 +57,7 @@ static LimitedHandleResource<HAL_InterruptHandle, Interrupt, kNumInterrupts,
 
 typedef HAL_Handle SynchronousWaitDataHandle;
 static UnlimitedHandleResource<SynchronousWaitDataHandle, SynchronousWaitData, 
-                               HAL_HandleEnum::SimData>
+                               HAL_HandleEnum::Vendor>
     synchronousInterruptHandles;
 
 

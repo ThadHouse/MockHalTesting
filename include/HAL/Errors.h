@@ -83,6 +83,18 @@
 #define HAL_HANDLE_ERROR_MESSAGE \
   "HAL: A handle parameter was passed incorrectly"
 
+#define HAL_SERIAL_PORT_NOT_FOUND -1123
+#define HAL_SERIAL_PORT_NOT_FOUND_MESSAGE \
+  "HAL: The specified serial port device was not found";
+
+#define HAL_THREAD_PRIORITY_ERROR -1152
+#define HAL_THREAD_PRIORITY_ERROR_MESSAGE \
+  "HAL: Getting or setting the priority of a thread has failed";
+
+#define HAL_THREAD_PRIORITY_RANGE_ERROR -1153
+#define HAL_THREAD_PRIORITY_RANGE_ERROR_MESSAGE \
+  "HAL: The priority requested to be set is invalid"
+
 #define VI_ERROR_SYSTEM_ERROR_MESSAGE "HAL - VISA: System Error";
 #define VI_ERROR_INV_OBJECT_MESSAGE "HAL - VISA: Invalid Object"
 #define VI_ERROR_RSRC_LOCKED_MESSAGE "HAL - VISA: Resource Locked"
