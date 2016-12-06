@@ -140,6 +140,11 @@ HAL_NotifierHandle HAL_InitializeNotifier(HAL_NotifierProcessFunction process,
   return handle;
 }
 
+HAL_NotifierHandle HAL_InitializeNotifierThreaded(
+    HAL_NotifierProcessFunction process, void* param, int32_t* status) {
+      return HAL_InitializeNotifier(process, param, status);
+    }
+
 void HAL_CleanNotifier(HAL_NotifierHandle notifierHandle, int32_t* status) {
   {
     std::lock_guard<priority_recursive_mutex> sync(notifierMutex);

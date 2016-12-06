@@ -178,6 +178,8 @@ HAL_GetThreadPriority
 HAL_GetCurrentThreadPriority
 HAL_SetThreadPriority
 HAL_SetCurrentThreadPriority
+HAL_InitializeNotifierThreaded
+HAL_AttachInterruptHandlerThreaded
 
 ; Start of Simulation Definitions
 
