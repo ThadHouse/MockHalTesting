@@ -13,7 +13,11 @@
 #include "HAL/handles/HandlesInternal.h"
 #include "MockData/RoboRioDataInternal.h"
 
+#include <chrono>
+
 using namespace hal;
+
+static std::chrono::time_point<std::chrono::steady_clock> startTime;
 
 extern "C" {
 
@@ -175,7 +179,9 @@ int64_t HAL_GetFPGARevision(int32_t* status) {
  * reset).
  */
 uint64_t HAL_GetFPGATime(int32_t* status) {
-  return 0; // Figure this out
+  auto now = std::chrono::steady_clock::now();
+  auto currentTime = now - startTime;
+  return std::chrono::duration_cast<std::chrono::milliseconds>(currentTime).count(); // Figure this out
 }
 
 /**
@@ -194,7 +200,8 @@ HAL_Bool HAL_GetBrownedOut(int32_t* status) {
   return false; // Figure out if we need to detect a brownout condition
 }
 
-int32_t HAL_Initialize(int32_t mode) { 
+int32_t HAL_Initialize(int32_t mode) {
+  startTime = std::chrono::steady_clock::now();
   HAL_InitializeDriverStation();
   return 1; // Add initialization if we need to at a later point
 }
