@@ -4,26 +4,27 @@
 #include <atomic>
 #include <cstdio>
 #include <thread>
+#include "support/timestamp.h"
 
 static std::atomic<bool> programStarted {false};
 
-static std::atomic<std::chrono::steady_clock::time_point> programStartTime {std::chrono::steady_clock::now()};
+static std::atomic<uint64_t> programStartTime {wpi::Now() / 10};
 
 namespace hal {
 void RestartTiming() {
-  programStartTime = std::chrono::steady_clock::now();
+  programStartTime = wpi::Now() / 10;
 }
 
 int64_t GetFPGATime() {
-  std::chrono::steady_clock::time_point start = programStartTime;
-  std::chrono::steady_clock::time_point current = std::chrono::steady_clock::now();
-  return std::chrono::duration_cast<std::chrono::nanoseconds>(current - start).count();
+  auto now = wpi::Now() / 10;
+  auto currentTime = now - programStartTime;
+  return currentTime; 
 }
 
 double GetFPGATimestamp() {
-  std::chrono::steady_clock::time_point start = programStartTime;
-  std::chrono::steady_clock::time_point current = std::chrono::steady_clock::now();
-  return std::chrono::duration_cast<std::chrono::duration<double>>(current - start).count();
+  auto now = wpi::Now() / 10;
+  auto currentTime = now - programStartTime;
+  return currentTime * 1.0e-6;
 }
 
 void SetProgramStarted() {

@@ -12,14 +12,9 @@
 #include "ErrorsInternal.h"
 #include "HAL/handles/HandlesInternal.h"
 #include "MockData/RoboRioDataInternal.h"
-
-#include "support/timestamp.h"
-
-#include <chrono>
+#include "MockHooks.h"
 
 using namespace hal;
-
-static uint64_t startTime;
 
 extern "C" {
 
@@ -181,9 +176,7 @@ int64_t HAL_GetFPGARevision(int32_t* status) {
  * reset).
  */
 uint64_t HAL_GetFPGATime(int32_t* status) {
-  auto now = wpi::Now() / 10;
-  auto currentTime = now - startTime;
-  return currentTime; // Figure this out
+  return hal::GetFPGATime();
 }
 
 /**
@@ -203,7 +196,7 @@ HAL_Bool HAL_GetBrownedOut(int32_t* status) {
 }
 
 int32_t HAL_Initialize(int32_t mode) {
-  startTime = wpi::Now() / 10;
+  hal::RestartTiming();
   HAL_InitializeDriverStation();
   return 1; // Add initialization if we need to at a later point
 }
