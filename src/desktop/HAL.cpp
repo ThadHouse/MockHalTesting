@@ -13,11 +13,13 @@
 #include "HAL/handles/HandlesInternal.h"
 #include "MockData/RoboRioDataInternal.h"
 
+#include "support/timestamp.h"
+
 #include <chrono>
 
 using namespace hal;
 
-static std::chrono::time_point<std::chrono::steady_clock> startTime;
+static uint64_t startTime;
 
 extern "C" {
 
@@ -179,9 +181,9 @@ int64_t HAL_GetFPGARevision(int32_t* status) {
  * reset).
  */
 uint64_t HAL_GetFPGATime(int32_t* status) {
-  auto now = std::chrono::steady_clock::now();
+  auto now = wpi::Now() / 10;
   auto currentTime = now - startTime;
-  return std::chrono::duration_cast<std::chrono::milliseconds>(currentTime).count(); // Figure this out
+  return currentTime; // Figure this out
 }
 
 /**
@@ -201,7 +203,7 @@ HAL_Bool HAL_GetBrownedOut(int32_t* status) {
 }
 
 int32_t HAL_Initialize(int32_t mode) {
-  startTime = std::chrono::steady_clock::now();
+  startTime = wpi::Now() / 10;
   HAL_InitializeDriverStation();
   return 1; // Add initialization if we need to at a later point
 }

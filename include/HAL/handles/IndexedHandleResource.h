@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) FIRST 2016. All Rights Reserved.                             */
+/* Copyright (c) FIRST 2016-2017. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -38,16 +38,17 @@ class IndexedHandleResource {
   friend class IndexedHandleResourceTest;
 
  public:
-  IndexedHandleResource(const IndexedHandleResource&) = delete;
-  IndexedHandleResource operator=(const IndexedHandleResource&) = delete;
   IndexedHandleResource() = default;
+  IndexedHandleResource(const IndexedHandleResource&) = delete;
+  IndexedHandleResource& operator=(const IndexedHandleResource&) = delete;
+
   THandle Allocate(int16_t index, int32_t* status);
   std::shared_ptr<TStruct> Get(THandle handle);
   void Free(THandle handle);
 
  private:
   std::array<std::shared_ptr<TStruct>, size> m_structures;
-  std::array<priority_mutex, size> m_handleMutexes;
+  std::array<hal::priority_mutex, size> m_handleMutexes;
 };
 
 template <typename THandle, typename TStruct, int16_t size,
@@ -59,7 +60,7 @@ THandle IndexedHandleResource<THandle, TStruct, size, enumValue>::Allocate(
     *status = RESOURCE_OUT_OF_RANGE;
     return HAL_kInvalidHandle;
   }
-  std::lock_guard<priority_mutex> sync(m_handleMutexes[index]);
+  std::lock_guard<hal::priority_mutex> sync(m_handleMutexes[index]);
   // check for allocation, otherwise allocate and return a valid handle
   if (m_structures[index] != nullptr) {
     *status = RESOURCE_IS_ALLOCATED;
@@ -78,7 +79,7 @@ IndexedHandleResource<THandle, TStruct, size, enumValue>::Get(THandle handle) {
   if (index < 0 || index >= size) {
     return nullptr;
   }
-  std::lock_guard<priority_mutex> sync(m_handleMutexes[index]);
+  std::lock_guard<hal::priority_mutex> sync(m_handleMutexes[index]);
   // return structure. Null will propogate correctly, so no need to manually
   // check.
   return m_structures[index];
@@ -92,7 +93,7 @@ void IndexedHandleResource<THandle, TStruct, size, enumValue>::Free(
   int16_t index = getHandleTypedIndex(handle, enumValue);
   if (index < 0 || index >= size) return;
   // lock and deallocated handle
-  std::lock_guard<priority_mutex> sync(m_handleMutexes[index]);
+  std::lock_guard<hal::priority_mutex> sync(m_handleMutexes[index]);
   m_structures[index].reset();
 }
 }  // namespace hal
