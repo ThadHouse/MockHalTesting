@@ -3,6 +3,7 @@
 #include "MockData/HAL_Value.h"
 #include "MockData/DIODataInternal.h"
 #include "MockData/AnalogInDataInternal.h"
+#include "MockHooksInternal.h"
 #include "HAL/Errors.h"
 #include "ErrorsInternal.h"
 #include "HAL/handles/HandlesInternal.h"
@@ -202,13 +203,11 @@ static int64_t WaitForInterruptDigital(HAL_InterruptHandle handle, Interrupt* in
   //True => false, Falling
   if (interrupt->previousState) {
     //Set our return value and our timestamps
-    //interrupt.FallingTimestamp = SimHooks.GetFPGATimestamp();
-    //interrupt.RisingTimestamp = 0;
-    return WaitResult::FallingEdge;
+    interrupt->fallingTimestamp = hal::GetFPGATimestamp();
+    return 1 << (8 + interrupt->index);
   } else {
-    //interrupt.RisingTimestamp = SimHooks.GetFPGATimestamp();
-    //interrupt.FallingTimestamp = 0;
-    return WaitResult::RisingEdge;
+    interrupt->risingTimestamp = hal::GetFPGATimestamp();
+    return 1 << (interrupt->index);
   }
 }
 
@@ -267,13 +266,11 @@ static int64_t WaitForInterruptAnalog(HAL_InterruptHandle handle, Interrupt* int
   //True => false, Falling
   if (interrupt->previousState) {
     //Set our return value and our timestamps
-    //interrupt.FallingTimestamp = SimHooks.GetFPGATimestamp();
-    //interrupt.RisingTimestamp = 0;
-    return WaitResult::FallingEdge;
+    interrupt->fallingTimestamp = hal::GetFPGATimestamp();
+    return 1 << (8 + interrupt->index);
   } else {
-    //interrupt.RisingTimestamp = SimHooks.GetFPGATimestamp();
-    //interrupt.FallingTimestamp = 0;
-    return WaitResult::RisingEdge;
+    interrupt->risingTimestamp = hal::GetFPGATimestamp();
+    return 1 << (interrupt->index);
   }
 }
 
@@ -309,23 +306,23 @@ static void ProcessInterruptDigitalAsynchronous(const char* name, void* param, c
   bool retVal = value->data.v_boolean;
   // If no change in interrupt, return;
   if (retVal == interrupt->previousState) return;
+  int32_t mask = 0;
   if (interrupt->previousState) {
     interrupt->previousState = retVal;
+    interrupt->fallingTimestamp = hal::GetFPGATimestamp();
+    mask = 1 << (8 + interrupt->index);
     if (!interrupt->fireOnDown) return;
-    // set timestamps
   } else {
     interrupt->previousState = retVal;
+    interrupt->risingTimestamp = hal::GetFPGATimestamp();
+    mask = 1 << (interrupt->index);
     if (!interrupt->fireOnUp) return;
   }
-
-  int32_t status = 0;
-  int32_t digitalIndex = GetDigitalInputChannel(interrupt->portHandle, &status);
-  if (status != 0) return;
 
   // run callback
   auto callback = interrupt->callbackFunction;
   if (callback == nullptr) return;
-  callback(digitalIndex, interrupt->callbackParam);
+  callback(mask, interrupt->callbackParam);
 }
 
 static void ProcessInterruptAnalogAsynchronous(const char* name, void* param, const struct HAL_Value *value) {
@@ -341,13 +338,17 @@ static void ProcessInterruptAnalogAsynchronous(const char* name, void* param, co
   if (status != 0) return;
   // If no change in interrupt, return;
   if (retVal == interrupt->previousState) return;
+  int mask = 0;
   if (interrupt->previousState) {
     interrupt->previousState = retVal;
+    interrupt->fallingTimestamp = hal::GetFPGATimestamp();
     if (!interrupt->fireOnDown) return;
-    // set timestamps
+    mask = 1 << (8 + interrupt->index);
   } else {
     interrupt->previousState = retVal;
+    interrupt->risingTimestamp = hal::GetFPGATimestamp();
     if (!interrupt->fireOnUp) return;
+    mask = 1 << (interrupt->index);
   }
 
   status = 0;
@@ -357,7 +358,7 @@ static void ProcessInterruptAnalogAsynchronous(const char* name, void* param, co
   // run callback
   auto callback = interrupt->callbackFunction;
   if (callback == nullptr) return;
-  callback(analogIndex, interrupt->callbackParam);
+  callback(mask, interrupt->callbackParam);
 }
 
 

@@ -12,7 +12,7 @@
 #include "ErrorsInternal.h"
 #include "HAL/handles/HandlesInternal.h"
 #include "MockData/RoboRioDataInternal.h"
-#include "MockHooks.h"
+#include "MockHooksInternal.h"
 
 using namespace hal;
 

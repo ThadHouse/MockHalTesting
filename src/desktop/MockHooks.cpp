@@ -1,4 +1,4 @@
-#include "MockHooks.h"
+#include "MockHooksInternal.h"
 
 #include <chrono>
 #include <atomic>
@@ -32,6 +32,8 @@ void SetProgramStarted() {
 }
 }
 
+using namespace hal;
+
 extern "C" {
 void HALSIM_WaitForProgramStart(void) {
   using namespace std::chrono_literals;
@@ -41,5 +43,13 @@ void HALSIM_WaitForProgramStart(void) {
     std::printf("Waiting for program start signal: %d\n", count);
     std::this_thread::sleep_for(500ms);
   }
+}
+
+void HALSIM_SetProgramStarted(void) {
+  SetProgramStarted();
+}
+
+void HALSIM_RestartTiming(void) {
+  RestartTiming();
 }
 }
